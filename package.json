@@ -1,0 +1,21 @@
+{
+  "name": "hydra-styling",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Hydra Security's React and Tailwind CSS design system.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @hydra-security/ui && npm run build -w @hydra-security/showcase",
+    "dev": "npm run build -w @hydra-security/ui && npm run dev -w @hydra-security/showcase",
+    "test": "npm run test -w @hydra-security/ui",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@10.8.2"
+}
