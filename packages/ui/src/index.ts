@@ -1,4 +1,6 @@
 export { cn } from "./lib/cn";
+export {MotionProvider,Motion,useHydraMotion} from './components/motion';
+export {Footer,type FooterProps,type FooterVariant} from './components/footer';
 export {HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations, type HydraIconName, type AssetNode} from './components/extended';
 export { Button, buttonVariants, type ButtonProps } from "./components/button";
 export { Field, Input, Select, Textarea, type FieldProps } from "./components/field";
