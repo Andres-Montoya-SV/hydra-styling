@@ -1,4 +1,6 @@
 export { cn } from "./lib/cn";
+export {AssetInventory,validateInventory,type AssetInventoryProps,type InventoryAsset} from './components/asset-inventory';
+export {validateAssetGraph,type AssetLayout,type AssetPosition} from './lib/asset-map';
 export {AssetMap,type AssetMapProps,type MapAsset,type MapRelation,type AssetKind} from './components/asset-map';
 export {MotionProvider,Motion,useHydraMotion} from './components/motion';
 export {Footer,type FooterProps,type FooterVariant} from './components/footer';
