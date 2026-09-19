@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Accessible React components and Tailwind CSS tokens for Hydra Security products.",
   "type": "module",
-  "sideEffects": ["**/*.css"],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -13,9 +15,14 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./icons/*": "./icons/*"
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "icons",
+    "THIRD_PARTY_NOTICES"
+  ],
   "scripts": {
     "build": "npm run clean && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom && tailwindcss -i src/styles.css -o dist/styles.css --minify",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
