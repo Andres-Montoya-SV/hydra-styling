@@ -17,6 +17,9 @@ export {
   useOrganization,
   createOrganization,
   listOrganizations,
+  listOrganizationsPage,
+  type OrganizationCursor,
+  type OrganizationPage,
   setOrganizationMember,
   organizationRoles,
   type Organization,
@@ -46,3 +49,5 @@ export {
   type OrganizationFile,
 } from "./firebase/storage";
 export {DeleteAccountForm} from './firebase/delete-account';
+
+export {requestAccountDeletion} from './firebase/account-deletion-client';

@@ -11,7 +11,7 @@ export const buttonVariants = cva(
         secondary: "hydra-button-secondary text-hydra-text",
         outline: "border border-hydra-line bg-transparent text-hydra-text hover:border-hydra-accent hover:text-hydra-accent",
         ghost: "bg-transparent text-hydra-muted hover:bg-hydra-surface-strong hover:text-hydra-text",
-        danger: "bg-hydra-danger text-white shadow-hydra-sm hover:brightness-110",
+        danger: "hydra-button-danger text-white shadow-hydra-sm",
       },
       size: {
         sm: "h-8 px-3 text-xs",

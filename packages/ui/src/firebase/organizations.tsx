@@ -7,6 +7,8 @@ import {
 } from "react";
 import {
   collectionGroup,
+  startAfter,
+  type QueryDocumentSnapshot,
   doc,
   getDoc,
   getDocs,
@@ -35,7 +37,7 @@ export interface Organization {
   name: string;
   role: OrganizationRole;
 }
-const memberSchema = z.object({
+export const memberSchema = z.object({
   orgId: z.string(),
   userId: z.string(),
   role: z.enum(organizationRoles),
@@ -81,32 +83,31 @@ export async function createOrganization(
   return id;
 }
 
-export async function listOrganizations(
+export type OrganizationCursor = QueryDocumentSnapshot;
+export interface OrganizationPage { organizations: Organization[]; nextCursor?: OrganizationCursor }
+/** Bounded reads. Keep cursors in memory and reset them when the session changes. */
+export async function listOrganizationsPage(
   services: HydraFirebaseServices,
-): Promise<Organization[]> {
+  cursor?: OrganizationCursor,
+): Promise<OrganizationPage> {
   const user = requireCurrentUser(services);
-  const rows = await getDocs(
-    query(
-      collectionGroup(services.db, "members"),
-      where("userId", "==", user.uid),
-      limit(100),
-    ),
-  );
-  const members = rows.docs
-    .map((row) => memberSchema.parse(row.data()))
-    .filter((m) => m.status === "active");
-  return (
-    await Promise.all(
-      members.map(async (member) => {
-        const snap = await getDoc(
-          doc(services.db, "organizations", safeSegment(member.orgId)),
-        );
-        return snap.exists()
-          ? { id: snap.id, name: String(snap.data().name), role: member.role }
-          : null;
-      }),
-    )
-  ).filter((org): org is Organization => org !== null);
+  const rows = await getDocs(query(
+    collectionGroup(services.db, "members"), where("userId", "==", user.uid),
+    ...(cursor ? [startAfter(cursor)] : []), limit(50),
+  ));
+  const members = rows.docs.map(row => memberSchema.parse(row.data()))
+    .filter(m => m.status === "active" && m.userId === user.uid);
+  const organizations = (await Promise.all(members.map(async member => {
+    const snap = await getDoc(doc(services.db, "organizations", safeSegment(member.orgId)));
+    return snap.exists() ? {id: snap.id, name: z.string().min(1).max(80).parse(snap.data().name), role: member.role} : null;
+  }))).filter((org): org is Organization => org !== null);
+  return {organizations, nextCursor: rows.size === 50 ? rows.docs.at(-1) : undefined};
+}
+/** Compatibility helper: up to 100 memberships. Use listOrganizationsPage for navigation. */
+export async function listOrganizations(services: HydraFirebaseServices): Promise<Organization[]> {
+  const first = await listOrganizationsPage(services);
+  if (!first.nextCursor) return first.organizations;
+  return [...first.organizations, ...(await listOrganizationsPage(services, first.nextCursor)).organizations];
 }
 
 /** Owners grant access to an existing UID. Email invitations require a trusted backend. */

@@ -16,6 +16,7 @@ import {
   limit,
   query,
   serverTimestamp,
+  startAfter,
   setDoc,
   updateDoc,
   where,
@@ -322,4 +323,23 @@ test("suspension revokes reads and writes without waiting for a new auth token",
 test("viewer cannot delete, uploader and org administrators can", async () => {
   await assertFails(deleteObject(ref(client("viewer").storage(), path())));
   await assertSucceeds(deleteObject(ref(client("admin").storage(), path())));
+});
+
+
+test("cursor pagination traverses over 100 members and does not bypass tenant isolation", async () => {
+  await env.withSecurityRulesDisabled(async context => {
+    const db=context.firestore();const batch=writeBatch(db);
+    for(let i=0;i<105;i++) {
+      const uid=`page-${String(i).padStart(3,'0')}`;
+      batch.set(doc(db,`organizations/a/members/${uid}`),member('a',uid));
+    }
+    await batch.commit();
+  });
+  const db=client('owner').firestore();const ids=[];let cursor;
+  do {
+    const page=await assertSucceeds(getDocs(query(collection(db,'organizations/a/members'),...(cursor?[startAfter(cursor)]:[]),limit(50))));
+    ids.push(...page.docs.map(d=>d.id));cursor=page.size===50?page.docs.at(-1):undefined;
+  } while(cursor);
+  assert.equal(ids.length,109);assert.equal(new Set(ids).size,109);
+  await assertFails(getDocs(query(collection(client('outsider').firestore(),'organizations/a/members'),limit(50))));
 });

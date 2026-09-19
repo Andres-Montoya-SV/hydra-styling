@@ -18,7 +18,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -32,7 +32,8 @@ jobs:
             tools/firebase/package-lock.json
       - run: npm ci --ignore-scripts
       - run: npm run setup:firebase
-      - name: Check components, starter and Firebase rules
+      - run: npx --no-install playwright install --with-deps chromium
+      - name: Check components, browser accessibility, package consumer and Firebase rules
         run: |
           export JAVA_HOME="$JAVA_HOME_21_X64"
           export PATH="$JAVA_HOME/bin:$PATH"
@@ -40,3 +41,13 @@ jobs:
       - run: npm pack --dry-run -w @hydra-security/ui
       - run: npm run audit:signatures
       - run: npm run audit
+      - name: Retain browser diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: browser-diagnostics
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+          if-no-files-found: ignore

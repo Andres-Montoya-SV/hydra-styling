@@ -170,3 +170,12 @@ The current version is an initial `0.1.0` foundation. Before publishing `1.0`, a
 ## License
 
 MIT © Hydra Security
+
+## Integration and release gates
+
+- [Component states, pagination and validation commands](docs/component-readiness.md)
+- [Account deletion backend contract](docs/account-deletion-contract.md)
+- [Release policy and package consumer verification](docs/releases.md)
+- [Changelog](CHANGELOG.md)
+
+`npm run check` requires Node 24, Java 21, the Firebase tooling setup and Playwright Chromium. It runs browser/accessibility and clean-package consumer checks as well as the existing build, unit and security-rule gates. See the integration guide for setup.

@@ -24,7 +24,7 @@ export function Alert({ className, tone, icon, title, children, ...props }: Aler
       {icon && <span className="mt-0.5 shrink-0 text-hydra-accent" aria-hidden="true">{icon}</span>}
       <div className="min-w-0">
         {title && <p className="mb-1 font-bold text-hydra-text">{title}</p>}
-        <div className="text-hydra-muted">{children}</div>
+        <div className="text-hydra-text">{children}</div>
       </div>
     </div>
   );

@@ -14,3 +14,12 @@ it('parent off prevents nested animations',()=>{render(<MotionProvider enabled={
 it('OS preference stops running animations and removes listeners on unmount',()=>{const r=render(<MotionProvider><Motion><State/></Motion></MotionProvider>);expect(screen.getByText('moving')).toBeInTheDocument();act(()=>{reduced=true;listeners.forEach(cb=>cb());});expect(screen.getByText('still')).toBeInTheDocument();expect(spies.revert).toHaveBeenCalled();r.unmount();expect(listeners.size).toBe(0);});
 it('focus animates the control and blur restores it',()=>{render(<MotionProvider><Field label="Domain"><Input/></Field></MotionProvider>);fireEvent.focusIn(screen.getByLabelText('Domain'));expect(spies.animate).toHaveBeenCalledTimes(1);fireEvent.focusOut(screen.getByLabelText('Domain'));expect(spies.revert).toHaveBeenCalledTimes(1);});
 it('disabling motion reverts the active animation',()=>{const r=render(<MotionProvider><Motion>Example</Motion></MotionProvider>);r.rerender(<MotionProvider enabled={false}><Motion>Example</Motion></MotionProvider>);expect(spies.revert).toHaveBeenCalled();});
+
+it('pauses when the document is hidden and resumes when visible',()=>{
+ render(<MotionProvider><Motion><State/></Motion></MotionProvider>);
+ const hidden=vi.spyOn(document,'hidden','get');
+ hidden.mockReturnValue(true);fireEvent(document,new Event('visibilitychange'));
+ expect(screen.getByText('still')).toBeInTheDocument();expect(spies.revert).toHaveBeenCalled();
+ hidden.mockReturnValue(false);fireEvent(document,new Event('visibilitychange'));
+ expect(screen.getByText('moving')).toBeInTheDocument();hidden.mockRestore();
+});

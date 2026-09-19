@@ -43,6 +43,7 @@
   --color-hydra-text: var(--hs-text);
   --color-hydra-muted: var(--hs-muted);
   --color-hydra-accent: var(--hs-accent);
+  --color-hydra-accent-ink: var(--hs-accent-ink);
   --color-hydra-on-accent: var(--hs-on-accent);
   --color-hydra-orange: var(--hs-orange);
   --color-hydra-success: var(--hs-success);
@@ -71,6 +72,7 @@
   --hs-text: #f7f0df;
   --hs-muted: #a9bbc0;
   --hs-accent: #f3a51f;
+  --hs-accent-ink: #f3a51f;
   --hs-on-accent: #172225;
   --hs-orange: #ed6a24;
   --hs-success: #4ecb8b;
@@ -99,12 +101,13 @@
   --hs-text: #0c3540;
   --hs-muted: #587078;
   --hs-accent: #df8c13;
+  --hs-accent-ink: #80500c;
   --hs-on-accent: #0c2931;
   --hs-orange: #d85f24;
   --hs-success: #167b5a;
   --hs-warning: #a96d08;
   --hs-danger: #bd3f31;
-  --hs-info: #176c93;
+  --hs-info: #125575;
   --hs-focus: #a75b00;
   --hs-ink: #102c36;
   --hs-shadow: #60471c;
@@ -243,3 +246,7 @@
 .hydra-loader-ring { display:block; width:3rem; height:3rem; border:2px solid var(--hs-line); border-top-color:var(--hs-accent); border-right-color:var(--hs-success); border-radius:50%; box-shadow:0 0 24px #4ca99125; }
 [data-hydra-motion="off"] .hydra-card-float { transition:none; }
 @media print { .hydra-ocean { display:none; } .hydra-card-float { backdrop-filter:none; box-shadow:none; transform:none!important; } }
+
+/* Dedicated action color keeps white button text at AA contrast in both themes. */
+.hydra-button-danger { background-color: #b53628; }
+.hydra-button-danger:hover { background-color: #a22e22; }

@@ -12,7 +12,7 @@
     "dev": "npm run dev -w @hydra-security/showcase --",
     "test": "npm run test -w @hydra-security/ui",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "check": "npm run test:firebase-compat && npm run build && npm run test:rules",
+    "check": "npm run test:firebase-compat && npm run build && npm run test:integration && npm run test:package",
     "audit": "npm run audit:app && npm run audit:firebase",
     "audit:app": "npm audit --audit-level=moderate",
     "audit:firebase": "npm audit --prefix tools/firebase --audit-level=moderate",
@@ -24,14 +24,19 @@
     "setup:firebase": "npm ci --prefix tools/firebase --ignore-scripts && node tools/firebase/patch-cli.mjs && npm run test:firebase-compat",
     "test:firebase-compat": "node --test tools/firebase/compat.test.mjs",
     "test:rules": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --project demo-hydra-ui --only firestore,storage \"node --test --test-concurrency=1 tests/firebase-rules.test.mjs\"",
-    "emulators": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:start --project demo-hydra-ui --only auth,firestore,storage"
+    "emulators": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:start --project demo-hydra-ui --only auth,firestore,storage",
+    "test:browser": "playwright test",
+    "test:package": "node scripts/test-package.mjs",
+    "test:integration": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --project demo-hydra-ui --only auth,firestore,storage \"node --test --test-concurrency=1 tests/firebase-rules.test.mjs && npm run test:browser\""
   },
   "engines": {
     "node": ">=24"
   },
   "packageManager": "npm@10.8.2",
   "devDependencies": {
-    "@firebase/rules-unit-testing": "5.0.2"
+    "@axe-core/playwright": "4.13.0",
+    "@firebase/rules-unit-testing": "5.0.2",
+    "@playwright/test": "1.63.0"
   },
   "overrides": {
     "esbuild": "0.28.2"

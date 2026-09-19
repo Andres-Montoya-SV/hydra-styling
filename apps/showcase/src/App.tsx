@@ -1,7 +1,9 @@
-import { useEffect, useState, type ComponentType, type SVGProps } from "react";
-import {FooterScreen,MotionScreen,ProductScreen} from './Screens';
+import { lazy, Suspense, useEffect, useState, type ComponentType, type SVGProps } from "react";
+const FooterScreen=lazy(()=>import('./Screens').then(m=>({default:m.FooterScreen})));
+const MotionScreen=lazy(()=>import('./Screens').then(m=>({default:m.MotionScreen})));
+const ProductScreen=lazy(()=>import('./Screens').then(m=>({default:m.ProductScreen})));
 import MapDemo from './MapDemo';
-import AccountScreen from './AccountScreen';
+const AccountScreen=lazy(()=>import('./AccountScreen'));
 import {
   Activity, Bell, Boxes, Bug, Check, ChevronRight, CircleDot, Copy, FileDown,
   FileText, Fingerprint, Globe2, Hexagon, Home, KeyRound, Layers3, Menu, Moon,
@@ -10,7 +12,7 @@ import {
 } from "lucide-react";
 import {
   HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations,
-  MotionProvider, Motion, Footer, OceanBackground,
+  MotionProvider, Motion, Footer, OceanBackground, SiteLoader,
   Alert, Badge, Button, Card, CardContent, CardHeader, CardTitle, Checkbox,
   DocumentCard, Field, FolkSun, HydraMark, Input, Progress, Select, Stat, Switch, Textarea,
 } from "@hydra-security/ui";
@@ -53,7 +55,7 @@ function FolkLandscape() {
 
 function Sidebar({ open, close, view, navigate }: { open: boolean; close: () => void; view:string; navigate:(view:string)=>void }) {
   return (
-    <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-hydra-line bg-hydra-canvas/98 p-4 backdrop-blur transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+    <aside id="hydra-navigation" className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-hydra-line bg-hydra-canvas/98 p-4 backdrop-blur transition-transform lg:static lg:translate-x-0 ${open ? "visible translate-x-0" : "invisible -translate-x-full lg:visible"}`}>
       <div className="mb-8 flex items-center justify-between">
         <HydraMark wordmark className="w-44" />
         <button className="text-hydra-muted lg:hidden" onClick={close} aria-label="Close menu"><X /></button>
@@ -65,10 +67,10 @@ function Sidebar({ open, close, view, navigate }: { open: boolean; close: () => 
           </button>
         ))}
       </nav>
-      <button onClick={()=>{navigate('Inventory');close();}} aria-current={view==='Inventory'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Asset inventory</button>
-      <button onClick={()=>{navigate('Hydra runs');close();}} aria-current={view==='Hydra runs'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Hydra runs</button>
-      <button onClick={()=>{navigate('App toolkit');close();}} aria-current={view==='App toolkit'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">App toolkit</button>
-      <nav aria-label="Design system" className="my-5 grid gap-2">{['components','motion','footers','account'].map(item=><button key={item} onClick={()=>{navigate(item);close();}} aria-current={view===item?'page':undefined} className={`rounded-hydra px-3 py-2 text-left text-sm capitalize ${view===item?'bg-hydra-surface-strong text-hydra-accent':'text-hydra-muted'}`}>{item}</button>)}</nav>
+      <button onClick={()=>{navigate('Inventory');close();}} aria-current={view==='Inventory'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent-ink">Asset inventory</button>
+      <button onClick={()=>{navigate('Hydra runs');close();}} aria-current={view==='Hydra runs'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent-ink">Hydra runs</button>
+      <button onClick={()=>{navigate('App toolkit');close();}} aria-current={view==='App toolkit'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent-ink">App toolkit</button>
+      <nav aria-label="Design system" className="my-5 grid gap-2">{['components','motion','footers','account'].map(item=><button key={item} onClick={()=>{navigate(item);close();}} aria-current={view===item?'page':undefined} className={`rounded-hydra px-3 py-2 text-left text-sm capitalize ${view===item?'bg-hydra-surface-strong text-hydra-accent-ink':'text-hydra-muted'}`}>{item}</button>)}</nav>
       <div className="mt-auto rounded-hydra border border-hydra-line bg-hydra-surface p-4">
         <TreePine className="mb-3 size-8 text-hydra-success" />
         <p className="font-display text-lg font-bold">Know your territory.</p>
@@ -114,7 +116,7 @@ function Dashboard() {
             <p><span className="text-hydra-success">[INFO]</span> Found 342 subdomains</p>
             <p><span className="text-hydra-success">[INFO]</span> Resolving hosts... 128 live</p>
             <p><span className="text-hydra-warning">[WARN]</span> 7 actionable findings detected</p>
-            <p><span className="text-hydra-accent">[DONE]</span> Surface mapped in 2m 34s</p>
+            <p><span className="text-hydra-accent-ink">[DONE]</span> Surface mapped in 2m 34s</p>
           </CardContent>
         </Card>
         <Card>
@@ -149,6 +151,24 @@ function ComponentLab() {
 export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [view, setView] = useState('dashboard');
+  useEffect(()=>{
+    if(!mobileOpen)return;
+    const previous=document.activeElement as HTMLElement|null;
+    const menu=document.getElementById('hydra-navigation');
+    menu?.querySelector<HTMLButtonElement>('button')?.focus();
+    const handle=(event:KeyboardEvent)=>{
+      if(window.innerWidth>=1024)return;
+      if(event.key==='Escape'){event.preventDefault();setMobileOpen(false);}
+      if(event.key==='Tab'){
+        const items=Array.from(menu?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')??[]).filter(el=>el.getClientRects().length);
+        const first=items[0],last=items.at(-1);
+        if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+        else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+      }
+    };
+    document.addEventListener('keydown',handle);
+    return()=>{document.removeEventListener('keydown',handle);previous?.focus();};
+  },[mobileOpen]);
   const [animated,setAnimated]=useState(true);
   useEffect(()=>{const sync=()=>{const hash=decodeURIComponent(window.location.hash.slice(1));const known=['account','App toolkit','Hydra runs','Inventory','dashboard','components','motion','footers','Settings',...navItems.map(n=>n.label)];setView(known.find(n=>n.toLowerCase()===hash.toLowerCase())??'dashboard');};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync);},[]);
   function navigate(next:string){window.location.hash=next;setView(next);}
@@ -166,20 +186,20 @@ export default function App() {
       {mobileOpen && <button aria-label="Close navigation" className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setMobileOpen(false)} />}
       <div className="min-w-0 flex-1">
         <header className="sticky top-0 z-20 flex h-18 items-center gap-3 border-b border-hydra-line bg-hydra-canvas/90 px-4 backdrop-blur md:px-6">
-          <button className="text-hydra-muted lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu"><Menu /></button>
+          <button className="text-hydra-muted lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu" aria-expanded={mobileOpen} aria-controls="hydra-navigation"><Menu /></button>
           <span className="mr-auto font-display text-lg sm:hidden">Hydra Security</span>
           <div className="hidden rounded-hydra-sm border border-hydra-line bg-hydra-surface p-1 sm:flex">
             <button onClick={() => navigate("dashboard")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "dashboard" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Product</button>
             <button onClick={() => navigate("components")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "components" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Components</button>
           </div>
-          <div className="mx-auto hidden max-w-xl flex-1 md:block"><Input leading={<Sparkles className="size-4" />} trailing={<span className="text-[0.65rem]">⌘ K</span>} placeholder="Target domain, IP, CIDR, or file…" /></div>
+          <div className="mx-auto hidden max-w-xl flex-1 md:block"><Input aria-label="Scan target" leading={<Sparkles className="size-4" />} trailing={<span className="text-[0.65rem]">⌘ K</span>} placeholder="Target domain, IP, CIDR, or file…" /></div>
           <Button className="hidden sm:inline-flex"><Play className="size-4 fill-current" />Scan</Button>
           <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={`Use ${theme === "nocturne" ? "light" : "dark"} theme`}>{theme === "nocturne" ? <Sun className="size-4" /> : <Moon className="size-4" />}</Button>
           <Button variant="ghost" size="icon" aria-label="Notifications"><Bell className="size-4" /></Button>
-          <div className="hidden items-center gap-2 xl:flex"><span className="grid size-8 place-items-center rounded-full bg-hydra-surface-strong text-hydra-accent"><Fingerprint className="size-4" /></span><span className="text-xs font-semibold">Hydra Security</span><ChevronRight className="size-3 text-hydra-muted" /></div>
+          <div className="hidden items-center gap-2 xl:flex"><span className="grid size-8 place-items-center rounded-full bg-hydra-surface-strong text-hydra-accent-ink"><Fingerprint className="size-4" /></span><span className="text-xs font-semibold">Hydra Security</span><ChevronRight className="size-3 text-hydra-muted" /></div>
         </header>
         <div className="flex items-center justify-between gap-4 border-b border-hydra-line px-6 py-3"><span className="text-sm capitalize">{view} · Showcase</span><Switch label="Animations" checked={animated} onChange={e=>setAnimated(e.target.checked)}/></div>
-        <main><Motion key={view}>{view==='dashboard'?<Dashboard/>:view==='components'?<ComponentLab/>:<div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8"><h1 className="font-display text-3xl capitalize">{view}</h1>{view==='account'?<AccountScreen/>:view==='footers'?<FooterScreen/>:view==='motion'?<MotionScreen/>:<ProductScreen key={view} screen={view}/>}</div>}</Motion></main>
+        <main><Suspense fallback={<SiteLoader label="Loading view…"/>}><Motion key={view}>{view==='dashboard'?<Dashboard/>:view==='components'?<ComponentLab/>:<div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8"><h1 className="font-display text-3xl capitalize">{view}</h1>{view==='account'?<AccountScreen/>:view==='footers'?<FooterScreen/>:view==='motion'?<MotionScreen/>:<ProductScreen key={view} screen={view}/>}</div>}</Motion></Suspense></main>
         <div className="p-4 md:p-6"><Footer variant="simple"/></div>
       </div>
     </div></MotionProvider>
