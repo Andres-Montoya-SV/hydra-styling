@@ -68,6 +68,20 @@ export function ScanForm() {
 
 The package supports React 18.3 and 19. It ships ESM, CommonJS, TypeScript declarations, and compiled CSS.
 
+## Hydra backend data
+
+Open **Hydra runs** in the showcase to import a real `output/<run_id>/assets.json`
+locally. The file stays in the tab. The screen includes paginated host review,
+independent risk/confidence filters, finding observations and relationship evidence.
+It does not initiate scans or claim that raw findings are verified vulnerabilities.
+
+Use `@hydra-security/ui/hydra` for the validated export adapter and file importer;
+use `HydraRunSummary`, `HydraHostInventory`, `HydraHostDetails`, `HydraRelationships`
+and `ResourceState` from the main package for presentation.
+See [backend integration](docs/backend-integration.md) for usage, the audited backend
+revision, export limits and the API/authentication/job work still required for a
+real multi-customer web application.
+
 ## Themes
 
 Set the theme at any DOM boundary:

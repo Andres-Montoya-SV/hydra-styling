@@ -65,6 +65,7 @@ function Sidebar({ open, close, view, navigate }: { open: boolean; close: () => 
         ))}
       </nav>
       <button onClick={()=>{navigate('Inventory');close();}} aria-current={view==='Inventory'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Asset inventory</button>
+      <button onClick={()=>{navigate('Hydra runs');close();}} aria-current={view==='Hydra runs'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Hydra runs</button>
       <nav aria-label="Design system" className="my-5 grid gap-2">{['components','motion','footers'].map(item=><button key={item} onClick={()=>{navigate(item);close();}} aria-current={view===item?'page':undefined} className={`rounded-hydra px-3 py-2 text-left text-sm capitalize ${view===item?'bg-hydra-surface-strong text-hydra-accent':'text-hydra-muted'}`}>{item}</button>)}</nav>
       <div className="mt-auto rounded-hydra border border-hydra-line bg-hydra-surface p-4">
         <TreePine className="mb-3 size-8 text-hydra-success" />
@@ -147,7 +148,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [view, setView] = useState('dashboard');
   const [animated,setAnimated]=useState(true);
-  useEffect(()=>{const sync=()=>{const hash=decodeURIComponent(window.location.hash.slice(1));const known=['Inventory','dashboard','components','motion','footers','Settings',...navItems.map(n=>n.label)];setView(known.find(n=>n.toLowerCase()===hash.toLowerCase())??'dashboard');};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync);},[]);
+  useEffect(()=>{const sync=()=>{const hash=decodeURIComponent(window.location.hash.slice(1));const known=['Hydra runs','Inventory','dashboard','components','motion','footers','Settings',...navItems.map(n=>n.label)];setView(known.find(n=>n.toLowerCase()===hash.toLowerCase())??'dashboard');};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync);},[]);
   function navigate(next:string){window.location.hash=next;setView(next);}
   const [theme, setTheme] = useState<"nocturne" | "parchment">("nocturne");
 

@@ -15,6 +15,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./hydra": {
+      "types": "./dist/hydra.d.ts",
+      "import": "./dist/hydra.js",
+      "require": "./dist/hydra.cjs"
+    },
     "./styles.css": "./dist/styles.css",
     "./icons/*": "./icons/*"
   },
@@ -24,7 +29,7 @@
     "THIRD_PARTY_NOTICES"
   ],
   "scripts": {
-    "build": "npm run typecheck && npm test && npm run clean && tsup src/index.ts --format esm,cjs --dts --external react --external react-dom && tailwindcss -i src/styles.css -o dist/styles.css --minify",
+    "build": "npm run typecheck && npm test && npm run clean && tsup src/index.ts src/hydra.ts --format esm,cjs --dts --external react --external react-dom && tailwindcss -i src/styles.css -o dist/styles.css --minify",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
@@ -37,7 +42,8 @@
     "animejs": "4.5.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
-    "tailwind-merge": "3.7.0"
+    "tailwind-merge": "3.7.0",
+    "zod": "4.6.5"
   },
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
