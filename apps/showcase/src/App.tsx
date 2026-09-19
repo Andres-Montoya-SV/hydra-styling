@@ -1,6 +1,7 @@
 import { useEffect, useState, type ComponentType, type SVGProps } from "react";
 import {FooterScreen,MotionScreen,ProductScreen} from './Screens';
 import MapDemo from './MapDemo';
+import AccountScreen from './AccountScreen';
 import {
   Activity, Bell, Boxes, Bug, Check, ChevronRight, CircleDot, Copy, FileDown,
   FileText, Fingerprint, Globe2, Hexagon, Home, KeyRound, Layers3, Menu, Moon,
@@ -9,7 +10,7 @@ import {
 } from "lucide-react";
 import {
   HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations,
-  MotionProvider, Motion, Footer,
+  MotionProvider, Motion, Footer, OceanBackground,
   Alert, Badge, Button, Card, CardContent, CardHeader, CardTitle, Checkbox,
   DocumentCard, Field, FolkSun, HydraMark, Input, Progress, Select, Stat, Switch, Textarea,
 } from "@hydra-security/ui";
@@ -67,7 +68,7 @@ function Sidebar({ open, close, view, navigate }: { open: boolean; close: () => 
       <button onClick={()=>{navigate('Inventory');close();}} aria-current={view==='Inventory'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Asset inventory</button>
       <button onClick={()=>{navigate('Hydra runs');close();}} aria-current={view==='Hydra runs'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">Hydra runs</button>
       <button onClick={()=>{navigate('App toolkit');close();}} aria-current={view==='App toolkit'?'page':undefined} className="rounded-hydra px-3 py-2 text-left text-sm text-hydra-accent">App toolkit</button>
-      <nav aria-label="Design system" className="my-5 grid gap-2">{['components','motion','footers'].map(item=><button key={item} onClick={()=>{navigate(item);close();}} aria-current={view===item?'page':undefined} className={`rounded-hydra px-3 py-2 text-left text-sm capitalize ${view===item?'bg-hydra-surface-strong text-hydra-accent':'text-hydra-muted'}`}>{item}</button>)}</nav>
+      <nav aria-label="Design system" className="my-5 grid gap-2">{['components','motion','footers','account'].map(item=><button key={item} onClick={()=>{navigate(item);close();}} aria-current={view===item?'page':undefined} className={`rounded-hydra px-3 py-2 text-left text-sm capitalize ${view===item?'bg-hydra-surface-strong text-hydra-accent':'text-hydra-muted'}`}>{item}</button>)}</nav>
       <div className="mt-auto rounded-hydra border border-hydra-line bg-hydra-surface p-4">
         <TreePine className="mb-3 size-8 text-hydra-success" />
         <p className="font-display text-lg font-bold">Know your territory.</p>
@@ -149,7 +150,7 @@ export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [view, setView] = useState('dashboard');
   const [animated,setAnimated]=useState(true);
-  useEffect(()=>{const sync=()=>{const hash=decodeURIComponent(window.location.hash.slice(1));const known=['App toolkit','Hydra runs','Inventory','dashboard','components','motion','footers','Settings',...navItems.map(n=>n.label)];setView(known.find(n=>n.toLowerCase()===hash.toLowerCase())??'dashboard');};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync);},[]);
+  useEffect(()=>{const sync=()=>{const hash=decodeURIComponent(window.location.hash.slice(1));const known=['account','App toolkit','Hydra runs','Inventory','dashboard','components','motion','footers','Settings',...navItems.map(n=>n.label)];setView(known.find(n=>n.toLowerCase()===hash.toLowerCase())??'dashboard');};sync();window.addEventListener('hashchange',sync);return()=>window.removeEventListener('hashchange',sync);},[]);
   function navigate(next:string){window.location.hash=next;setView(next);}
   const [theme, setTheme] = useState<"nocturne" | "parchment">("nocturne");
 
@@ -160,13 +161,14 @@ export default function App() {
   }
 
   return (
-    <MotionProvider enabled={animated}><div className="flex min-h-screen bg-hydra-canvas text-hydra-text">
+    <MotionProvider enabled={animated}><div className="hydra-ocean-shell flex min-h-screen text-hydra-text"><OceanBackground/>
       <Sidebar open={mobileOpen} close={() => setMobileOpen(false)} view={view} navigate={navigate}/>
       {mobileOpen && <button aria-label="Close navigation" className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setMobileOpen(false)} />}
       <div className="min-w-0 flex-1">
         <header className="sticky top-0 z-20 flex h-18 items-center gap-3 border-b border-hydra-line bg-hydra-canvas/90 px-4 backdrop-blur md:px-6">
           <button className="text-hydra-muted lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu"><Menu /></button>
-          <div className="flex rounded-hydra-sm border border-hydra-line bg-hydra-surface p-1">
+          <span className="mr-auto font-display text-lg sm:hidden">Hydra Security</span>
+          <div className="hidden rounded-hydra-sm border border-hydra-line bg-hydra-surface p-1 sm:flex">
             <button onClick={() => navigate("dashboard")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "dashboard" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Product</button>
             <button onClick={() => navigate("components")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "components" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Components</button>
           </div>
@@ -177,7 +179,7 @@ export default function App() {
           <div className="hidden items-center gap-2 xl:flex"><span className="grid size-8 place-items-center rounded-full bg-hydra-surface-strong text-hydra-accent"><Fingerprint className="size-4" /></span><span className="text-xs font-semibold">Hydra Security</span><ChevronRight className="size-3 text-hydra-muted" /></div>
         </header>
         <div className="flex items-center justify-between gap-4 border-b border-hydra-line px-6 py-3"><span className="text-sm capitalize">{view} · Showcase</span><Switch label="Animations" checked={animated} onChange={e=>setAnimated(e.target.checked)}/></div>
-        <main><Motion key={view}>{view==='dashboard'?<Dashboard/>:view==='components'?<ComponentLab/>:<div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8"><h1 className="font-display text-3xl capitalize">{view}</h1>{view==='footers'?<FooterScreen/>:view==='motion'?<MotionScreen/>:<ProductScreen key={view} screen={view}/>}</div>}</Motion></main>
+        <main><Motion key={view}>{view==='dashboard'?<Dashboard/>:view==='components'?<ComponentLab/>:<div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8"><h1 className="font-display text-3xl capitalize">{view}</h1>{view==='account'?<AccountScreen/>:view==='footers'?<FooterScreen/>:view==='motion'?<MotionScreen/>:<ProductScreen key={view} screen={view}/>}</div>}</Motion></main>
         <div className="p-4 md:p-6"><Footer variant="simple"/></div>
       </div>
     </div></MotionProvider>

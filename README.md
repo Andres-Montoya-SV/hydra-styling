@@ -109,6 +109,9 @@ the example does not launch scans or persist an audit trail.
 
 ## Themes
 
+The ocean/glass treatment, Framer Motion integration, accessible loader and account
+screens are documented in [Ocean and accounts](docs/ocean-and-accounts.md).
+
 Set the theme at any DOM boundary:
 
 ```html

@@ -4,6 +4,7 @@ import {
   browserSessionPersistence,
   connectAuthEmulator,
   setPersistence,
+  signOut,
 } from "firebase/auth";
 import { connectFirestoreEmulator } from "firebase/firestore";
 import { connectStorageEmulator } from "firebase/storage";
@@ -12,6 +13,7 @@ import {
   Card,
   CardContent,
   ResourceState,
+  MotionProvider, OceanBackground, SiteLoader,
 } from "@hydra-security/ui";
 import {
   initializeHydraFirebase,
@@ -23,6 +25,7 @@ import {
   SignOutButton,
   ProfileForm,
   ChangePasswordForm,
+  DeleteAccountForm,
   OrganizationPicker,
   OrganizationProvider,
   RequireOrganization,
@@ -78,7 +81,7 @@ function Workspace() {
   );
 }
 function Account() {
-  const { user } = useHydraAuth();
+  const { user,services } = useHydraAuth();
   return (
     <div key={user?.uid} className="starter-grid">
       <div className="starter-bar">
@@ -93,6 +96,14 @@ function Account() {
             <ProfileForm />
             <hr />
             <ChangePasswordForm />
+            <hr />
+            <DeleteAccountForm onDeleteAccount={import.meta.env.VITE_ACCOUNT_DELETE_URL ? async token=>{
+              const url=new URL(import.meta.env.VITE_ACCOUNT_DELETE_URL);
+              if(url.protocol!=='https:'&&!(import.meta.env.DEV&&url.hostname==='localhost'))throw new Error('HTTPS is required.');
+              const response=await fetch(url,{method:'DELETE',headers:{Authorization:`Bearer ${token}`},redirect:'error'});
+              if(response.status!==200&&response.status!==204)throw new Error('Account deletion was not completed.');
+              await signOut(services.auth);
+            }:undefined}/>
           </CardContent>
         </Card>
       </details>
@@ -104,12 +115,12 @@ function Account() {
 }
 function App() {
   return (
-    <main className="starter-shell">
+    <main className="starter-shell"><OceanBackground/>
       <HydraMark wordmark className="starter-logo" />
-      <PublicOnly>
+      <PublicOnly loading={<SiteLoader label="Checking your session…"/>}>
         <Login />
       </PublicOnly>
-      <Protected fallback={null}>
+      <Protected fallback={null} loading={null}>
         <Account />
       </Protected>
     </main>
@@ -137,14 +148,16 @@ async function start() {
     connectStorageEmulator(services.storage, "127.0.0.1", 9199);
   }
   await setPersistence(services.auth, browserSessionPersistence);
-  createRoot(document.getElementById("root")!).render(
-    <FirebaseProvider services={services}>
+  appRoot.render(
+    <MotionProvider><div className="hydra-ocean-shell"><FirebaseProvider services={services}>
       <App />
-    </FirebaseProvider>,
+    </FirebaseProvider></div></MotionProvider>,
   );
 }
+const appRoot=createRoot(document.getElementById('root')!);
+appRoot.render(<MotionProvider><SiteLoader label="Preparing your workspace…"/></MotionProvider>);
 void start().catch(() => {
-  createRoot(document.getElementById("root")!).render(
+  appRoot.render(
     <ResourceState
       status="error"
       message="Firebase could not start. Check your public web configuration and enabled services."

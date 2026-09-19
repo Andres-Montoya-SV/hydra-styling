@@ -19,11 +19,11 @@ for(const name of names){
  if(category==='08-graphics-motifs' && !['moon','bird','pattern-2'].includes(slug)) {
    svg=execFileSync('unzip',['-p',archive,name],{encoding:'utf8'});
  } else if(category==='05-technologies') {
-   svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title>${slug}</title><path d="M10 6h44v44l-12 8H10z" fill="#F3A51F" stroke="#062B3A" stroke-width="3"/><text x="32" y="37" text-anchor="middle" font-family="sans-serif" font-size="${slug.length>7?9:11}" font-weight="bold" fill="#062B3A">${slug.toUpperCase()}</text></svg>`;
+   svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><title>${slug}</title><text x="32" y="37" text-anchor="middle" font-family="sans-serif" font-size="${slug.length>7?9:11}" font-weight="bold" fill="#062B3A">${slug.toUpperCase()}</text></svg>`;
  } else {
    const key=lookup[slug]; if(!key || !icons[key]) throw Error('Unmapped '+name+' '+key);
    svg=renderToStaticMarkup(createElement(icons[key],{size:64,stroke:'#062B3A',strokeWidth:1.8}));
-   svg=svg.replace(/<svg[^>]*>/,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none" stroke="#062B3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><title>'+slug+'</title><rect x="1" y="1" width="26" height="26" rx="5" fill="#F3E5C8" stroke="none"/><g transform="translate(2 2)">').replace('</svg>','</g><path d="M3 25h7" stroke="#E76C30" stroke-width="2"/></svg>');
+   svg=svg.replace(/<svg[^>]*>/,'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" fill="none" stroke="#062B3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><title>'+slug+'</title><g transform="translate(2 2)">').replace('</svg>','</g><path d="M3 25h7" stroke="#E76C30" stroke-width="2"/></svg>');
  }
  if(/<script|onload=|href=|foreignObject/i.test(svg)) throw Error('Unsafe SVG '+name);
  const path=`packages/ui/icons/${category}/${slug}.svg`;

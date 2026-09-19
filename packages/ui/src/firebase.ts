@@ -45,3 +45,4 @@ export {
   FILE_TYPES,
   type OrganizationFile,
 } from "./firebase/storage";
+export {DeleteAccountForm} from './firebase/delete-account';
