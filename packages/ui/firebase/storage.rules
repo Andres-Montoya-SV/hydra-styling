@@ -1,0 +1,27 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function member(orgId) {
+      return request.auth != null && request.auth.token.email_verified == true
+        && firestore.get(/databases/(default)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.status == 'active';
+    }
+    function role(orgId) {
+      return firestore.get(/databases/(default)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role;
+    }
+    match /organizations/{orgId}/users/{uid}/files/{fileId} {
+      // Files are organization-shared; uid records who uploaded, not personal privacy.
+      allow read: if member(orgId);
+      allow create: if resource == null && member(orgId) && request.auth.uid == uid && role(orgId) in ['owner', 'admin', 'analyst']
+        && orgId.matches('[A-Za-z0-9_-]{1,128}') && uid.matches('[A-Za-z0-9_-]{1,128}')
+        && fileId.matches('[A-Za-z0-9_-]{36}_[A-Za-z0-9._-]{1,120}')
+        && request.resource.size > 0 && request.resource.size <= 25 * 1024 * 1024
+        && request.resource.contentType in ['application/pdf', 'application/json', 'text/plain', 'text/csv', 'image/png', 'image/jpeg', 'image/webp', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+        && request.resource.contentDisposition.matches('attachment; filename="[A-Za-z0-9._-]{1,120}"')
+        && request.resource.metadata.keys().hasOnly(['orgId', 'ownerId', 'originalName'])
+        && request.resource.metadata.orgId == orgId && request.resource.metadata.ownerId == uid
+        && request.resource.metadata.originalName.matches('[A-Za-z0-9._-]{1,120}');
+      // Immutable blobs: upload a new UUID to replace a file, never overwrite metadata.
+      allow delete: if member(orgId) && (role(orgId) in ['owner', 'admin'] || (request.auth.uid == uid && role(orgId) == 'analyst'));
+    }
+  }
+}

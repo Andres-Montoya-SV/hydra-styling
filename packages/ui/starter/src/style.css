@@ -1,0 +1,52 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+  background: #071923;
+  color: #fff8e9;
+}
+body {
+  margin: 0;
+}
+.starter-shell {
+  max-width: 1000px;
+  margin: auto;
+  padding: 32px 20px;
+}
+.starter-logo {
+  width: 190px;
+  margin-bottom: 32px;
+}
+.starter-grid {
+  display: grid;
+  gap: 24px;
+}
+.starter-bar,
+.starter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.starter-tabs button {
+  color: inherit;
+  background: transparent;
+  border: 1px solid #35515e;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.starter-tabs button[aria-pressed="true"] {
+  border-color: #ffb52a;
+  color: #ffb52a;
+}
+summary {
+  cursor: pointer;
+  padding: 16px 0;
+}
+hr {
+  margin: 24px 0;
+  border: 0;
+  border-top: 1px solid #35515e;
+}

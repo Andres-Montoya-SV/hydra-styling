@@ -1,4 +1,5 @@
 export { cn } from "./lib/cn";
+export {ScanJobList,FindingReviewForm,AuditTimeline,ScopeSummary,type ScanJob,type ScanJobStatus,type FindingReview,type FindingDisposition,type AuditEvent} from './components/easm-workflows';
 export {ResourceState,type ResourceStateProps} from './components/resource-state';
 export {HydraRunSummary,HydraHostInventory,HydraHostDetails,HydraRelationships,type HydraHostInventoryProps} from './components/hydra-workbench';
 export {AssetInventory,validateInventory,type AssetInventoryProps,type InventoryAsset} from './components/asset-inventory';

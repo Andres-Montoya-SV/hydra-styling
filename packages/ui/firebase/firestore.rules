@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function verified() { return signedIn() && request.auth.token.email_verified == true; }
+    function member(orgId) {
+      return verified() && get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.status == 'active';
+    }
+    function owner(orgId) {
+      return member(orgId) && get(/databases/$(database)/documents/organizations/$(orgId)).data.ownerId == request.auth.uid;
+    }
+    function validMember(orgId, uid) {
+      return request.resource.data.keys().hasOnly(['orgId', 'userId', 'role', 'status', 'joinedAt'])
+        && request.resource.data.orgId == orgId && request.resource.data.userId == uid
+        && request.resource.data.status in ['active', 'suspended']
+        && request.resource.data.joinedAt == request.time;
+    }
+    match /users/{uid} {
+      allow get: if signedIn() && request.auth.uid == uid;
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['displayName', 'username', 'updatedAt'])
+        && request.resource.data.displayName is string && request.resource.data.displayName.size() > 0 && request.resource.data.displayName.size() <= 80
+        && request.resource.data.username is string && request.resource.data.username.matches('[A-Za-z0-9_.-]{3,32}')
+        && request.resource.data.updatedAt == request.time;
+    }
+    match /organizations/{orgId} {
+      allow get: if member(orgId);
+      allow create: if verified() && orgId.matches('[A-Za-z0-9_-]{1,128}')
+        && request.resource.data.keys().hasOnly(['name', 'ownerId', 'createdAt'])
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 80
+        && request.resource.data.createdAt == request.time
+        && getAfter(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role == 'owner'
+        && getAfter(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.status == 'active';
+      match /members/{uid} {
+        allow get: if (signedIn() && request.auth.uid == uid) || member(orgId);
+        allow list: if member(orgId) && request.query.limit <= 100;
+        allow create: if verified() && uid.matches('[A-Za-z0-9_-]{1,128}') && validMember(orgId, uid) && (
+          (request.auth.uid == uid && !exists(/databases/$(database)/documents/organizations/$(orgId))
+            && getAfter(/databases/$(database)/documents/organizations/$(orgId)).data.ownerId == uid
+            && request.resource.data.role == 'owner' && request.resource.data.status == 'active')
+          || (owner(orgId) && uid != get(/databases/$(database)/documents/organizations/$(orgId)).data.ownerId
+            && request.resource.data.role in ['admin', 'analyst', 'viewer'])
+        );
+        allow update: if owner(orgId) && uid != get(/databases/$(database)/documents/organizations/$(orgId)).data.ownerId
+          && validMember(orgId, uid) && request.resource.data.role in ['admin', 'analyst', 'viewer'];
+        allow delete: if owner(orgId) && uid != get(/databases/$(database)/documents/organizations/$(orgId)).data.ownerId;
+      }
+    }
+    // Supports the constrained collection-group query for one's own memberships.
+    match /{path=**}/members/{uid} {
+      allow list: if signedIn() && resource.data.userId == request.auth.uid && request.query.limit <= 100;
+    }
+    // Every other collection is denied. EASM scan data remains behind Hydra's API.
+  }
+}
