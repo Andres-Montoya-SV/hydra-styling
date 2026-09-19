@@ -12,7 +12,9 @@
     "dev": "npm run build -w @hydra-security/ui && npm run dev -w @hydra-security/showcase",
     "test": "npm run test -w @hydra-security/ui",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "check": "npm run typecheck && npm test && npm run build"
+    "check": "npm run typecheck && npm test && npm run build",
+    "audit": "npm audit --audit-level=moderate",
+    "audit:signatures": "npm audit signatures"
   },
   "engines": {
     "node": ">=20"
