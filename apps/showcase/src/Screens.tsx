@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {lazy,Suspense,useState} from 'react';
+const HydraBackendDemo=lazy(()=>import('./HydraBackendDemo'));
 import {AssetInventory,type InventoryAsset} from '@hydra-security/ui';
 const inventory:InventoryAsset[]=[
  {id:'domain',label:'example.com',kind:'domain',risk:'unknown',ownership:'confirmed',source:'Demo · supplied scope',lastSeen:'2026-09-19T10:00:00.000Z',evidence:'Synthetic asset supplied by the organization. No live discovery was performed.'},
@@ -15,6 +16,7 @@ export function MotionScreen(){
 }
 export function ProductScreen({screen}:{screen:string}){
  const [query,setQuery]=useState('');const [continuous,setContinuous]=useState(true);const [done,setDone]=useState(false);
+ if(screen==='Hydra runs')return <Suspense fallback={<p role="status">Loading run explorer…</p>}><HydraBackendDemo/></Suspense>;
  if(screen==='Inventory')return <><p className="mb-4 text-sm text-hydra-muted">Sample data · no live scan or external service connected.</p><AssetInventory assets={inventory}/></>;
  const rows=screen==='Technologies'?['React · web framework','Nginx · web server','PostgreSQL · database']:screen==='Vulnerabilities'?['Exposed admin panel · high','Outdated TLS · medium','Insecure cookie · low']:screen==='Infrastructure'?['104.21.32.12 · HTTPS 443','172.67.45.23 · SSH 22']:screen==='Domains'?['example.com','example.org']:['api.example.com','dev.example.com','staging.example.com'];
  if(screen==='Settings')return <Card><CardContent className="grid gap-5"><Switch label="Continuous monitoring" checked={continuous} onChange={e=>setContinuous(e.target.checked)}/><Alert title="Local demonstration">Preference changes stay in this demo session.</Alert></CardContent></Card>;

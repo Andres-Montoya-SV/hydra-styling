@@ -1,0 +1,185 @@
+{
+  "run_id": "demo-contract-run",
+  "host_count": 2,
+  "alive_count": 1,
+  "hosts": [
+    {
+      "domain": "api.example.com",
+      "hostname": "api.example.com",
+      "root_domain": "example.com",
+      "subdomain": "api",
+      "ips": [
+        "192.0.2.10"
+      ],
+      "asn": null,
+      "asn_org": null,
+      "cidr": null,
+      "country": null,
+      "city": null,
+      "latitude": null,
+      "longitude": null,
+      "provider": null,
+      "cloud_provider": null,
+      "cloud_region": null,
+      "registrar": null,
+      "registration_created_at": null,
+      "registration_expires_at": null,
+      "nameservers": [],
+      "is_cdn": false,
+      "cdn_provider": null,
+      "waf_provider": null,
+      "dns_resolved": true,
+      "dns_unconfirmed_http_response": false,
+      "dns_wildcard": true,
+      "tarpit_suspected": false,
+      "tarpit_canary_ports": [],
+      "soft_404_detected": true,
+      "security_headers_score": null,
+      "confidence": "low",
+      "confidence_score": 40,
+      "risk_level": "high",
+      "risk_score": 75,
+      "risk_reasons": [
+        "Synthetic example: review the observed configuration."
+      ],
+      "discovery_sources": [
+        "dnsx",
+        "httpx",
+        "security_headers"
+      ],
+      "warnings": [],
+      "cluster_ids": {},
+      "profile": null,
+      "http_count": 1,
+      "port_count": 1,
+      "url_count": 0,
+      "finding_count": 1,
+      "findings": [
+        {
+          "template_id": "missing-security-header",
+          "severity": "medium",
+          "name": "Example missing security header",
+          "source": "security_headers",
+          "url": "https://api.example.com",
+          "description": "Synthetic observation; verification is not included.",
+          "confidence_score": 40
+        }
+      ],
+      "first_seen": "2026-09-19T10:00:00.123456+00:00",
+      "last_seen": "2026-09-19T10:00:00.123456+00:00",
+      "scan_timestamp": "2026-09-19T10:00:00.123456+00:00",
+      "http_services": [
+        {
+          "url": "https://api.example.com",
+          "status_code": 200,
+          "title": "Example API",
+          "technologies": [],
+          "cdn": null,
+          "waf": null,
+          "favicon_hash": null,
+          "content_length": null,
+          "response_size": null,
+          "tls_version": null,
+          "tls_cipher": null,
+          "security_headers": {},
+          "confidence_score": 80
+        }
+      ],
+      "ports": [
+        {
+          "port": 443,
+          "protocol": "tcp",
+          "source": "naabu",
+          "confidence_score": 50,
+          "verification_state": "unverified",
+          "service": "https",
+          "version": null
+        }
+      ]
+    },
+    {
+      "domain": "example.com",
+      "hostname": "example.com",
+      "root_domain": "example.com",
+      "subdomain": "",
+      "ips": [],
+      "asn": null,
+      "asn_org": null,
+      "cidr": null,
+      "country": null,
+      "city": null,
+      "latitude": null,
+      "longitude": null,
+      "provider": null,
+      "cloud_provider": null,
+      "cloud_region": null,
+      "registrar": null,
+      "registration_created_at": null,
+      "registration_expires_at": null,
+      "nameservers": [],
+      "is_cdn": false,
+      "cdn_provider": null,
+      "waf_provider": null,
+      "dns_resolved": false,
+      "dns_unconfirmed_http_response": false,
+      "dns_wildcard": false,
+      "tarpit_suspected": false,
+      "tarpit_canary_ports": [],
+      "soft_404_detected": false,
+      "security_headers_score": null,
+      "confidence": "unknown",
+      "confidence_score": 25,
+      "risk_level": "info",
+      "risk_score": 0,
+      "risk_reasons": [],
+      "discovery_sources": [],
+      "warnings": [],
+      "cluster_ids": {},
+      "profile": null,
+      "http_count": 0,
+      "port_count": 0,
+      "url_count": 0,
+      "finding_count": 0,
+      "findings": [],
+      "first_seen": "2026-09-19T10:00:00.123456+00:00",
+      "last_seen": "2026-09-19T10:00:00.123456+00:00",
+      "scan_timestamp": "2026-09-19T10:00:00.123456+00:00",
+      "http_services": [],
+      "ports": []
+    }
+  ],
+  "clusters": [],
+  "graph": {
+    "nodes": [],
+    "edges": []
+  },
+  "intelligence": {
+    "relationships": [
+      {
+        "relationship_id": "demo-relationship",
+        "source_entity": "domain:api.example.com",
+        "target_entity": "ip_address:192.0.2.10",
+        "relationship_type": "RESOLVES_TO",
+        "confidence_band": "HIGH",
+        "strength": "dns_record",
+        "evidence_id": "demo-evidence",
+        "evidence_ids": [
+          "demo-evidence"
+        ],
+        "evidence_type": "DNS_RESOLUTION",
+        "certificate_fingerprint": "",
+        "certificate_serial": "",
+        "shared_ip": "",
+        "san_cardinality": null,
+        "source_artifact": "dnsx_records.jsonl",
+        "source_plugin": "dnsx",
+        "run_id": "demo-contract-run",
+        "explanation": "Synthetic DNS observation linking this host and address.",
+        "rationale": "Synthetic DNS observation linking this host and address.",
+        "observed_at": "2026-09-19T10:00:00.123456+00:00",
+        "collection_status": "COLLECTED",
+        "scope_status": "IN_SCOPE"
+      }
+    ]
+  }
+}
