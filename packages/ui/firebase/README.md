@@ -216,3 +216,9 @@ the repository's `tools/firebase/README.md` for exact scope, compatibility tests
 and removal procedure when upstream catches up. These tools are not shipped in
 the UI package. Emulator compatibility does not certify every deployment command;
 validate your actual deployment against a development project before production.
+
+### Paginated organization access
+
+Use `listOrganizationsPage(services, cursor?)` to retrieve 50 memberships at a time. Follow `nextCursor` even when the returned `organizations` list is empty (suspended memberships are filtered). Reset cursors after a session/app change. `OrganizationPicker` includes Load more; `OrganizationMembers` has next/previous navigation. The legacy `listOrganizations` helper retains its 100-membership limit.
+
+Account deletion requires a trusted cleanup endpoint returning HTTP 204 only after completion. `requestAccountDeletion` rejects queued/ambiguous results and insecure URLs. See the repository's `docs/account-deletion-contract.md`; no server cleanup implementation is included.

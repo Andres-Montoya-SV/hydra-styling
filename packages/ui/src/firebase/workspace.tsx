@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { collection, limit, onSnapshot, query } from "firebase/firestore";
+import { collection, limit, onSnapshot, query, startAfter, type QueryDocumentSnapshot } from "firebase/firestore";
 import type { UploadTask } from "firebase/storage";
 import { useHydraAuth } from "./auth";
 import {
   createOrganization,
-  listOrganizations,
+  listOrganizationsPage,
+  memberSchema,
+  type OrganizationCursor,
   setOrganizationMember,
   useOrganization,
   type Organization,
@@ -51,20 +53,27 @@ function OrganizationPickerContent({
 }) {
   const { services, user } = useHydraAuth();
   const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [created, setCreated] = useState<Organization>();
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [revision, setRevision] = useState(0);
+  const [cursor, setCursor] = useState<OrganizationCursor>();
+  const [nextCursor, setNextCursor] = useState<OrganizationCursor>();
   useEffect(() => {
     let current = true;
-    setOrganizations([]);
+    if (!cursor) setOrganizations([]);
+    setNextCursor(undefined);
     setError("");
     if (!user?.emailVerified) return;
     setBusy(true);
-    listOrganizations(services)
+    listOrganizationsPage(services, cursor)
       .then(
         (data) => {
-          if (current) setOrganizations(data);
+          if (current) {
+            setOrganizations(old => [...new Map([...old, ...data.organizations].map(org => [org.id,org])).values()]);
+            setNextCursor(data.nextCursor);
+          }
         },
         (e) => {
           if (current) setError(firebaseMessage(e));
@@ -76,7 +85,7 @@ function OrganizationPickerContent({
     return () => {
       current = false;
     };
-  }, [services.db, user?.uid, user?.emailVerified, revision]);
+  }, [services.db, user?.uid, user?.emailVerified, revision, cursor]);
   async function create(e: FormEvent) {
     e.preventDefault();
     if (busy) return;
@@ -84,7 +93,9 @@ function OrganizationPickerContent({
     setError("");
     try {
       const id = await createOrganization(services, name);
+      setCreated({id, name:name.trim(), role:"owner"});
       setName("");
+      setCursor(undefined);
       setRevision((n) => n + 1);
       onChange(id);
     } catch (e) {
@@ -102,13 +113,14 @@ function OrganizationPickerContent({
           onChange={(e) => onChange(e.target.value)}
         >
           <option value="">Choose an organization</option>
-          {organizations.map((org) => (
+          {(created?.id === value && !organizations.some(org => org.id === created.id) ? [created,...organizations] : organizations).map((org) => (
             <option key={org.id} value={org.id}>
               {org.name} · {org.role}
             </option>
           ))}
         </Select>
       </Field>
+      {nextCursor && <Button variant="secondary" disabled={busy} onClick={() => setCursor(nextCursor)}>Load more organizations</Button>}
       <form onSubmit={create} className="flex flex-wrap items-end gap-3">
         <Field label="New organization">
           <Input
@@ -126,7 +138,7 @@ function OrganizationPickerContent({
       <Button
         variant="ghost"
         disabled={busy}
-        onClick={() => setRevision((n) => n + 1)}
+        onClick={() => {setCursor(undefined);setRevision((n) => n + 1);}}
       >
         Refresh organizations
       </Button>
@@ -135,6 +147,11 @@ function OrganizationPickerContent({
 }
 
 export function OrganizationMembers() {
+  const {orgId,status} = useOrganization();
+  const {services,user} = useHydraAuth();
+  return <OrganizationMembersContent key={JSON.stringify([services.app.name,user?.uid,orgId,status])}/>;
+}
+function OrganizationMembersContent() {
   const { orgId, status, member } = useOrganization();
   const { services } = useHydraAuth();
   const [members, setMembers] = useState<OrganizationMember[]>([]);
@@ -143,20 +160,37 @@ export function OrganizationMembers() {
     useState<Exclude<OrganizationRole, "owner">>("viewer");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [pages, setPages] = useState<Array<QueryDocumentSnapshot | undefined>>([undefined]);
+  const [next, setNext] = useState<QueryDocumentSnapshot>();
+  const [loading, setLoading] = useState(true);
+  const cursor = pages[pages.length - 1];
   useEffect(() => {
+    let current = true;
+    setLoading(true);
+    setNext(undefined);
     setMembers([]);
     setError("");
     if (status !== "active") return;
-    return onSnapshot(
+    const stop = onSnapshot(
       query(
         collection(services.db, "organizations", orgId, "members"),
-        limit(100),
+        ...(cursor ? [startAfter(cursor)] : []),
+        limit(50),
       ),
-      (snap) =>
-        setMembers(snap.docs.map((d) => d.data() as OrganizationMember)),
-      (e) => setError(firebaseMessage(e)),
+      (snap) => {
+        if (!current) return;
+        try {
+          const parsed = snap.docs.map(d => memberSchema.parse(d.data()));
+          if (parsed.some(m => m.orgId !== orgId)) throw new Error('Invalid membership');
+          setMembers(parsed);
+          setNext(snap.size === 50 ? snap.docs.at(-1) : undefined);
+        } catch { setMembers([]); setNext(undefined); setError('Member data could not be validated.'); }
+        setLoading(false);
+      },
+      (e) => {if(current){setError(firebaseMessage(e));setMembers([]);setNext(undefined);setLoading(false);}},
     );
-  }, [orgId, status, services.db]);
+    return () => {current = false;stop();};
+  }, [orgId, status, services.db, cursor]);
   async function save(
     userId: string,
     memberRole: Exclude<OrganizationRole, "owner">,
@@ -208,6 +242,12 @@ export function OrganizationMembers() {
           </li>
         ))}
       </ul>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="secondary" disabled={loading || pages.length === 1} onClick={() => setPages(p => p.slice(0,-1))}>Previous members</Button>
+        <Button variant="secondary" disabled={loading || !next} onClick={() => setPages(p => [...p,next])}>Next members</Button>
+        <Button variant="ghost" disabled={loading || pages.length === 1} onClick={() => setPages([undefined])}>First page</Button>
+      </div>
+      {loading && <ResourceState status="loading" message="Loading members…"/>}
       {member?.role === "owner" && (
         <form
           onSubmit={(e) => {

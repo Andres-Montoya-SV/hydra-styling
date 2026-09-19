@@ -9,6 +9,7 @@ import {
 import { connectFirestoreEmulator } from "firebase/firestore";
 import { connectStorageEmulator } from "firebase/storage";
 import {
+  ErrorBoundary,
   HydraMark,
   Card,
   CardContent,
@@ -26,6 +27,7 @@ import {
   ProfileForm,
   ChangePasswordForm,
   DeleteAccountForm,
+  requestAccountDeletion,
   OrganizationPicker,
   OrganizationProvider,
   RequireOrganization,
@@ -98,10 +100,7 @@ function Account() {
             <ChangePasswordForm />
             <hr />
             <DeleteAccountForm onDeleteAccount={import.meta.env.VITE_ACCOUNT_DELETE_URL ? async token=>{
-              const url=new URL(import.meta.env.VITE_ACCOUNT_DELETE_URL);
-              if(url.protocol!=='https:'&&!(import.meta.env.DEV&&url.hostname==='localhost'))throw new Error('HTTPS is required.');
-              const response=await fetch(url,{method:'DELETE',headers:{Authorization:`Bearer ${token}`},redirect:'error'});
-              if(response.status!==200&&response.status!==204)throw new Error('Account deletion was not completed.');
+              await requestAccountDeletion(import.meta.env.VITE_ACCOUNT_DELETE_URL,token,{allowLocalhost:import.meta.env.DEV});
               await signOut(services.auth);
             }:undefined}/>
           </CardContent>
@@ -149,9 +148,9 @@ async function start() {
   }
   await setPersistence(services.auth, browserSessionPersistence);
   appRoot.render(
-    <MotionProvider><div className="hydra-ocean-shell"><FirebaseProvider services={services}>
+    <ErrorBoundary><MotionProvider><div className="hydra-ocean-shell"><FirebaseProvider services={services}>
       <App />
-    </FirebaseProvider></div></MotionProvider>,
+    </FirebaseProvider></div></MotionProvider></ErrorBoundary>,
   );
 }
 const appRoot=createRoot(document.getElementById('root')!);

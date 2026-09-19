@@ -6,9 +6,11 @@ export function useHydraMotion(){return useContext(MotionContext)===true;}
 export function MotionProvider({enabled=true,children}:{enabled?:boolean;children:ReactNode}){
  const [reduced,setReduced]=useState(true);
  const parent=useContext(MotionContext);
+ const [visible,setVisible]=useState(true);
+ useEffect(()=>{const update=()=>setVisible(!document.hidden);update();document.addEventListener('visibilitychange',update);return()=>document.removeEventListener('visibilitychange',update);},[]);
  // Parent opt-out and the OS preference always win over a nested opt-in.
  useEffect(()=>{const query=window.matchMedia('(prefers-reduced-motion: reduce)');const update=()=>setReduced(query.matches);update();query.addEventListener('change',update);return()=>query.removeEventListener('change',update);},[]);
- const active=enabled&&!reduced&&parent!==false;
+ const active=enabled&&visible&&!reduced&&parent!==false;
  const root=useRef<HTMLDivElement>(null);
  useEffect(()=>{
   const el=root.current;if(!el||!active)return;

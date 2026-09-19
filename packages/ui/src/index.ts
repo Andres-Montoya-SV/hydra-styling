@@ -18,3 +18,5 @@ export { Stat, type StatProps } from "./components/stat";
 export { DocumentCard, type DocumentCardProps, type DocumentKind } from "./components/document-card";
 export { HydraMark, FolkSun, type HydraMarkProps } from "./components/hydra-mark";
 export {OceanBackground, SiteLoader} from './components/ocean';
+
+export {ErrorBoundary} from './components/error-boundary';

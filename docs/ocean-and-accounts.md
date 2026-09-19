@@ -40,7 +40,7 @@ the optional public `VITE_ACCOUNT_DELETE_URL` configuration (HTTPS in production
 That endpoint must verify the token and recent authentication server-side, derive
 the UID from the token, block or transfer organization ownership, remove private
 profile/files/memberships according to retention policy, and delete the Auth
-account. It must be idempotent and return success only after deletion completes;
+account. It must be idempotent and return HTTP 204 only after deletion completes;
 an asynchronous job needs its own status workflow instead of returning 202 to this
 starter. The client signs out after success. Errors never display a success state.
 Tokens/passwords are not logged or persisted by these components.
