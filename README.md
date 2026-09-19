@@ -27,6 +27,10 @@ Run all checks:
 npm run check
 ```
 
+The full check includes Firebase rules emulators and requires Node 24 and Java 21.
+`npm run build` checks types and component tests, then builds the library, showcase
+and Firebase starter. `npm run audit` remains a separate mandatory CI gate.
+
 Build the package and showcase:
 
 ```bash
@@ -81,6 +85,22 @@ and `ResourceState` from the main package for presentation.
 See [backend integration](docs/backend-integration.md) for usage, the audited backend
 revision, export limits and the API/authentication/job work still required for a
 real multi-customer web application.
+
+## Firebase application toolkit
+
+Use `@hydra-security/ui/firebase` for `FirebaseProvider`, `Protected`, `PublicOnly`,
+authentication and profile forms, verified-email workflows, organizations, roles,
+membership management and scoped file uploads/downloads. Firebase initializes only
+when your application explicitly supplies its public web configuration.
+
+The package includes a runnable React starter and Firestore/Storage rules. See the
+[setup guide](packages/ui/firebase/README.md) for installation, permissions,
+emulator tests and the remaining production setup. No cloud project or rules are
+deployed by installing the library.
+
+The **App toolkit** showcase screen demonstrates `ScopeSummary`, `ScanJobList`,
+`FindingReviewForm` and `AuditTimeline`. These accept application data and callbacks;
+the example does not launch scans or persist an audit trail.
 
 ## Themes
 

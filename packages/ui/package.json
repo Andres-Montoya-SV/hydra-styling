@@ -20,16 +20,24 @@
       "import": "./dist/hydra.js",
       "require": "./dist/hydra.cjs"
     },
+    "./firebase": {
+      "types": "./dist/firebase.d.ts",
+      "import": "./dist/firebase.js",
+      "require": "./dist/firebase.cjs"
+    },
+    "./firebase-rules/*": "./firebase/*",
     "./styles.css": "./dist/styles.css",
     "./icons/*": "./icons/*"
   },
   "files": [
     "dist",
     "icons",
+    "firebase",
+    "starter",
     "THIRD_PARTY_NOTICES"
   ],
   "scripts": {
-    "build": "npm run typecheck && npm test && npm run clean && tsup src/index.ts src/hydra.ts --format esm,cjs --dts --external react --external react-dom && tailwindcss -i src/styles.css -o dist/styles.css --minify",
+    "build": "npm run typecheck && npm test && npm run clean && tsup src/index.ts src/hydra.ts src/firebase.ts --format esm,cjs --dts --external react --external react-dom && tailwindcss -i src/styles.css -o dist/styles.css --minify",
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json --noEmit"
@@ -42,6 +50,7 @@
     "animejs": "4.5.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
+    "firebase": "12.19.0",
     "tailwind-merge": "3.7.0",
     "zod": "4.6.5"
   },

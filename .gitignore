@@ -4,4 +4,8 @@ coverage
 .DS_Store
 *.local
 *.log
-
+.starter-dist
+.firebase
+.env
+.env.*
+!*.env.example

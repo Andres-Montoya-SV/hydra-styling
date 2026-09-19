@@ -1,0 +1,10 @@
+{
+  "firestore": {"rules": "node_modules/@hydra-security/ui/firebase/firestore.rules", "indexes": "node_modules/@hydra-security/ui/firebase/firestore.indexes.json"},
+  "storage": {"rules": "node_modules/@hydra-security/ui/firebase/storage.rules"},
+  "emulators": {
+    "auth": {"host": "127.0.0.1", "port": 9099},
+    "firestore": {"host": "127.0.0.1", "port": 8080},
+    "storage": {"host": "127.0.0.1", "port": 9199},
+    "ui": {"enabled": false}
+  }
+}

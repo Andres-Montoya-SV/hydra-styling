@@ -28,7 +28,11 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: npm run audit
-      - run: npm run audit:signatures
-      - run: npm run check
+      - name: Check components, starter and Firebase rules
+        run: |
+          export JAVA_HOME="$JAVA_HOME_21_X64"
+          export PATH="$JAVA_HOME/bin:$PATH"
+          npm run check
       - run: npm pack --dry-run -w @hydra-security/ui
+      - run: npm run audit:signatures
+      - run: npm run audit
