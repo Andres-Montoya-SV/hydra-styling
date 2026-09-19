@@ -1,6 +1,8 @@
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, useEffect, useImperativeHandle, type HTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import {useAnimate} from 'framer-motion';
+import {useHydraMotion} from './motion';
 
 const cardVariants = cva("hydra-card", {
   variants: {
@@ -8,7 +10,7 @@ const cardVariants = cva("hydra-card", {
       default: "bg-hydra-surface",
       raised: "bg-hydra-surface-strong shadow-hydra-lg",
       parchment: "hydra-parchment text-hydra-ink",
-      danger: "border-hydra-danger/50 bg-hydra-danger/8",
+      danger: "hydra-card-danger border-hydra-danger/50 bg-hydra-danger/8",
     },
   },
   defaultVariants: { variant: "default" },
@@ -16,9 +18,15 @@ const cardVariants = cva("hydra-card", {
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
 
-export const Card = forwardRef<HTMLDivElement, CardProps>(({ className, variant, ...props }, ref) => (
-  <div ref={ref} className={cn(cardVariants({ variant }), className)} {...props} />
-));
+export const Card = forwardRef<HTMLDivElement, CardProps>(({ className, variant, onPointerEnter, onPointerLeave, ...props }, ref) => {
+  const active=useHydraMotion();
+  const [scope,animate]=useAnimate<HTMLDivElement>();
+  useImperativeHandle(ref,()=>scope.current!,[scope]);
+  useEffect(()=>{if(!active&&scope.current)void animate(scope.current,{y:0},{duration:0});},[active,animate,scope]);
+  return <div ref={scope} className={cn(cardVariants({variant}),'hydra-card-float',className)} {...props}
+    onPointerEnter={event=>{onPointerEnter?.(event);if(active&&event.pointerType==='mouse')void animate(scope.current,{y:-4},{type:'spring',stiffness:220,damping:24});}}
+    onPointerLeave={event=>{onPointerLeave?.(event);if(active)void animate(scope.current,{y:0},{type:'spring',stiffness:220,damping:24});}}/>;
+});
 Card.displayName = "Card";
 
 export const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (

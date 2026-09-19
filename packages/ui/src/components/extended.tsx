@@ -4,11 +4,11 @@ import {Button} from './button';
 import {iconSources} from '../icon-sources';
 export type HydraIconName = keyof typeof iconSources;
 export function HydraIcon({name,label,className='size-6'}:{name:HydraIconName;label?:string;className?:string}) {
- return <img src={iconSources[name]} alt={label ?? ''} className={className} />;
+ return name.startsWith('08-graphics-motifs/') ? <img src={iconSources[name]} alt={label ?? ''} className={className} /> : <span role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true} className={`inline-block shrink-0 bg-current ${className}`} style={{maskImage:`url("${iconSources[name]}")`,WebkitMaskImage:`url("${iconSources[name]}")`,maskSize:'contain',maskRepeat:'no-repeat',maskPosition:'center'}}/>;
 }
 export function PasswordInput(props: Omit<InputHTMLAttributes<HTMLInputElement>,'type'>) {
  const [visible,setVisible]=useState(false);
- return <div className="flex gap-2"><Input {...props} type={visible?'text':'password'}/><Button variant="outline" aria-pressed={visible} onClick={()=>setVisible(!visible)}>{visible?'Hide':'Show'} password</Button></div>;
+ return <div className="flex min-w-0 gap-2"><Input {...props} type={visible?'text':'password'}/><Button className="shrink-0" variant="outline" disabled={props.disabled} aria-pressed={visible} onClick={()=>setVisible(!visible)}>{visible?'Hide':'Show'} password</Button></div>;
 }
 export function RangeInput({label,min=0,max=100,...props}:InputHTMLAttributes<HTMLInputElement>&{label:string}) {
  return <Field label={label}><Input {...props} type="range" min={min} max={max}/></Field>;

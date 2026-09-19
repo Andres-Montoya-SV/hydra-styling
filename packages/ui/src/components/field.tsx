@@ -17,7 +17,7 @@ export function Field({ label, hint, error, optional, children, className, ...pr
   const descriptionId = hint || error ? `${id}-description` : undefined;
   return (
     <FieldContext.Provider value={{ id, invalid: Boolean(error), describedBy: descriptionId }}>
-      <div className={cn("grid gap-2", className)} {...props}>
+      <div className={cn("grid min-w-0 gap-2", className)} {...props}>
         <label htmlFor={id} className="flex items-center justify-between text-sm font-semibold text-hydra-text">
           <span>{label}</span>
           {optional && <span className="text-xs font-normal text-hydra-muted">Optional</span>}

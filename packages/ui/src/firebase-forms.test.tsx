@@ -11,6 +11,7 @@ import {
 import { afterEach, beforeEach, it, expect, vi } from "vitest";
 import { FirebaseProvider } from "./firebase/auth";
 import { AuthForm, ChangePasswordForm } from "./firebase/forms";
+import {DeleteAccountForm} from './firebase/delete-account';
 import type { HydraFirebaseServices } from "./firebase/services";
 const mocks = vi.hoisted(() => ({
   listener: null as null | ((user: unknown) => void),
@@ -43,6 +44,7 @@ const services = {
   storage: {},
 } as unknown as HydraFirebaseServices;
 const user = {
+  getIdToken:vi.fn().mockResolvedValue('fresh-token'),
   uid: "alice",
   email: "alice@example.com",
   emailVerified: true,
@@ -156,4 +158,29 @@ it("does not update a password when reauthentication fails", async () => {
   await screen.findByRole("alert");
   expect(mocks.update).not.toHaveBeenCalled();
   expect(screen.getByLabelText("New password")).toHaveValue("");
+});
+it('deletion requires confirmation, reauthentication and a fresh token',async()=>{
+ const remove=vi.fn().mockResolvedValue(undefined);
+ render(<FirebaseProvider services={services}><DeleteAccountForm onDeleteAccount={remove}/></FirebaseProvider>);
+ act(()=>mocks.listener!(user));
+ fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));expect(remove).not.toHaveBeenCalled();
+ fireEvent.change(screen.getByLabelText('Current password'),{target:{value:'password'}});
+ fireEvent.change(screen.getByLabelText('Type DELETE to confirm'),{target:{value:'DELETE'}});
+ fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));
+ await screen.findByText('Account deletion completed.');
+ expect(mocks.reauth).toHaveBeenCalled();expect(user.getIdToken).toHaveBeenCalledWith(true);expect(remove).toHaveBeenCalledWith('fresh-token');
+});
+it('deletion does not call the service when reauthentication fails',async()=>{
+ mocks.reauth.mockRejectedValue({code:'auth/invalid-credential'});const remove=vi.fn();
+ render(<FirebaseProvider services={services}><DeleteAccountForm onDeleteAccount={remove}/></FirebaseProvider>);
+ act(()=>mocks.listener!(user));
+ fireEvent.change(screen.getByLabelText('Current password'),{target:{value:'wrong'}});
+ fireEvent.change(screen.getByLabelText('Type DELETE to confirm'),{target:{value:'DELETE'}});
+ fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));
+ await waitFor(()=>expect(screen.getByLabelText('Current password')).toHaveValue(''));
+ expect(remove).not.toHaveBeenCalled();expect(screen.queryByText('Account deletion completed.')).toBeNull();
+});
+it('deletion is unavailable without a configured service',()=>{
+ render(<FirebaseProvider services={services}><DeleteAccountForm/></FirebaseProvider>);act(()=>mocks.listener!(user));
+ expect(screen.getByRole('button',{name:'Permanently delete account'})).toBeDisabled();
 });

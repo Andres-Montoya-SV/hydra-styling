@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
 
 export const buttonVariants = cva(
-  "hydra-button inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-[transform,background-color,border-color,box-shadow,color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydra-focus focus-visible:ring-offset-2 focus-visible:ring-offset-hydra-canvas disabled:pointer-events-none disabled:opacity-45 active:translate-y-px",
+  "hydra-button inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-[transform,background-color,border-color,box-shadow,color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydra-focus focus-visible:ring-offset-2 focus-visible:ring-offset-hydra-canvas disabled:cursor-not-allowed disabled:opacity-45 active:translate-y-px",
   {
     variants: {
       variant: {

@@ -119,7 +119,10 @@ The Firebase Admin SDK bypasses these rules and requires its own server checks.
 Profiles live at `users/{uid}`. Only their owner can read/write the allowed
 fields; passwords remain in Firebase Auth and are never stored in profile documents.
 The username is a display handle, **not a unique login identifier**. Changing email,
-account deletion, MFA and SSO are not implemented. Members are stored at
+MFA and SSO are not implemented. `DeleteAccountForm` provides confirmation and
+reauthentication; deletion and data cleanup require a trusted backend callback.
+The starter accepts `VITE_ACCOUNT_DELETE_URL` for that service and disables deletion
+when it is absent. Members are stored at
 `organizations/{orgId}/members/{uid}`. The owner cannot be removed or demoted by
 client rules; ownership transfer and organization deletion require a reviewed
 server workflow. Email invitations require a trusted backend; entering an existing
