@@ -13,4 +13,4 @@ const nodes:MapAsset[]=[
  {id:'risk',label:'Outdated TLS',kind:'vulnerability',x:745,y:455,detail:'Example finding · medium severity'}
 ];
 const edges:MapRelation[]=[...['api','dev','stage','www','mail'].map(target=>({source:'root',target,label:'has subdomain'})),{source:'api',target:'svc',label:'exposes'},{source:'www',target:'ip1',label:'resolves to'},{source:'dev',target:'ip2',label:'resolves to'},{source:'stage',target:'ip3',label:'resolves to'},{source:'svc',target:'risk',label:'affected by'},{source:'ip3',target:'risk',label:'affected by'}];
-export default function MapDemo(){return <AssetMap nodes={nodes} edges={edges}/>;}
+export default function MapDemo(){return <AssetMap nodes={nodes} edges={edges} storageKey="hydra:demo:asset-map:v1"/>;}

@@ -4,9 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "typecheck": "tsc -b --pretty false"
+    "dev": "npm run build -w @hydra-security/ui && tsc -b && vite",
+    "build": "npm run build -w @hydra-security/ui && tsc -b && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "preview": "npm run build && vite preview"
   },
   "dependencies": {
     "@hydra-security/ui": "0.1.0",

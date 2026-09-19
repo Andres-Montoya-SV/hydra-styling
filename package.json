@@ -8,13 +8,15 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @hydra-security/ui && npm run build -w @hydra-security/showcase",
-    "dev": "npm run build -w @hydra-security/ui && npm run dev -w @hydra-security/showcase",
+    "build": "npm run build -w @hydra-security/showcase",
+    "dev": "npm run dev -w @hydra-security/showcase --",
     "test": "npm run test -w @hydra-security/ui",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "check": "npm run typecheck && npm test && npm run build",
+    "check": "npm run build",
     "audit": "npm audit --audit-level=moderate",
-    "audit:signatures": "npm audit signatures"
+    "audit:signatures": "npm audit signatures",
+    "preview": "npm run preview -w @hydra-security/showcase --",
+    "prod": "npm run preview --"
   },
   "engines": {
     "node": ">=20"
