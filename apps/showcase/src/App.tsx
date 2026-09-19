@@ -1,5 +1,6 @@
 import { useEffect, useState, type ComponentType, type SVGProps } from "react";
 import {FooterScreen,MotionScreen,ProductScreen} from './Screens';
+import MapDemo from './MapDemo';
 import {
   Activity, Bell, Boxes, Bug, Check, ChevronRight, CircleDot, Copy, FileDown,
   FileText, Fingerprint, Globe2, Hexagon, Home, KeyRound, Layers3, Menu, Moon,
@@ -49,11 +50,6 @@ function FolkLandscape() {
   );
 }
 
-function AssetMap() {
-  return <AssetRelations root={{id:'root',label:'example.com',children:[{id:'api',label:'api.example.com',relation:'subdomain',children:[{id:'tls',label:'HTTPS · 443',relation:'service'},{id:'ip',label:'104.21.32.12',relation:'resolves to'}]},{id:'dev',label:'dev.example.com',relation:'subdomain',children:[{id:'ssh',label:'SSH · 22',relation:'service'}]},{id:'stage',label:'staging.example.com',relation:'subdomain'}]}}/>;
-}
-
-
 function Sidebar({ open, close, view, navigate }: { open: boolean; close: () => void; view:string; navigate:(view:string)=>void }) {
   return (
     <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-hydra-line bg-hydra-canvas/98 p-4 backdrop-blur transition-transform lg:static lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
@@ -91,8 +87,7 @@ function Dashboard() {
       </section>
       <div className="grid gap-4 2xl:grid-cols-[1.55fr_1fr]">
         <Card>
-          <CardHeader><CardTitle className="flex items-center gap-2"><Network className="size-4 text-hydra-accent" />Asset map</CardTitle><Badge severity="low">Live</Badge></CardHeader>
-          <CardContent><AssetMap /></CardContent>
+          <CardContent className="p-0"><MapDemo /></CardContent>
         </Card>
         <Card>
           <CardHeader><CardTitle className="flex items-center gap-2"><ShieldAlert className="size-4 text-hydra-orange" />Top findings</CardTitle><button className="text-xs text-hydra-muted">View all →</button></CardHeader>

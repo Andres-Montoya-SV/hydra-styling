@@ -1,4 +1,5 @@
 export { cn } from "./lib/cn";
+export {AssetMap,type AssetMapProps,type MapAsset,type MapRelation,type AssetKind} from './components/asset-map';
 export {MotionProvider,Motion,useHydraMotion} from './components/motion';
 export {Footer,type FooterProps,type FooterVariant} from './components/footer';
 export {HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations, type HydraIconName, type AssetNode} from './components/extended';
