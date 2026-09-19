@@ -1,0 +1,16 @@
+{
+  "name": "hydra-firebase-tooling",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Repository-only Firebase emulator tooling; never part of Hydra UI's runtime package.",
+  "engines": {"node": ">=24"},
+  "devDependencies": {"firebase-tools": "15.30.2"},
+  "overrides": {
+    "firebase-tools": {
+      "csv-parse": "7.0.2",
+      "uuid": "11.1.1",
+      "@opentelemetry/core": "2.11.0",
+      "stream-json": "3.6.0"
+    }
+  }
+}

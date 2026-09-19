@@ -16,18 +16,25 @@ Do not globally re-enable scripts or use `npm audit fix --force` as a routine fi
 If a future native dependency needs an install script, review that exact package
 and version before adding a narrowly scoped exception and testing it in isolation.
 
-Run `npm run audit`, `npm run audit:signatures`, and `npm run check`.
+Install repository-only Firebase tools with `npm run setup:firebase`, then run
+`npm run audit`, `npm run audit:signatures`, and `npm run check`.
 Audits cover development dependencies as well as production dependencies; CI blocks
 moderate and higher known advisories. Registry signatures establish registry
 integrity, not trustworthiness of the publisher. Attestations may not exist for all
 packages. Registry failures fail CI rather than silently skipping verification.
 
-Known residual advisory: esbuild 0.27.7 is affected by GHSA-g7r4-m6w7-qqqr
-(low severity, development server on Windows). The attempted 0.28.1 override did
-not change the resolved tree and was removed; this is NOT reported as fixed.
-Do not expose an esbuild development server on Windows. Review an upstream tsup
-upgrade or a separately validated bundler migration; recheck the audit at release.
-Vitest 4.1.11 addresses GHSA-82fw-gwwq-j7x9.
+The root lockfile resolves esbuild 0.28.2 through an override, fixing
+GHSA-g7r4-m6w7-qqqr. A regenerated lockfile and clean install verify the resolved
+version; changing an override without checking the installed tree is insufficient.
+
+Firebase CLI is a private tooling package under `tools/firebase`, with its own
+lockfile and mandatory audit. It resolves stream-json 3.6.0, fixing
+GHSA-528h-pc64-c93x. The CLI's two legacy consumers require the explicit,
+version- and SHA-256-checked API migration in `patch-cli.mjs`. Setup applies it
+with lifecycle scripts disabled and runs compatibility tests. Audits have no
+exceptions. See [tooling maintenance](tools/firebase/README.md) before upgrading.
+Registry signatures cover upstream packages, not our locally reviewed patch.
+Remove the patch and overrides when compatible upstream releases make them redundant.
 
 ## Repository settings — manual activation required
 

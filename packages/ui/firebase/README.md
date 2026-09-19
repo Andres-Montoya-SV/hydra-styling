@@ -184,6 +184,7 @@ From the repository, with Node 24 and Java 21:
 
 ```sh
 npm ci --ignore-scripts
+npm run setup:firebase   # install the repository-only CLI from its own lockfile
 npm run check            # types, component tests, builds and emulator rule tests
 npm run audit            # includes development dependencies; blocks moderate+
 npm run audit:signatures
@@ -198,17 +199,17 @@ real Firestore/Storage rule evaluation, including cross-tenant requests, privile
 escalation, oversized files, overwrite attempts and suspended membership. They do
 not replace a staging smoke test against your deployed Firebase configuration.
 
-## Current development-tool security blocker
+## Development-tool dependency maintenance
 
-The pinned `firebase-tools@15.30.2` pulls `stream-json@1.9.1`, affected by
-[GHSA-528h-pc64-c93x](https://github.com/advisories/GHSA-528h-pc64-c93x), a moderate
-denial-of-service advisory. The patched `stream-json@3.6.0` has an incompatible API;
-forcing it breaks the CLI. `npm run audit` intentionally stays blocking. This
-change should not be merged/released until compatible upstream tooling or a
-reviewed alternative resolves it. The Firebase browser SDK is not the source of
-this advisory. There is also an existing low-severity esbuild advisory.
+The repository isolates Firebase CLI in `tools/firebase` with its own lockfile.
+It uses the corrected `stream-json@3.6.0` plus a version- and SHA-256-checked
+migration of the CLI's two legacy consumers to the public Node stream API.
+`npm run setup:firebase` installs, applies and tests that migration explicitly.
+The fixed depth limit remains enabled and is tested; no audit exception is used.
+The root build pins corrected esbuild 0.28.2 as well.
 
-Scoped CLI overrides for `csv-parse`, `uuid` and `@opentelemetry/core` remove other
-advisories and have been checked with CLI startup and emulator tests. They are not
-proof that every deployment command works; review/remove them when upstream fixes
-its dependency ranges. No audit threshold has been relaxed.
+Both dependency trees remain subject to audits and signature verification. See
+the repository's `tools/firebase/README.md` for exact scope, compatibility tests
+and removal procedure when upstream catches up. These tools are not shipped in
+the UI package. Emulator compatibility does not certify every deployment command;
+validate your actual deployment against a development project before production.
