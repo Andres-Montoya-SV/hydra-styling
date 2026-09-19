@@ -1,6 +1,28 @@
 @import "tailwindcss";
 @source "./**/*.{ts,tsx}";
 
+.hydra-asset-map { position:relative; isolation:isolate; overflow:hidden; border:2px solid #295265; border-radius:18px; background:#041d29; color:#f5ecd8; box-shadow:inset 0 0 45px #010b1266; }
+.hydra-map-header { display:flex; align-items:center; flex-wrap:wrap; gap:1rem 2rem; padding:1.25rem 1.5rem; border-bottom:1px solid #294753; }
+.hydra-map-header h2 { font-family:Georgia,serif; font-weight:bold; font-size:1.25rem; }
+.hydra-map-header ul { display:flex; flex-wrap:wrap; gap:1rem; font-size:.75rem; color:#b5c4c8; list-style:none; }
+.hydra-map-header li { display:flex; align-items:center; gap:.45rem; }
+.hydra-map-header li span { display:block; width:.7rem; height:.7rem; border-radius:50%; }
+.hydra-map-viewport { overflow:hidden; }
+.hydra-map-viewport svg { display:block; width:100%; height:auto; min-height:320px; aspect-ratio:1000 / 520; touch-action:none; cursor:grab; }
+.hydra-map-viewport svg:active { cursor:grabbing; }
+.hydra-map-toolbar { display:flex; gap:.4rem; align-items:center; justify-content:flex-end; padding:.5rem 1rem; background:#061e29; }
+.hydra-map-toolbar button { width:36px; height:36px; border:1px solid #325364; border-radius:8px; color:#edaf37; background:#062531; font-size:1.4rem; }
+.hydra-map-toolbar button:disabled { opacity:.35; }
+.hydra-map-toolbar output { min-width:3rem; font-size:.75rem; color:#b7cbd0; text-align:right; }
+.hydra-map-node { cursor:pointer; outline:none; }
+.hydra-map-node:focus-visible rect,.hydra-map-node:hover rect { stroke:#ffe4a3; stroke-opacity:1; stroke-width:3px; }
+.hydra-map-detail { display:grid; gap:.4rem; padding:.85rem 1.25rem; border-top:1px solid #294753; font-size:.75rem; color:#bdced2; }
+.hydra-map-detail strong { color:#f3bd56; font-size:.9rem; }
+.hydra-map-detail button { justify-self:start; text-decoration:underline; }
+.hydra-map-expanded .hydra-map-viewport { max-height:80vh; overflow:auto; }
+.hydra-map-expanded .hydra-map-viewport svg { min-width:1000px; }
+.hydra-asset-map button:focus-visible,.hydra-map-viewport svg:focus-visible { outline:2px solid #ffe4a3; outline-offset:-2px; }
+
 [data-hydra-motion="off"] *, [data-hydra-motion="off"] *::before, [data-hydra-motion="off"] *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 [data-hydra-motion="off"] .hydra-button:hover, [data-hydra-motion="off"] .hydra-button:active { transform: none !important; }
 .hydra-footer { border: 1px solid var(--hs-line); border-radius: 1rem 1rem 1rem .25rem; overflow: hidden; background: var(--hs-surface); }
