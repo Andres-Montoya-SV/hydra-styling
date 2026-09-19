@@ -1,4 +1,5 @@
 export { cn } from "./lib/cn";
+export {HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations, type HydraIconName, type AssetNode} from './components/extended';
 export { Button, buttonVariants, type ButtonProps } from "./components/button";
 export { Field, Input, Select, Textarea, type FieldProps } from "./components/field";
 export { Checkbox, Switch } from "./components/choice";

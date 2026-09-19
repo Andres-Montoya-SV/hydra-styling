@@ -6,6 +6,7 @@ import {
   Sparkles, Sun, TerminalSquare, TreePine, TriangleAlert, X,
 } from "lucide-react";
 import {
+  HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations,
   Alert, Badge, Button, Card, CardContent, CardHeader, CardTitle, Checkbox,
   DocumentCard, Field, FolkSun, HydraMark, Input, Progress, Select, Stat, Switch, Textarea,
 } from "@hydra-security/ui";
@@ -47,27 +48,9 @@ function FolkLandscape() {
 }
 
 function AssetMap() {
-  const nodes = [
-    [15, 28, "api.example.com"], [45, 18, "dev.example.com"], [72, 33, "staging.example.com"],
-    [24, 70, "104.21.32.12"], [49, 57, "example.com"], [78, 72, "172.67.45.23"],
-  ] as const;
-  return (
-    <div className="hydra-grid relative h-72 overflow-hidden rounded-hydra border border-hydra-line bg-hydra-canvas/70">
-      <svg className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <path d="M100 82 C210 45 270 150 360 135 S500 82 650 135" fill="none" stroke="var(--hs-success)" strokeWidth="2" strokeDasharray="7 7" opacity=".75" />
-        <path d="M140 225 C210 160 310 195 390 150 S540 210 690 110" fill="none" stroke="var(--hs-orange)" strokeWidth="2" strokeDasharray="8 6" opacity=".8" />
-      </svg>
-      {nodes.map(([left, top, label], index) => (
-        <div key={label} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ left: `${left}%`, top: `${top}%` }}>
-          <span className="mx-auto mb-1 grid size-8 place-items-center rounded-full border border-hydra-accent/50 bg-hydra-surface text-hydra-accent shadow-hydra-sm">
-            {index === 4 ? <HydraMark className="w-5" /> : index % 2 ? <Server className="size-4" /> : <Globe2 className="size-4" />}
-          </span>
-          <span className="block whitespace-nowrap rounded-full border border-hydra-line bg-hydra-canvas/95 px-2.5 py-1 text-[0.65rem] text-hydra-text">{label}</span>
-        </div>
-      ))}
-    </div>
-  );
+  return <AssetRelations root={{id:'root',label:'example.com',children:[{id:'api',label:'api.example.com',relation:'subdomain',children:[{id:'tls',label:'HTTPS · 443',relation:'service'},{id:'ip',label:'104.21.32.12',relation:'resolves to'}]},{id:'dev',label:'dev.example.com',relation:'subdomain',children:[{id:'ssh',label:'SSH · 22',relation:'service'}]},{id:'stage',label:'staging.example.com',relation:'subdomain'}]}}/>;
 }
+
 
 function Sidebar({ open, close }: { open: boolean; close: () => void }) {
   return (
@@ -79,7 +62,7 @@ function Sidebar({ open, close }: { open: boolean; close: () => void }) {
       <nav aria-label="Primary" className="grid gap-1">
         {navItems.map(({ label, icon: NavIcon }, index) => (
           <button key={label} className={`flex items-center gap-3 rounded-hydra-sm px-3 py-2.5 text-left text-sm font-semibold transition ${index === 0 ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted hover:bg-hydra-surface hover:text-hydra-text"}`}>
-            <NavIcon className="size-4" />{label}
+            <HydraIcon name={(['01-general-ui/home','06-tools-actions/scan','03-recon-network/subdomain','03-recon-network/http','03-recon-network/service','06-tools-actions/modules','02-states-severity/vulnerable','09-files-documents/file'] as const)[index]} className="size-6"/>{label}
           </button>
         ))}
       </nav>
@@ -144,10 +127,13 @@ function Dashboard() {
 }
 
 function ComponentLab() {
+  const [profile,setProfile]=useState('passive');
   return (
     <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
       <div><Badge severity="info">Design system 0.1</Badge><h1 className="mt-3 font-display text-4xl font-bold">Hydra foundations</h1><p className="mt-2 max-w-2xl text-hydra-muted">Security interfaces with a Salvadoran visual accent—clear under pressure, recognizable without becoming decorative noise.</p></div>
       <div className="grid gap-6 lg:grid-cols-2">
+        <Card><CardHeader><CardTitle>Advanced controls</CardTitle></CardHeader><CardContent className="grid gap-4"><Field label="API credential"><PasswordInput autoComplete="off" /></Field><RangeInput label="Concurrency" min={1} max={20} defaultValue={4}/><FileInput label="Import asset inventory" accept=".csv,.json" multiple/><RadioGroup label="Scan mode" name="scan-mode" options={[{value:'passive',label:'Passive'},{value:'active',label:'Active'}]} value={profile} onChange={setProfile}/>{(['date','time','datetime-local','number','color','email','url','search','tel'] as const).map(type=><Field key={type} label={type}><Input type={type}/></Field>)}</CardContent></Card>
+        <Card><CardHeader><CardTitle>Hydra icon vocabulary</CardTitle></CardHeader><CardContent className="grid grid-cols-3 gap-5">{(['01-general-ui/search','01-general-ui/menu','01-general-ui/close','08-graphics-motifs/bird','08-graphics-motifs/flower','05-technologies/react'] as const).map(name=><div key={name} className="grid justify-items-center gap-2"><HydraIcon name={name} className="size-12"/><span className="text-xs">{name.split('/')[1]}</span></div>)}</CardContent></Card>
         <Card><CardHeader><CardTitle>Actions</CardTitle></CardHeader><CardContent className="flex flex-wrap gap-3"><Button><Play className="size-4" />Run scan</Button><Button variant="secondary">Enumerate</Button><Button variant="outline">Compare</Button><Button variant="ghost">Cancel</Button><Button variant="danger">Delete</Button></CardContent></Card>
         <Card><CardHeader><CardTitle>Severity</CardTitle></CardHeader><CardContent className="flex flex-wrap gap-2"><Badge severity="critical">Critical</Badge><Badge severity="high">High</Badge><Badge severity="medium">Medium</Badge><Badge severity="low">Low</Badge><Badge severity="info">Info</Badge></CardContent></Card>
         <Card><CardHeader><CardTitle>Inputs</CardTitle></CardHeader><CardContent className="grid gap-4"><Field label="Scan target" hint="Domain, IP, CIDR, or asset file"><Input leading={<Search className="size-4" />} placeholder="example.com" /></Field><Field label="Profile"><Select defaultValue="full"><option value="full">Full reconnaissance</option><option value="passive">Passive discovery</option></Select></Field><Field label="Notes" optional><Textarea placeholder="Context for the security team…" /></Field></CardContent></Card>
@@ -176,7 +162,7 @@ export default function App() {
       <div className="min-w-0 flex-1">
         <header className="sticky top-0 z-20 flex h-18 items-center gap-3 border-b border-hydra-line bg-hydra-canvas/90 px-4 backdrop-blur md:px-6">
           <button className="text-hydra-muted lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Open menu"><Menu /></button>
-          <div className="hidden rounded-hydra-sm border border-hydra-line bg-hydra-surface p-1 sm:flex">
+          <div className="flex rounded-hydra-sm border border-hydra-line bg-hydra-surface p-1">
             <button onClick={() => setView("dashboard")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "dashboard" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Product</button>
             <button onClick={() => setView("components")} className={`rounded px-3 py-1.5 text-xs font-bold ${view === "components" ? "bg-hydra-accent text-hydra-on-accent" : "text-hydra-muted"}`}>Components</button>
           </div>

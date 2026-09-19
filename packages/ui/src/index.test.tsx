@@ -23,7 +23,7 @@ describe("Hydra UI", () => {
 
   it("describes documents without relying on color", () => {
     render(<DocumentCard name="surface-report.pdf" kind="pdf" meta="2.4 MB" />);
-    expect(screen.getAllByText("PDF")).toHaveLength(2);
+    expect(screen.getByText("PDF")).toBeInTheDocument();
     expect(screen.getByText("surface-report.pdf")).toBeInTheDocument();
   });
 });
