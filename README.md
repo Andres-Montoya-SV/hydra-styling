@@ -24,12 +24,17 @@ npm run dev
 Run all checks:
 
 ```bash
+npm run setup:firebase
 npm run check
 ```
 
 The full check includes Firebase rules emulators and requires Node 24 and Java 21.
 `npm run build` checks types and component tests, then builds the library, showcase
 and Firebase starter. `npm run audit` remains a separate mandatory CI gate.
+The Firebase CLI has its own lockfile in `tools/firebase` and is installed only
+for emulator work. `npm run audit` and CI include **both** dependency trees; this
+CLI uses a corrected stream-json version with an explicitly verified compatibility
+patch. See the [tooling guide](tools/firebase/README.md) for its scope and checks.
 
 Build the package and showcase:
 

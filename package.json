@@ -12,29 +12,28 @@
     "dev": "npm run dev -w @hydra-security/showcase --",
     "test": "npm run test -w @hydra-security/ui",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "check": "npm run build && npm run test:rules",
-    "audit": "npm audit --audit-level=moderate",
-    "audit:signatures": "npm audit signatures",
+    "check": "npm run test:firebase-compat && npm run build && npm run test:rules",
+    "audit": "npm run audit:app && npm run audit:firebase",
+    "audit:app": "npm audit --audit-level=moderate",
+    "audit:firebase": "npm audit --prefix tools/firebase --audit-level=moderate",
+    "audit:signatures": "npm audit signatures && npm audit signatures --prefix tools/firebase",
     "preview": "npm run preview -w @hydra-security/showcase --",
     "prod": "npm run preview --",
     "build:starter": "tsc -p packages/ui/starter/tsconfig.json --noEmit && vite build packages/ui/starter --outDir ../../../.starter-dist --emptyOutDir",
     "dev:starter": "npm run build -w @hydra-security/ui && vite packages/ui/starter",
-    "test:rules": "firebase emulators:exec --project demo-hydra-ui --only firestore,storage \"node --test --test-concurrency=1 tests/firebase-rules.test.mjs\"",
-    "emulators": "firebase emulators:start --project demo-hydra-ui --only auth,firestore,storage"
+    "setup:firebase": "npm ci --prefix tools/firebase --ignore-scripts && node tools/firebase/patch-cli.mjs && npm run test:firebase-compat",
+    "test:firebase-compat": "node --test tools/firebase/compat.test.mjs",
+    "test:rules": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --project demo-hydra-ui --only firestore,storage \"node --test --test-concurrency=1 tests/firebase-rules.test.mjs\"",
+    "emulators": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:start --project demo-hydra-ui --only auth,firestore,storage"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "packageManager": "npm@10.8.2",
   "devDependencies": {
-    "@firebase/rules-unit-testing": "5.0.2",
-    "firebase-tools": "15.30.2"
+    "@firebase/rules-unit-testing": "5.0.2"
   },
   "overrides": {
-    "firebase-tools": {
-      "csv-parse": "7.0.2",
-      "uuid": "11.1.1",
-      "@opentelemetry/core": "2.11.0"
-    }
+    "esbuild": "0.28.2"
   }
 }
