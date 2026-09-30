@@ -64,7 +64,10 @@ export function useFloatingSurface(
       if (event?.target instanceof window!.Node && surface?.contains(event.target)) return;
       if (!frame) frame = window!.requestAnimationFrame(update);
     }
-    update();
+    // Native focus scrolls the anchor into view after focus handlers run.
+    // Measuring synchronously can dismiss an opening input popover before that
+    // scroll finishes in Firefox/WebKit. Keep it hidden until the first frame.
+    schedule();
     document.addEventListener("scroll", schedule, true);
     window.addEventListener("resize", schedule);
     window.visualViewport?.addEventListener("resize", schedule);
