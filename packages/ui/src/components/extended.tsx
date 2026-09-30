@@ -1,15 +1,26 @@
-import {useState, type InputHTMLAttributes} from 'react';
-import {Input, Field} from './field';
+import {forwardRef, useState, type InputHTMLAttributes} from 'react';
+import {Input, Field, useFieldControl, type InputProps} from './field';
 import {Button} from './button';
 import {iconSources} from '../icon-sources';
 export type HydraIconName = keyof typeof iconSources;
 export function HydraIcon({name,label,className='size-6'}:{name:HydraIconName;label?:string;className?:string}) {
  return name.startsWith('08-graphics-motifs/') ? <img src={iconSources[name]} alt={label ?? ''} className={className} /> : <span role={label?'img':undefined} aria-label={label} aria-hidden={label?undefined:true} className={`inline-block shrink-0 bg-current ${className}`} style={{maskImage:`url("${iconSources[name]}")`,WebkitMaskImage:`url("${iconSources[name]}")`,maskSize:'contain',maskRepeat:'no-repeat',maskPosition:'center'}}/>;
 }
-export function PasswordInput(props: Omit<InputHTMLAttributes<HTMLInputElement>,'type'>) {
- const [visible,setVisible]=useState(false);
- return <div className="flex min-w-0 gap-2"><Input {...props} type={visible?'text':'password'}/><Button className="shrink-0" variant="outline" disabled={props.disabled} aria-pressed={visible} onClick={()=>setVisible(!visible)}>{visible?'Hide':'Show'} password</Button></div>;
+export interface PasswordInputProps extends Omit<InputProps, 'type'> {
+ showLabel?: string;
+ hideLabel?: string;
 }
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+ ({showLabel='Show password',hideLabel='Hide password',...props},ref) => {
+  const [visible,setVisible]=useState(false);
+  const control=useFieldControl(props);
+  return <div className="hydra-password flex min-w-0 gap-2">
+   <Input {...props} ref={ref} type={visible?'text':'password'}/>
+   <Button className="shrink-0" size={control.controlSize} variant="outline" disabled={control.disabled}
+    aria-pressed={visible} onClick={()=>setVisible(!visible)}>{visible?hideLabel:showLabel}</Button>
+  </div>;
+ });
+PasswordInput.displayName='PasswordInput';
 export function RangeInput({label,min=0,max=100,...props}:InputHTMLAttributes<HTMLInputElement>&{label:string}) {
  return <Field label={label}><Input {...props} type="range" min={min} max={max}/></Field>;
 }

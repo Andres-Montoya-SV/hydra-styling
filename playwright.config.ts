@@ -8,11 +8,12 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['list'],['html',{open:'never'}]],
-  use: {baseURL:'http://127.0.0.1:4173',trace:'retain-on-failure',screenshot:'only-on-failure',
-    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ? {executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE} : {}},
+  use: {baseURL:'http://127.0.0.1:4173',trace:'retain-on-failure',screenshot:'only-on-failure'},
   projects: [
-    {name:'desktop',use:{...devices['Desktop Chrome']}},
-    {name:'mobile-reduced-motion',use:{...devices['Desktop Chrome'],viewport:{width:390,height:844},reducedMotion:'reduce'}},
+    {name:'desktop',use:{...devices['Desktop Chrome'],launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ? {executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE} : {}}},
+    {name:'mobile-reduced-motion',use:{...devices['Desktop Chrome'],launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ? {executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE} : {},viewport:{width:390,height:844},reducedMotion:'reduce'}},
+    {name:'firefox-foundations',testMatch:/foundations\.spec\.ts/,use:{...devices['Desktop Firefox']}},
+    {name:'webkit-foundations',testMatch:/foundations\.spec\.ts/,use:{...devices['Desktop Safari']}},
   ],
   webServer: [
     {command:'npx --no-install vite preview apps/showcase --host 127.0.0.1 --port 4173 --strictPort',url:'http://127.0.0.1:4173',reuseExistingServer:false},

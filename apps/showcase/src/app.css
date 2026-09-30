@@ -83,3 +83,21 @@ button { -webkit-tap-highlight-color:transparent; }
  .showcase-location label { gap:.5rem; }
  .showcase-location label span { font-size:.7rem; }
 }
+
+/* Application foundations: the same controls composed into a working surface. */
+.catalog-foundations-link { display: inline-flex; margin-block: 1rem 1.5rem; }
+.foundations-preview { display: grid; gap: 1.5rem; min-width: 0; }
+.foundations-heading { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.foundations-heading h2 { margin-top: .75rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 650; }
+.foundations-heading p { max-width: 38rem; margin-top: .5rem; color: var(--hs-muted); }
+.foundations-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.foundations-sizes, .foundations-form { display: grid; gap: 1rem; }
+.foundation-size-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(5rem, .7fr) auto; align-items: end; gap: .5rem; }
+.foundation-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-block: .75rem; }
+.foundation-clip { display: flex; align-items: flex-end; justify-content: flex-end; height: 7rem; overflow: hidden; transform: translateZ(0); padding: 1rem; border: 1px solid var(--hs-control-line); border-radius: var(--hs-radius-surface); background: var(--hs-surface-strong); }
+.foundation-nested { padding-top: 1rem; }
+@media (max-width: 1100px) { .foundations-grid { grid-template-columns: 1fr; } }
+@media (max-width: 460px) {
+  .foundation-size-row { grid-template-columns: minmax(0, 1fr) minmax(5rem, .8fr); }
+  .foundation-size-row > .hydra-button { grid-column: 1 / -1; justify-self: start; }
+}

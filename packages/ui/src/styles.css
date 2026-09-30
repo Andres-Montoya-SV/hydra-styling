@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./catalog.css";
+@import "./foundations.css";
 @source "./**/*.{ts,tsx}";
 
 @theme inline {
@@ -129,10 +130,10 @@
 }
 
 .hydra-theme { min-height:100%; background-color:var(--hs-canvas); color:var(--hs-text); }
-:root, [data-hydra-theme] { transition:background-color .7s ease,color .7s ease; }
+:root, [data-hydra-theme] { transition:background-color var(--hs-motion-theme) ease,color var(--hs-motion-theme) ease; }
 
 @layer components {
-  .hydra-button { position:relative; isolation:isolate; border-radius:.45rem; transition-duration:200ms; }
+  .hydra-button { position:relative; isolation:isolate; border-radius:var(--hs-radius-control); transition-duration:var(--hs-motion-fast); }
   .hydra-button-primary {
     border:1px solid color-mix(in srgb,var(--hs-accent) 75%,var(--hs-glass-ice));
     background-color:var(--hs-accent);
@@ -146,11 +147,11 @@
   .hydra-button-danger { background-color:#a32949; border:1px solid #b93a59; }
   .hydra-button-danger:hover:not(:disabled) { background-color:#8e1c39; }
   .hydra-control {
-    min-width:0; width:100%; min-height:2.625rem; padding-inline:.875rem;
-    border:1px solid var(--hs-control-line); border-radius:.4rem;
+    min-width:0; width:100%; min-height:var(--hs-control-height-md); padding-inline:var(--hs-control-padding-md);
+    border:1px solid var(--hs-control-line); border-radius:var(--hs-radius-control);
     background:linear-gradient(118deg,transparent 0 91%,color-mix(in srgb,var(--hs-glass-cyan) 20%,transparent) 91% 91.5%,transparent 91.5%),linear-gradient(48deg,transparent 0 95%,color-mix(in srgb,var(--hs-glass-violet) 12%,transparent) 95%),linear-gradient(115deg,var(--hs-glass-shine),transparent 38%),var(--hs-surface);
     box-shadow:inset 0 1px 4px color-mix(in srgb,var(--hs-shadow) 12%,transparent),inset 0 -1px 0 var(--hs-glass-shine);
-    transition:border-color .2s ease,box-shadow .2s ease;
+    transition:border-color var(--hs-motion-fast) ease,box-shadow var(--hs-motion-fast) ease;
   }
   .hydra-control:hover:not(:disabled):not(:has(:disabled)) { border-color:var(--hs-accent); }
   .hydra-control:focus,.hydra-control:focus-within {
@@ -161,9 +162,9 @@
   .hydra-control:disabled,.hydra-control:has(:disabled) { opacity:.5; cursor:not-allowed; }
   select.hydra-control { appearance:auto; padding-right:.6rem; }
   input::file-selector-button { border:1px solid var(--hs-control-line); border-radius:.25rem; padding:.3rem .65rem; margin-right:.75rem; background:var(--hs-surface-strong); color:var(--hs-text); }
-  .hydra-card { min-width:0; position:relative; border:1px solid var(--hs-line); border-radius:.75rem; }
+  .hydra-card { min-width:0; position:relative; border:1px solid var(--hs-line); border-radius:var(--hs-radius-surface); }
   .hydra-card::before { content:""; position:absolute; left:1rem; right:1rem; top:-1px; height:1px; background:linear-gradient(90deg,transparent,var(--hs-glass-cyan),var(--hs-glass-violet),transparent); opacity:.7; pointer-events:none; }
-  .hydra-card-float { box-shadow:0 8px 28px color-mix(in srgb,var(--hs-shadow) 14%,transparent),inset 0 1px 0 var(--hs-glass-shine); transition:border-color .25s ease,box-shadow .25s ease; }
+  .hydra-card-float { box-shadow:0 8px 28px color-mix(in srgb,var(--hs-shadow) 14%,transparent),inset 0 1px 0 var(--hs-glass-shine); transition:border-color var(--hs-motion-normal) ease,box-shadow var(--hs-motion-normal) ease; }
   .hydra-card-float:not(.hydra-parchment):not(.hydra-card-danger) { background-image:linear-gradient(130deg,var(--hs-glass-shine),transparent 32%); }
   .hydra-parchment { background:linear-gradient(135deg,#edf5ff,#dbe9f7); color:var(--hs-ink); }
   .hydra-parchment .text-hydra-text { color:var(--hs-ink); }

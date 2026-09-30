@@ -10,6 +10,8 @@ import {
 } from "react";
 import { cn } from "../lib/cn";
 import { Button } from "./button";
+import { useFloatingSurface } from "../lib/use-floating-surface";
+import type { FloatingPlacement } from "../lib/floating-position";
 
 export interface ModalProps {
   open: boolean;
@@ -142,20 +144,24 @@ export function Dropdown({
   label,
   items,
   className,
+  placement = "bottom-start",
 }: {
   label: string;
   items: DropdownItem[];
   className?: string;
+  placement?: FloatingPlacement;
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null),
-    trigger = useRef<HTMLButtonElement>(null);
+    trigger = useRef<HTMLButtonElement>(null),
+    surface = useRef<HTMLDivElement>(null);
   const menuId = useId();
   const pendingIndex = useRef(0);
   function close(restore = false) {
     setOpen(false);
     if (restore) trigger.current?.focus();
   }
+  useFloatingSurface(open, trigger, surface, placement, () => close());
   useEffect(() => {
     if (!open) return;
     const buttons = root.current?.querySelectorAll<HTMLButtonElement>(
@@ -178,6 +184,7 @@ export function Dropdown({
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) {
           event.preventDefault();
+          event.stopPropagation();
           close(true);
         }
       }}
@@ -207,10 +214,11 @@ export function Dropdown({
       </Button>
       {open && (
         <div
+          ref={surface}
           id={menuId}
           role="menu"
           aria-label={label}
-          className="hydra-dropdown-menu"
+          className="hydra-dropdown-menu hydra-floating-surface"
           onKeyDown={(e) => {
             const buttons = Array.from(
               e.currentTarget.querySelectorAll<HTMLButtonElement>(
@@ -222,6 +230,7 @@ export function Dropdown({
             );
             if (e.key === "Escape") {
               e.preventDefault();
+              e.stopPropagation();
               close(true);
             }
             if (
@@ -271,38 +280,51 @@ export function Fab({
   label: string;
   actions: DropdownItem[];
 }) {
-  return <Dropdown label={label} items={actions} className="hydra-fab" />;
+  return <Dropdown label={label} items={actions} placement="top-end" className="hydra-fab" />;
 }
 
 export function Tooltip({
   content,
   children,
+  placement = "top",
 }: {
   content: string;
+  placement?: FloatingPlacement;
   children: ReactElement<HTMLAttributes<HTMLElement>>;
 }) {
   const [open, setOpen] = useState(false),
     id = useId();
+  const anchor = useRef<HTMLSpanElement>(null), surface = useRef<HTMLSpanElement>(null);
+  useFloatingSurface(open, anchor, surface, placement, () => setOpen(false));
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(leaveTimer.current), []);
   const hover = useRef(false),
     focus = useRef(false);
   useEffect(() => {
     if (!open) return;
     const escape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        e.preventDefault();
+        e.stopPropagation();
+        setOpen(false);
+      }
     };
     document.addEventListener("keydown", escape);
     return () => document.removeEventListener("keydown", escape);
   }, [open]);
   return (
     <span
+      ref={anchor}
       className="hydra-tooltip"
       onPointerEnter={() => {
+        clearTimeout(leaveTimer.current);
         hover.current = true;
         setOpen(true);
       }}
       onPointerLeave={() => {
         hover.current = false;
-        if (!focus.current) setOpen(false);
+        clearTimeout(leaveTimer.current);
+        if (!focus.current) leaveTimer.current = setTimeout(() => setOpen(false), 160);
       }}
       onFocus={() => {
         focus.current = true;
@@ -320,7 +342,7 @@ export function Tooltip({
             .join(" ") || undefined,
       })}
       {open && (
-        <span role="tooltip" id={id} className="hydra-tooltip-content">
+        <span ref={surface} role="tooltip" id={id} className="hydra-tooltip-content hydra-floating-surface">
           {content}
         </span>
       )}

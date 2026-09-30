@@ -7,9 +7,9 @@ export {validateAssetGraph,type AssetLayout,type AssetPosition} from './lib/asse
 export {AssetMap,type AssetMapProps,type MapAsset,type MapRelation,type AssetKind} from './components/asset-map';
 export {MotionProvider,Motion,useHydraMotion} from './components/motion';
 export {Footer,type FooterProps,type FooterVariant} from './components/footer';
-export {HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations, type HydraIconName, type AssetNode} from './components/extended';
+export {HydraIcon, PasswordInput, RangeInput, FileInput, RadioGroup, AssetRelations, type PasswordInputProps, type HydraIconName, type AssetNode} from './components/extended';
 export { Button, buttonVariants, type ButtonProps } from "./components/button";
-export { Field, Input, Select, Textarea, type FieldProps } from "./components/field";
+export { Field, Input, Select, Textarea, useFieldControl, type FieldProps, type FieldControlOptions, type InputProps, type SelectProps, type TextareaProps } from "./components/field";
 export { Checkbox, Switch } from "./components/choice";
 export { Card, CardHeader, CardTitle, CardContent, CardFooter, type CardProps } from "./components/card";
 export { Badge, type BadgeProps } from "./components/badge";
@@ -30,3 +30,6 @@ export {Link, Breadcrumbs, Menu, Dock, Navbar, MegaMenu, Pagination, Steps, Tabs
 export {Collapse, Accordion, Avatar, Aura, Kbd, List, Table, Status, ChatBubble, Countdown, Timeline, Loading, RadialProgress, Skeleton, Carousel, HoverGallery, HoverCard, Diff, TextRotate, type GalleryItem} from './components/catalog-display';
 export {Fieldset, Label, Radio, Filter, Rating, OtpInput, Validator, Swap, ThemeController, Calendar, type CalendarProps} from './components/catalog-input';
 export {Divider, Hero, Indicator, Join, Mask, Stack, BrowserMockup, CodeMockup, PhoneMockup, WindowMockup} from './components/catalog-layout';
+
+export {DensityProvider, type DensityProviderProps, type HydraDensity, type ControlSize} from "./components/density";
+export type {FloatingPlacement} from "./lib/floating-position";

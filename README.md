@@ -24,6 +24,12 @@ or an implementation of every daisyUI example variant.
 
 See the [complete coverage map and integration guide](docs/component-catalog.md).
 
+## Application foundations
+
+Open `/#components/foundations` to compare shared control sizes, comfortable/compact density,
+connected form states, busy buttons, and menus/tooltips inside constrained surfaces.
+See [composition contracts, tokens and browser coverage](docs/foundations.md).
+
 ## Why it is not a daisyUI theme
 
 daisyUI is a useful reference for API ergonomics, but using it as the foundation would couple Hydra's identity to generic component markup and global class names. Hydra UI instead uses typed React components, semantic design tokens, and Tailwind-generated CSS. Consumers get predictable variants without inheriting a second design system.

@@ -1,9 +1,9 @@
-import { forwardRef, type ButtonHTMLAttributes } from "react";
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
 
 export const buttonVariants = cva(
-  "hydra-button inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold transition-[transform,background-color,border-color,box-shadow,color] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydra-focus focus-visible:ring-offset-2 focus-visible:ring-offset-hydra-canvas disabled:cursor-not-allowed disabled:opacity-45 active:translate-y-px",
+  "hydra-button inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydra-focus focus-visible:ring-offset-2 focus-visible:ring-offset-hydra-canvas disabled:cursor-not-allowed disabled:opacity-45 active:translate-y-px",
   {
     variants: {
       variant: {
@@ -14,10 +14,10 @@ export const buttonVariants = cva(
         danger: "hydra-button-danger text-white shadow-hydra-sm",
       },
       size: {
-        sm: "h-8 px-3 text-xs",
-        md: "h-10 px-4 text-sm",
-        lg: "h-12 px-6 text-base",
-        icon: "size-10 p-0",
+        sm: "hydra-size-sm",
+        md: "hydra-size-md",
+        lg: "hydra-size-lg",
+        icon: "hydra-size-md hydra-button-icon",
       },
     },
     defaultVariants: { variant: "primary", size: "md" },
@@ -25,13 +25,30 @@ export const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
+  extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
+  loading?: boolean;
+  /** Announced while busy. The original button name and width are preserved. */
+  loadingLabel?: ReactNode;
+}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, type = "button", ...props }, ref) => (
-    <button ref={ref} type={type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  ({ className, variant, size, type = "button", disabled, loading = false,
+    loadingLabel = "Loading", children, "aria-busy": ariaBusy, ...props }, ref) => (
+    <>
+      <button
+        {...props}
+        ref={ref}
+        type={type}
+        disabled={disabled || loading}
+        aria-busy={loading || ariaBusy || undefined}
+        data-loading={loading || undefined}
+        className={cn(buttonVariants({ variant, size }), className)}
+      >
+        <span className="hydra-button-label">{children}</span>
+        {loading && <span className="hydra-button-progress" aria-hidden="true"><span /></span>}
+      </button>
+      {loading && <span className="sr-only" role="status" aria-live="polite">{loadingLabel}</span>}
+    </>
   ),
 );
-
 Button.displayName = "Button";

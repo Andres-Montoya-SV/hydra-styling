@@ -11,6 +11,7 @@ import {
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import ComponentPreview from "./ComponentPreview";
 import HydraExtras from "./HydraExtras";
+import FoundationsPreview from "./FoundationsPreview";
 import {
   catalog,
   categories,
@@ -112,7 +113,8 @@ export default function ComponentCatalog() {
         </div>
         <RoseWindow className="catalog-intro-window" />
       </section>
-      {entry ? (
+      <Link className="catalog-foundations-link" href="#components/foundations">Explore application foundations →</Link>
+      {selected === "foundations" ? <FoundationsPreview /> : entry ? (
         <>
           <nav className="catalog-detail-nav" aria-label="Component navigation">
             <Button variant="ghost" onClick={showAll}>
@@ -197,7 +199,7 @@ export default function ComponentCatalog() {
           )}
         </>
       )}
-      {!entry && !search && category === "All" && <HydraExtras />}
+      {!entry && selected !== "foundations" && !search && category === "All" && <HydraExtras />}
       <footer className="catalog-footnote">
         Component coverage based on the daisyUI catalog · Original Hydra
         implementations and Vitral styling.
