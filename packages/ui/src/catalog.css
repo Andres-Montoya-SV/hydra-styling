@@ -105,7 +105,7 @@
 .hydra-dropdown-menu button {
   display: block;
   width: 100%;
-  text-align: left;
+  text-align: start;
   padding: calc(var(--hs-row-padding) * .8) var(--hs-control-padding-md);
   border-radius: 0.25rem;
   font-size: 0.875rem;
@@ -318,11 +318,12 @@
 .hydra-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
+  text-align: start;
   font-size: 0.8rem;
 }
 .hydra-table th,
 .hydra-table td {
+  text-align: inherit;
   padding: var(--hs-row-padding);
   border-bottom: 1px solid var(--hs-line);
   white-space: nowrap;
@@ -332,12 +333,13 @@
 }
 .hydra-table caption {
   caption-side: bottom;
-  text-align: left;
+  text-align: start;
   padding: 0.65rem;
   font-size: 0.75rem;
   color: var(--hs-muted);
 }
-.hydra-table tbody tr:last-child td {
+.hydra-table tbody tr:last-child td,
+.hydra-table tbody tr:last-child th {
   border: 0;
 }
 .hydra-status {

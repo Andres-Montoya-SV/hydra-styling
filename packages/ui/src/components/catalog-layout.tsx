@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "../lib/cn";
 import { VitralBackdrop } from "./vitral";
@@ -122,13 +123,15 @@ export function CodeMockup({
   caption?: string;
   className?: string;
 }) {
+  const { messages } = useHydraLocale();
+
   return (
     <figure className={cn("hydra-mockup hydra-code", className)}>
       <figcaption className="hydra-mockup-toolbar">
-        <span>{caption ?? "Code"}</span>
+        <span>{caption ?? messages.code}</span>
         <span className="hydra-muted">{language}</span>
       </figcaption>
-      <pre tabIndex={0} aria-label={caption ?? `${language} example`}>
+      <pre tabIndex={0} aria-label={caption ?? messages.codeExample(language)}>
         <code>{code}</code>
       </pre>
     </figure>
@@ -136,13 +139,16 @@ export function CodeMockup({
 }
 export function PhoneMockup({
   children,
-  label = "Phone preview",
+  label,
   className,
 }: {
   children: ReactNode;
   label?: string;
   className?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.phonePreview;
+
   return (
     <div
       role="group"

@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
+const ApiReference = lazy(() => import("./ApiReference"));
 import {
   Badge, Button, Card, CardHeader, CardTitle, CardContent, CodeMockup,
   Combobox, MultiSelect, TagsInput, DateRangePicker, DataTable, Field, Input,
@@ -88,5 +89,6 @@ export default function DataControlsPreview() {
     </CardContent></Card>
     <CodeMockup language="tsx" caption="Use a server-owned page"
       code={'<DataTable mode="server" rows={response.rows} totalRows={response.total}\\n  columns={columns} getRowId={row => row.id} caption="Findings"\\n  page={page} onPageChange={setPage} pageSize={25}\\n  sorting={sorting} onSortingChange={setSorting} loading={loading} />'.replaceAll("\\n", "\n")} />
+    <Suspense fallback={<p role="status">Loading API reference…</p>}><ApiReference exports="Combobox MultiSelect TagsInput DateRangePicker DataTable" /></Suspense>
   </section>;
 }

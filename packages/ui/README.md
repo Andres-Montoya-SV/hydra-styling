@@ -2,7 +2,11 @@
 
 React components, Tailwind styling, EASM views and optional Firebase integration.
 
-Firebase currently pins a Node gRPC version affected by GHSA-m9gg-hp2v-232j and
+Installing this package's base UI does not install Firebase or an animation engine.
+Firebase is an optional peer: install `firebase@12.19.0` explicitly when using
+`@hydra-security/ui/firebase`. Motion uses native Web Animations and CSS.
+
+For Firebase consumers, the SDK currently pins a Node gRPC version affected by GHSA-m9gg-hp2v-232j and
 GHSA-f596-whhp-79r4. Include `"overrides": { "@grpc/grpc-js": "1.13.6" }` in your
 application's package.json (already configured in the bundled starter). npm does
 not propagate a dependency package's overrides to the application.

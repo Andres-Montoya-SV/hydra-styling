@@ -104,9 +104,13 @@ test("nested menus and tooltips dismiss before their dialog and retain scoped th
 test("both themes keep the foundations accessible and constrained on the page", async ({ page }) => {
   await openFoundations(page);
   for (const theme of ["nocturne", "daylight"]) {
-    await page.locator("[data-hydra-theme]").first().evaluate((element, value) => {
-      element.setAttribute("data-hydra-theme", value);
-    }, theme);
+    if (theme === "daylight") await page.getByRole("button", { name: "Use light theme" }).click();
+    await expect(page.locator(".hydra-theme").first()).toHaveAttribute("data-hydra-theme", theme);
+    await page.evaluate(async () => {
+      await Promise.all(document.getAnimations()
+        .filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
+        .map(animation => animation.finished.catch(() => {})));
+    });
     const tooltipTrigger = page.getByRole("button", { name: "Scope help", exact: true });
     await tooltipTrigger.scrollIntoViewIfNeeded();
     await tooltipTrigger.focus();

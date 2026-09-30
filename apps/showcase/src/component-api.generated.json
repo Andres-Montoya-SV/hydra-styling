@@ -1,0 +1,5763 @@
+{
+  "Accordion": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "{ id: string; title: string; content: ReactNode; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Alert": {
+    "source": "packages/ui/src/components/feedback.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "tone",
+        "type": "\"success\" | \"info\" | \"danger\" | \"warning\" | null | undefined",
+        "required": false,
+        "default": "\"info\"",
+        "description": ""
+      }
+    ]
+  },
+  "AssetInventory": {
+    "source": "packages/ui/src/components/asset-inventory.tsx",
+    "description": "Read-only triage inventory: discovery is not proof of ownership or vulnerability.",
+    "native": false,
+    "props": [
+      {
+        "name": "assets",
+        "type": "InventoryAsset[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onSelect",
+        "type": "((asset: InventoryAsset) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "AssetMap": {
+    "source": "packages/ui/src/components/asset-map.tsx",
+    "description": "Coordinates use a 1000 x 520 canvas. A graph may include cross-links and cycles.",
+    "native": false,
+    "props": [
+      {
+        "name": "decorative",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "edges",
+        "type": "MapRelation[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "nodes",
+        "type": "MapAsset[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onLayoutChange",
+        "type": "((positions: AssetLayout) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onSelect",
+        "type": "((node: MapAsset) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "storageKey",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "AssetRelations": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "root",
+        "type": "AssetNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "AuditTimeline": {
+    "source": "packages/ui/src/components/easm-workflows.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "events",
+        "type": "AuditEvent[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Aura": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Avatar": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\" | undefined",
+        "required": false,
+        "default": "\"md\"",
+        "description": ""
+      },
+      {
+        "name": "src",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Badge": {
+    "source": "packages/ui/src/components/badge.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLSpanElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "severity",
+        "type": "\"high\" | \"medium\" | \"low\" | \"critical\" | \"info\" | \"neutral\" | null | undefined",
+        "required": false,
+        "default": "\"neutral\"",
+        "description": ""
+      }
+    ]
+  },
+  "Breadcrumbs": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "items",
+        "type": "{ label: string; href?: string; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.breadcrumb",
+        "description": ""
+      }
+    ]
+  },
+  "BrowserMockup": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "url",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Button": {
+    "source": "packages/ui/src/components/button.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "loadingLabel",
+        "type": "ReactNode",
+        "required": false,
+        "default": "locale.loading",
+        "description": "Announced while busy. The original button name and width are preserved."
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLButtonElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "\"sm\" | \"md\" | \"lg\" | \"icon\" | null | undefined",
+        "required": false,
+        "default": "\"md\"",
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "\"button\" | \"reset\" | \"submit\" | undefined",
+        "required": false,
+        "default": "\"button\"",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "variant",
+        "type": "\"primary\" | \"secondary\" | \"outline\" | \"ghost\" | \"danger\" | null | undefined",
+        "required": false,
+        "default": "\"primary\"",
+        "description": ""
+      }
+    ]
+  },
+  "Calendar": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "Single ISO date picker. Arrow keys move days; Home/End move within a week; PageUp/Down change month.",
+    "native": false,
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false,
+        "default": "\"\"",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.chooseDate",
+        "description": ""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "required": false,
+        "default": "LocaleProvider.locale",
+        "description": ""
+      },
+      {
+        "name": "max",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "min",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((date: string) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Card": {
+    "source": "packages/ui/src/components/card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "variant",
+        "type": "\"default\" | \"danger\" | \"raised\" | \"parchment\" | null | undefined",
+        "required": false,
+        "default": "\"default\"",
+        "description": ""
+      }
+    ]
+  },
+  "CardContent": {
+    "source": "packages/ui/src/components/card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "CardFooter": {
+    "source": "packages/ui/src/components/card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "CardHeader": {
+    "source": "packages/ui/src/components/card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "CardTitle": {
+    "source": "packages/ui/src/components/card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLHeadingElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Carousel": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "items",
+        "type": "GalleryItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.carousel",
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((index: number) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "ChatBubble": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "align",
+        "type": "\"start\" | \"end\" | undefined",
+        "required": false,
+        "default": "\"start\"",
+        "description": ""
+      },
+      {
+        "name": "author",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "avatar",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "time",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Checkbox": {
+    "source": "packages/ui/src/components/choice.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "CodeMockup": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "caption",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "code",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "language",
+        "type": "string | undefined",
+        "required": false,
+        "default": "\"text\"",
+        "description": ""
+      }
+    ]
+  },
+  "Collapse": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDetailsElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Combobox": {
+    "source": "packages/ui/src/components/data-select.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "clearLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false,
+        "default": "\"\"",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "emptyMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "loadingMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "optionsLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "removeLabel",
+        "type": "((label: string) => string) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "requiredMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Countdown": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "digits",
+        "type": "number | undefined",
+        "required": false,
+        "default": "2",
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.remaining",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "DataTable": {
+    "source": "packages/ui/src/components/data-table.tsx",
+    "description": "A native table with bounded pages. Server mode never sorts or slices caller rows.",
+    "native": false,
+    "props": [
+      {
+        "name": "caption",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "columns",
+        "type": "DataColumn<T>[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultPage",
+        "type": "number | undefined",
+        "required": false,
+        "default": "1",
+        "description": ""
+      },
+      {
+        "name": "defaultSelectedIds",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": "[]",
+        "description": ""
+      },
+      {
+        "name": "defaultSorting",
+        "type": "DataSorting | null | undefined",
+        "required": false,
+        "default": "null",
+        "description": ""
+      },
+      {
+        "name": "emptyMessage",
+        "type": "ReactNode",
+        "required": false,
+        "default": "locale.noRecords",
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "getRowId",
+        "type": "(row: T) => string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "isRowSelectable",
+        "type": "((row: T) => boolean) | undefined",
+        "required": false,
+        "default": "() => true",
+        "description": ""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "loadingMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.loadingRecords",
+        "description": ""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "required": false,
+        "default": "LocaleProvider.locale",
+        "description": ""
+      },
+      {
+        "name": "maxHeight",
+        "type": "string | number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "mode",
+        "type": "\"client\" | \"server\" | undefined",
+        "required": false,
+        "default": "\"client\"",
+        "description": ""
+      },
+      {
+        "name": "onPageChange",
+        "type": "((page: number) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onRetry",
+        "type": "(() => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onSelectionChange",
+        "type": "((ids: string[]) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onSortingChange",
+        "type": "((sorting: DataSorting | null) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "page",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "pageSize",
+        "type": "number | undefined",
+        "required": false,
+        "default": "25",
+        "description": ""
+      },
+      {
+        "name": "retryLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.retry",
+        "description": ""
+      },
+      {
+        "name": "rowLabel",
+        "type": "((row: T) => string) | undefined",
+        "required": false,
+        "default": "getRowId",
+        "description": ""
+      },
+      {
+        "name": "rows",
+        "type": "T[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "selectable",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "selectedIds",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "selectPageLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.selectPage",
+        "description": ""
+      },
+      {
+        "name": "selectRowLabel",
+        "type": "((label: string) => string) | undefined",
+        "required": false,
+        "default": "locale.selectRow",
+        "description": ""
+      },
+      {
+        "name": "sorting",
+        "type": "DataSorting | null | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "summaryLabel",
+        "type": "((page: number, totalPages: number, totalRows: number, selected: number) => string) | undefined",
+        "required": false,
+        "default": "locale.tableSummary",
+        "description": ""
+      },
+      {
+        "name": "totalRows",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "DateRangePicker": {
+    "source": "packages/ui/src/components/date-range-picker.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "calendarLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.chooseDates",
+        "description": ""
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "DateRangeValue | undefined",
+        "required": false,
+        "default": "emptyRange",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "endLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.endDate",
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "invalidRangeMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.invalidRange",
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "max",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "min",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: DateRangeValue) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "startLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.startDate",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "DateRangeValue | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "DensityProvider": {
+    "source": "packages/ui/src/components/density.tsx",
+    "description": "Density is inherited through CSS, including nested themes and native popovers.",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "density",
+        "type": "HydraDensity | undefined",
+        "required": false,
+        "default": "\"comfortable\"",
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Diff": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "after",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "afterLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.after",
+        "description": ""
+      },
+      {
+        "name": "before",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "beforeLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.before",
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.comparison",
+        "description": ""
+      }
+    ]
+  },
+  "Divider": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "orientation",
+        "type": "\"vertical\" | \"horizontal\" | undefined",
+        "required": false,
+        "default": "\"horizontal\"",
+        "description": ""
+      }
+    ]
+  },
+  "Dock": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "activeId",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "NavigationItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "DocumentCard": {
+    "source": "packages/ui/src/components/document-card.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "kind",
+        "type": "DocumentKind | undefined",
+        "required": false,
+        "default": "\"generic\"",
+        "description": ""
+      },
+      {
+        "name": "meta",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Drawer": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "side",
+        "type": "\"left\" | \"right\" | undefined",
+        "required": false,
+        "default": "\"right\"",
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Dropdown": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "DropdownItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placement",
+        "type": "FloatingPlacement | undefined",
+        "required": false,
+        "default": "\"bottom-start\"",
+        "description": ""
+      }
+    ]
+  },
+  "ErrorBoundary": {
+    "source": "packages/ui/src/components/error-boundary.tsx",
+    "description": "Contains render/lazy-import failures. Async handlers still need their own catch.",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onError",
+        "type": "((error: Error, info: ErrorInfo) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Fab": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "actions",
+        "type": "DropdownItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Field": {
+    "source": "packages/ui/src/components/field.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlId",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Identity of the control, separate from the wrapper's native id."
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": "\"md\"",
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "error",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "hint",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "optional",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "optionalLabel",
+        "type": "ReactNode",
+        "required": false,
+        "default": "\"Optional\"",
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Fieldset": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "legend",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLFieldSetElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "FileInput": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "HTMLInputTypeAttribute | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Filter": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.filter",
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "{ value: string; label: string; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "FindingReviewForm": {
+    "source": "packages/ui/src/components/easm-workflows.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "onSave",
+        "type": "(review: FindingReview) => Promise<void>",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "FindingReview",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "FolkSun": {
+    "source": "packages/ui/src/components/hydra-mark.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<SVGSVGElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Footer": {
+    "source": "packages/ui/src/components/footer.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "copyright",
+        "type": "string | undefined",
+        "required": false,
+        "default": "'Hydra Security'",
+        "description": ""
+      },
+      {
+        "name": "credit",
+        "type": "ReactNode",
+        "required": false,
+        "default": "locale.footerCredit",
+        "description": ""
+      },
+      {
+        "name": "groups",
+        "type": "{ title: string; links: { label: string; href: string; }[]; }[] | undefined",
+        "required": false,
+        "default": "[]",
+        "description": ""
+      },
+      {
+        "name": "headline",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "tagline",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.footerTagline",
+        "description": ""
+      },
+      {
+        "name": "variant",
+        "type": "FooterVariant | undefined",
+        "required": false,
+        "default": "'complete'",
+        "description": ""
+      }
+    ]
+  },
+  "Hero": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "artwork",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HoverCard": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HoverGallery": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "items",
+        "type": "GalleryItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.gallery",
+        "description": ""
+      }
+    ]
+  },
+  "HydraHostDetails": {
+    "source": "packages/ui/src/components/hydra-workbench.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "host",
+        "type": "{ domain: string; hostname: string; root_domain: string; subdomain: string; ips: string[]; confidence: \"unknown\" | \"high\" | \"medium\" | \"low\"; confidence_score: number; risk_level: \"high\" | \"medium\" | \"low\" | \"critical\" | \"info\"; risk_score: number; risk_reasons: string[]; discovery_sources: string[]; warnings: string[]; dns_resolved: boolean; dns_unconfirmed_http_response: boolean; dns_wildcard: boolean; tarpit_suspected: boolean; soft_404_detected: boolean; first_seen: string | null; last_seen: string | null; scan_timestamp: string | null; http_count: number; port_count: number; url_count: number; finding_count: number; http_services: { url: string; status_code: number | null; title: string | null; }[]; ports: { port: number; protocol: string; source: string; confidence_score: number; verification_state: string; service: string | null; version: string | null; }[]; findings: { template_id: string; severity: string; name: string; source: string; url: string | null; description: string; confidence_score: number; }[]; }",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HydraHostInventory": {
+    "source": "packages/ui/src/components/hydra-workbench.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "hosts",
+        "type": "{ domain: string; hostname: string; root_domain: string; subdomain: string; ips: string[]; confidence: \"unknown\" | \"high\" | \"medium\" | \"low\"; confidence_score: number; risk_level: \"high\" | \"medium\" | \"low\" | \"critical\" | \"info\"; risk_score: number; risk_reasons: string[]; discovery_sources: string[]; warnings: string[]; dns_resolved: boolean; dns_unconfirmed_http_response: boolean; dns_wildcard: boolean; tarpit_suspected: boolean; soft_404_detected: boolean; first_seen: string | null; last_seen: string | null; scan_timestamp: string | null; http_count: number; port_count: number; url_count: number; finding_count: number; http_services: { url: string; status_code: number | null; title: string | null; }[]; ports: { port: number; protocol: string; source: string; confidence_score: number; verification_state: string; service: string | null; version: string | null; }[]; findings: { template_id: string; severity: string; name: string; source: string; url: string | null; description: string; confidence_score: number; }[]; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onSelect",
+        "type": "((host: HydraHost) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HydraIcon": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": "'size-6'",
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "\"09-files-documents/txt\" | \"09-files-documents/powerpoint\" | \"09-files-documents/file\" | \"09-files-documents/zip\" | \"09-files-documents/json\" | \"09-files-documents/download\" | \"09-files-documents/image\" | \"09-files-documents/csv\" | \"09-files-documents/word\" | \"09-files-documents/pdf\" | \"09-files-documents/upload\" | \"09-files-documents/excel\" | \"02-states-severity/medium\" | \"02-states-severity/known-issue\" | \"02-states-severity/cve\" | \"02-states-severity/offline\" | \"02-states-severity/safe\" | \"02-states-severity/false-positive\" | \"02-states-severity/failed\" | \"02-states-severity/attention\" | \"02-states-severity/in-progress\" | \"02-states-severity/resolved\" | \"02-states-severity/exploit\" | \"02-states-severity/warning\" | \"02-states-severity/pending\" | \"02-states-severity/high\" | \"02-states-severity/suspicious\" | \"02-states-severity/loading\" | \"02-states-severity/low\" | \"02-states-severity/critical\" | \"02-states-severity/vulnerable\" | \"02-states-severity/tip\" | \"02-states-severity/online\" | \"02-states-severity/cvss\" | \"02-states-severity/beta\" | \"02-states-severity/success\" | \"02-states-severity/new\" | \"02-states-severity/error\" | \"02-states-severity/malicious\" | \"02-states-severity/completed\" | \"06-tools-actions/plugins\" | \"06-tools-actions/generate-report\" | \"06-tools-actions/export\" | \"06-tools-actions/clear\" | \"06-tools-actions/terminal\" | \"06-tools-actions/enumerate\" | \"06-tools-actions/analyze\" | \"06-tools-actions/import\" | \"06-tools-actions/fuzz\" | \"06-tools-actions/compare\" | \"06-tools-actions/save\" | \"06-tools-actions/scan\" | \"06-tools-actions/options\" | \"06-tools-actions/share\" | \"06-tools-actions/schedule\" | \"06-tools-actions/modules\" | \"06-tools-actions/brute\" | \"06-tools-actions/history\" | \"01-general-ui/search\" | \"01-general-ui/user\" | \"01-general-ui/home\" | \"01-general-ui/link\" | \"01-general-ui/settings\" | \"01-general-ui/download\" | \"01-general-ui/collapse\" | \"01-general-ui/dashboard\" | \"01-general-ui/team\" | \"01-general-ui/info\" | \"01-general-ui/close\" | \"01-general-ui/copy\" | \"01-general-ui/refresh\" | \"01-general-ui/save\" | \"01-general-ui/back\" | \"01-general-ui/more\" | \"01-general-ui/trash\" | \"01-general-ui/edit\" | \"01-general-ui/profile\" | \"01-general-ui/sort\" | \"01-general-ui/filter\" | \"01-general-ui/notifications\" | \"01-general-ui/upload\" | \"01-general-ui/forward\" | \"01-general-ui/help\" | \"01-general-ui/menu\" | \"07-data-visualization/map\" | \"07-data-visualization/radar\" | \"07-data-visualization/bar-chart\" | \"07-data-visualization/area-chart\" | \"07-data-visualization/export-chart\" | \"07-data-visualization/trend-up\" | \"07-data-visualization/pie-chart\" | \"07-data-visualization/network-graph\" | \"07-data-visualization/heatmap\" | \"07-data-visualization/table\" | \"07-data-visualization/gauge\" | \"07-data-visualization/coverage\" | \"07-data-visualization/line-chart\" | \"07-data-visualization/tree\" | \"07-data-visualization/timeline\" | \"07-data-visualization/donut-chart\" | \"07-data-visualization/trend-down\" | \"07-data-visualization/stats\" | \"03-recon-network/https\" | \"03-recon-network/open-port\" | \"03-recon-network/txt\" | \"03-recon-network/tls\" | \"03-recon-network/http\" | \"03-recon-network/cname\" | \"03-recon-network/whois\" | \"03-recon-network/service\" | \"03-recon-network/banner\" | \"03-recon-network/geoip\" | \"03-recon-network/dns\" | \"03-recon-network/traceroute\" | \"03-recon-network/isp\" | \"03-recon-network/asn\" | \"03-recon-network/port\" | \"03-recon-network/subdomain\" | \"03-recon-network/mx\" | \"03-recon-network/cdn\" | \"03-recon-network/redirect\" | \"03-recon-network/closed-port\" | \"03-recon-network/location\" | \"03-recon-network/wildcard\" | \"03-recon-network/ping\" | \"03-recon-network/ip\" | \"10-scan-controls/scan-finishing\" | \"10-scan-controls/scan-scanning\" | \"10-scan-controls/scan-analyzing\" | \"10-scan-controls/scan-progress\" | \"10-scan-controls/scan-starting\" | \"10-scan-controls/scan-completed\" | \"04-vulnerabilities/brute-force\" | \"04-vulnerabilities/path-traversal\" | \"04-vulnerabilities/sqli\" | \"04-vulnerabilities/cookie\" | \"04-vulnerabilities/admin-panel\" | \"04-vulnerabilities/insecure-cors\" | \"04-vulnerabilities/weak-crypto\" | \"04-vulnerabilities/token\" | \"04-vulnerabilities/deserialization\" | \"04-vulnerabilities/malware\" | \"04-vulnerabilities/exposed-secret\" | \"04-vulnerabilities/default-creds\" | \"04-vulnerabilities/rce-java\" | \"04-vulnerabilities/api-key\" | \"04-vulnerabilities/rfi\" | \"04-vulnerabilities/ssrf\" | \"04-vulnerabilities/xss\" | \"04-vulnerabilities/open-redirect\" | \"04-vulnerabilities/misconfig\" | \"04-vulnerabilities/xxe\" | \"04-vulnerabilities/rce\" | \"04-vulnerabilities/lfi\" | \"04-vulnerabilities/directory-listing\" | \"04-vulnerabilities/csrf\" | \"05-technologies/microsoft\" | \"05-technologies/apache\" | \"05-technologies/linux\" | \"05-technologies/vue\" | \"05-technologies/aws\" | \"05-technologies/firebase\" | \"05-technologies/java\" | \"05-technologies/gcp\" | \"05-technologies/angular\" | \"05-technologies/ruby\" | \"05-technologies/python\" | \"05-technologies/docker\" | \"05-technologies/git\" | \"05-technologies/kubernetes\" | \"05-technologies/nextjs\" | \"05-technologies/nodejs\" | \"05-technologies/terraform\" | \"05-technologies/fastapi\" | \"05-technologies/mongodb\" | \"05-technologies/php\" | \"05-technologies/azure\" | \"05-technologies/dotnet\" | \"05-technologies/redis\" | \"05-technologies/react\" | \"05-technologies/mysql\" | \"05-technologies/wordpress\" | \"05-technologies/graphql\" | \"05-technologies/nginx\" | \"05-technologies/go\" | \"05-technologies/postgresql\" | \"11-mobile/search\" | \"11-mobile/home\" | \"11-mobile/dashboard\" | \"11-mobile/close\" | \"11-mobile/back\" | \"11-mobile/more\" | \"11-mobile/profile\" | \"11-mobile/share\" | \"11-mobile/filter\" | \"11-mobile/notifications\" | \"11-mobile/forward\" | \"11-mobile/menu\" | \"08-graphics-motifs/pattern-1\" | \"08-graphics-motifs/house\" | \"08-graphics-motifs/pattern-2\" | \"08-graphics-motifs/pattern-3\" | \"08-graphics-motifs/bird\" | \"08-graphics-motifs/pattern-4\" | \"08-graphics-motifs/pattern-5\" | \"08-graphics-motifs/border\" | \"08-graphics-motifs/leaf\" | \"08-graphics-motifs/star\" | \"08-graphics-motifs/sun\" | \"08-graphics-motifs/flower\" | \"08-graphics-motifs/tree\" | \"08-graphics-motifs/water\" | \"08-graphics-motifs/mountain\" | \"08-graphics-motifs/cloud\" | \"08-graphics-motifs/branch\" | \"08-graphics-motifs/moon\"",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HydraMark": {
+    "source": "packages/ui/src/components/hydra-mark.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<SVGSVGElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "wordmark",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      }
+    ]
+  },
+  "HydraRelationships": {
+    "source": "packages/ui/src/components/hydra-workbench.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "relationships",
+        "type": "{ relationship_id: string; source_entity: string; target_entity: string; relationship_type: string; confidence_band: \"VERY_HIGH\" | \"HIGH\" | \"MEDIUM\" | \"LOW\" | \"VERY_LOW\"; strength: string; evidence_id: string | null; evidence_ids: string[]; evidence_type: string; source_artifact: string; source_plugin: string; run_id: string; explanation: string; rationale: string; observed_at: string | null; collection_status: \"\" | \"DISCOVERED\" | \"ELIGIBLE\" | \"IN_FLIGHT\" | \"COLLECTED\" | \"FAILED\" | \"NOT_ALLOWED\" | \"REJECTED\" | \"PARTIAL\" | \"NOT_COLLECTED\"; scope_status: \"\" | \"IN_SCOPE\" | \"OUT_OF_SCOPE\" | \"UNKNOWN\"; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "HydraRunSummary": {
+    "source": "packages/ui/src/components/hydra-workbench.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "run",
+        "type": "{ run_id: string; host_count: number; alive_count: number; hosts: { domain: string; hostname: string; root_domain: string; subdomain: string; ips: string[]; confidence: \"unknown\" | \"high\" | \"medium\" | \"low\"; confidence_score: number; risk_level: \"high\" | \"medium\" | \"low\" | \"critical\" | \"info\"; risk_score: number; risk_reasons: string[]; discovery_sources: string[]; warnings: string[]; dns_resolved: boolean; dns_unconfirmed_http_response: boolean; dns_wildcard: boolean; tarpit_suspected: boolean; soft_404_detected: boolean; first_seen: string | null; last_seen: string | null; scan_timestamp: string | null; http_count: number; port_count: number; url_count: number; finding_count: number; http_services: { url: string; status_code: number | null; title: string | null; }[]; ports: { port: number; protocol: string; source: string; confidence_score: number; verification_state: string; service: string | null; version: string | null; }[]; findings: { template_id: string; severity: string; name: string; source: string; url: string | null; description: string; confidence_score: number; }[]; }[]; intelligence: { relationships: { relationship_id: string; source_entity: string; target_entity: string; relationship_type: string; confidence_band: \"VERY_HIGH\" | \"HIGH\" | \"MEDIUM\" | \"LOW\" | \"VERY_LOW\"; strength: string; evidence_id: string | null; evidence_ids: string[]; evidence_type: string; source_artifact: string; source_plugin: string; run_id: string; explanation: string; rationale: string; observed_at: string | null; collection_status: \"\" | \"DISCOVERED\" | \"ELIGIBLE\" | \"IN_FLIGHT\" | \"COLLECTED\" | \"FAILED\" | \"NOT_ALLOWED\" | \"REJECTED\" | \"PARTIAL\" | \"NOT_COLLECTED\"; scope_status: \"\" | \"IN_SCOPE\" | \"OUT_OF_SCOPE\" | \"UNKNOWN\"; }[]; }; schema_version?: undefined; }",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Indicator": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "indicator",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Input": {
+    "source": "packages/ui/src/components/field.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": "Visual size; native numeric size keeps its HTML meaning."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "inputClassName",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "leading",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "trailing",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "HTMLInputTypeAttribute | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Join": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "orientation",
+        "type": "\"vertical\" | \"horizontal\" | undefined",
+        "required": false,
+        "default": "\"horizontal\"",
+        "description": ""
+      }
+    ]
+  },
+  "Kbd": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Label": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLLabelElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Link": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLAnchorElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "List": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLUListElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Loading": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.loading",
+        "description": ""
+      },
+      {
+        "name": "variant",
+        "type": "\"spinner\" | \"dots\" | \"bars\" | undefined",
+        "required": false,
+        "default": "\"spinner\"",
+        "description": ""
+      }
+    ]
+  },
+  "LocaleProvider": {
+    "source": "packages/ui/src/components/locale.tsx",
+    "description": "SSR-safe scoped locale. A nested locale change resets messages to that language.",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "direction",
+        "type": "\"ltr\" | \"rtl\" | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "locale",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "BCP 47 locale. English and Spanish messages are included; other locales use English fallback."
+      },
+      {
+        "name": "messages",
+        "type": "Partial<{ loading: string; loadingContent: string; loadingHydra: string; closeDialog: string; dismissNotification: string; showPassword: string; hidePassword: string; fileSelectionHint: string; assetHierarchy: string; breadcrumb: string; menu: string; explore: string; pagination: string; previousPage: string; nextPage: string; page: (n: number) => string; pagesFor: (name: string) => string; progressSteps: string; complete: string; tabs: string; filter: string; resetFilter: (name: string) => string; position: (n: number, total: number) => string; colorTheme: string; useLight: string; useDark: string; letLightIn: string; afterDark: string; daylight: string; nocturne: string; chooseDate: string; previousMonth: string; nextMonth: string; scrollableTable: string; remaining: string; timeline: string; progress: string; carousel: string; carouselRole: string; slideRole: string; previousSlide: string; nextSlide: string; gallery: string; before: string; after: string; comparison: string; rotatingText: string; pauseText: string; resumeText: string; pause: string; resume: string; code: string; codeExample: (language: string) => string; phonePreview: string; noOptions: string; loadingOptions: string; requiredOption: string; clearSelection: string; showOptions: string; selectedOptions: string; options: string; remove: (name: string) => string; tags: string; tagLimit: string; requiredTag: string; startDate: string; endDate: string; chooseDates: string; invalidRange: string; noRecords: string; loadingRecords: string; retry: string; selectPage: string; selectRow: (name: string) => string; tableSummary: (page: number, pages: number, count: number, selected: number) => string; loadingData: string; loadError: string; noData: string; viewError: string; viewErrorHint: string; reload: string; report: string; image: string; archive: string; file: string; footerTagline: string; footerHeadline: string; footerHorizon: string; footerCredit: string; }> | undefined",
+        "required": false,
+        "default": null,
+        "description": "Partial, typed overrides. Explicit component labels take precedence."
+      }
+    ]
+  },
+  "Mask": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "shape",
+        "type": "\"circle\" | \"hexagon\" | \"diamond\" | \"squircle\" | undefined",
+        "required": false,
+        "default": "\"hexagon\"",
+        "description": ""
+      }
+    ]
+  },
+  "MegaMenu": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "groups",
+        "type": "{ title: string; items: NavigationItem[]; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.explore",
+        "description": ""
+      }
+    ]
+  },
+  "Menu": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "activeId",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "NavigationItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.menu",
+        "description": ""
+      },
+      {
+        "name": "orientation",
+        "type": "\"vertical\" | \"horizontal\" | undefined",
+        "required": false,
+        "default": "\"vertical\"",
+        "description": ""
+      }
+    ]
+  },
+  "Modal": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "Native top-layer dialog supplies focus containment, inert background and Escape.",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "closeLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.closeDialog",
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "footer",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Motion": {
+    "source": "packages/ui/src/components/motion.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "enabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "true",
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "MotionProvider": {
+    "source": "packages/ui/src/components/motion.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "enabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "true",
+        "description": ""
+      }
+    ]
+  },
+  "MultiSelect": {
+    "source": "packages/ui/src/components/data-select.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "clearLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": "[]",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "emptyMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "loading",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "loadingMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "maxSelected",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string[]) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "SelectOption[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "optionsLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "removeLabel",
+        "type": "((label: string) => string) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "requiredMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Navbar": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "brand",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "OtpInput": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "length",
+        "type": "number | undefined",
+        "required": false,
+        "default": "6",
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Pagination": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.pagination",
+        "description": ""
+      },
+      {
+        "name": "onPageChange",
+        "type": "(page: number) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "page",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "totalPages",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "PasswordInput": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": "Visual size; native numeric size keeps its HTML meaning."
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "hideLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.hidePassword",
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "inputClassName",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "leading",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "showLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.showPassword",
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "trailing",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "PhoneMockup": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.phonePreview",
+        "description": ""
+      }
+    ]
+  },
+  "Progress": {
+    "source": "packages/ui/src/components/feedback.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "showValue",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "true",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "RadialProgress": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.progress",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Radio": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "RadioGroup": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "(value: string) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "options",
+        "type": "{ value: string; label: string; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "RangeInput": {
+    "source": "packages/ui/src/components/extended.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "HTMLInputTypeAttribute | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Rating": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "number | undefined",
+        "required": false,
+        "default": "0",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "max",
+        "type": "number | undefined",
+        "required": false,
+        "default": "5",
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: number) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "ResourceState": {
+    "source": "packages/ui/src/components/resource-state.tsx",
+    "description": "Shared async states. Never display raw server traces or credentials as messages.",
+    "native": false,
+    "props": [
+      {
+        "name": "message",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "status",
+        "type": "\"loading\" | \"error\" | \"empty\"",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "RoseWindow": {
+    "source": "packages/ui/src/components/vitral.tsx",
+    "description": "Original vector glasswork. No image requests, scripts, or raster textures.",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<SVGSVGElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "type",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "ScanJobList": {
+    "source": "packages/ui/src/components/easm-workflows.tsx",
+    "description": "The parent supplies authoritative job state. No fabricated progress percentages.",
+    "native": false,
+    "props": [
+      {
+        "name": "jobs",
+        "type": "ScanJob[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onCancel",
+        "type": "((id: string) => Promise<void>) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "ScopeSummary": {
+    "source": "packages/ui/src/components/easm-workflows.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "excluded",
+        "type": "string[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "included",
+        "type": "string[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "policyVersion",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Select": {
+    "source": "packages/ui/src/components/field.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLSelectElement, HTMLSelectElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "SiteLoader": {
+    "source": "packages/ui/src/components/ocean.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.loadingHydra",
+        "description": ""
+      }
+    ]
+  },
+  "Skeleton": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.loadingContent",
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Stack": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Stat": {
+    "source": "packages/ui/src/components/stat.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "delta",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLDivElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "trend",
+        "type": "\"neutral\" | \"up\" | \"down\" | undefined",
+        "required": false,
+        "default": "\"neutral\"",
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Status": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "tone",
+        "type": "\"success\" | \"info\" | \"danger\" | \"neutral\" | \"warning\" | undefined",
+        "required": false,
+        "default": "\"success\"",
+        "description": ""
+      }
+    ]
+  },
+  "Steps": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "current",
+        "type": "number",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.progressSteps",
+        "description": ""
+      },
+      {
+        "name": "steps",
+        "type": "string[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Swap": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "checked",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultChecked",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": "false",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "off",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "on",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onCheckedChange",
+        "type": "((checked: boolean) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Switch": {
+    "source": "packages/ui/src/components/choice.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLInputElement, HTMLInputElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "size",
+        "type": "number | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Table": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLTableElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Tabs": {
+    "source": "packages/ui/src/components/catalog-navigation.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "defaultValue",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "TabItem[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.tabs",
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "TagsInput": {
+    "source": "packages/ui/src/components/tags-input.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": "[]",
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "limitMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.tagLimit",
+        "description": ""
+      },
+      {
+        "name": "maxTags",
+        "type": "number | undefined",
+        "required": false,
+        "default": "20",
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValueChange",
+        "type": "((value: string[]) => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "removeLabel",
+        "type": "((tag: string) => string) | undefined",
+        "required": false,
+        "default": "locale.remove",
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "requiredMessage",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.requiredTag",
+        "description": ""
+      },
+      {
+        "name": "validateTag",
+        "type": "((tag: string) => string | undefined) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Textarea": {
+    "source": "packages/ui/src/components/field.tsx",
+    "description": "",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "controlSize",
+        "type": "ControlSize | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "disabled",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLTextAreaElement, HTMLTextAreaElement> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placeholder",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "readOnly",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "required",
+        "type": "boolean | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "value",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "TextRotate": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "interval",
+        "type": "number | undefined",
+        "required": false,
+        "default": "4000",
+        "description": ""
+      },
+      {
+        "name": "items",
+        "type": "string[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.rotatingText",
+        "description": ""
+      }
+    ]
+  },
+  "ThemeController": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.colorTheme",
+        "description": ""
+      }
+    ]
+  },
+  "ThemeProvider": {
+    "source": "packages/ui/src/components/theme.tsx",
+    "description": "Scoped and SSR-safe. Persistence is optional; storage failure never blocks a switch.",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultTheme",
+        "type": "HydraThemeInput | undefined",
+        "required": false,
+        "default": "\"nocturne\"",
+        "description": ""
+      },
+      {
+        "name": "storageKey",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "ThemeToggle": {
+    "source": "packages/ui/src/components/theme.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "Timeline": {
+    "source": "packages/ui/src/components/catalog-display.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "items",
+        "type": "{ id: string; title: string; time: string; dateTime?: string; description?: ReactNode; }[]",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "label",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.timeline",
+        "description": ""
+      }
+    ]
+  },
+  "Toast": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "Persistent by default: callers control lifetime so messages do not vanish before being read.",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "dismissLabel",
+        "type": "string | undefined",
+        "required": false,
+        "default": "locale.dismissNotification",
+        "description": ""
+      },
+      {
+        "name": "onDismiss",
+        "type": "(() => void) | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "tone",
+        "type": "\"success\" | \"info\" | \"danger\" | undefined",
+        "required": false,
+        "default": "\"info\"",
+        "description": ""
+      }
+    ]
+  },
+  "Tooltip": {
+    "source": "packages/ui/src/components/catalog-overlays.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactElement<HTMLAttributes<HTMLElement>, string | JSXElementConstructor<any>>",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "content",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "placement",
+        "type": "FloatingPlacement | undefined",
+        "required": false,
+        "default": "\"top\"",
+        "description": ""
+      }
+    ]
+  },
+  "Validator": {
+    "source": "packages/ui/src/components/catalog-input.tsx",
+    "description": "Uses browser constraints and leaves server-side validation to the consumer.",
+    "native": true,
+    "props": [
+      {
+        "name": "aria-label",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": "Defines a string value that labels the current element."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "defaultValue",
+        "type": "string | number | readonly string[] | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "id",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "name",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onChange",
+        "type": "ChangeEventHandler<HTMLFormElement, Element> | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "onValidSubmit",
+        "type": "(data: FormData) => void",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "VitralBackdrop": {
+    "source": "packages/ui/src/components/vitral.tsx",
+    "description": "Decorative architectural panes; keep these behind, never over, readable content.",
+    "native": false,
+    "props": [
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      }
+    ]
+  },
+  "WindowMockup": {
+    "source": "packages/ui/src/components/catalog-layout.tsx",
+    "description": "",
+    "native": false,
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "className",
+        "type": "string | undefined",
+        "required": false,
+        "default": null,
+        "description": ""
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": ""
+      }
+    ]
+  }
+}

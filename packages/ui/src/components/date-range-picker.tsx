@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { forwardRef, useEffect, useId, useRef, useState, type FieldsetHTMLAttributes } from "react";
 import { Button } from "./button";
 import { Calendar } from "./catalog-input";
@@ -26,9 +27,15 @@ export interface DateRangePickerProps extends Omit<FieldsetHTMLAttributes<HTMLFi
 const emptyRange: DateRangeValue = { start: "", end: "" };
 export const DateRangePicker = forwardRef<HTMLFieldSetElement, DateRangePickerProps>(function DateRangePicker({
   label, value, defaultValue = emptyRange, onValueChange, name, min, max, required, disabled, readOnly,
-  locale, controlSize, startLabel = "Start date", endLabel = "End date", calendarLabel = "Choose dates",
-  invalidRangeMessage = "End date must be on or after start date.", className, ...props
+  locale, controlSize, startLabel, endLabel, calendarLabel,
+  invalidRangeMessage, className, ...props
 }, ref) {
+  const { messages } = useHydraLocale();
+  if (startLabel === undefined) startLabel = messages.startDate;
+  if (endLabel === undefined) endLabel = messages.endDate;
+  if (calendarLabel === undefined) calendarLabel = messages.chooseDates;
+  if (invalidRangeMessage === undefined) invalidRangeMessage = messages.invalidRange;
+
   const [range, setRange] = useControllable(value, defaultValue, onValueChange);
   const [expanded, setExpanded] = useState(false);
   const end = useRef<HTMLInputElement>(null), id = useId(), error = Boolean(range.start && range.end && range.start > range.end);

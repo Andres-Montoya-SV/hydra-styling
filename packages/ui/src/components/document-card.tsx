@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { type HTMLAttributes, type ReactNode } from "react";
 import { cn } from "../lib/cn";
 import { Badge } from "./badge";
@@ -5,9 +6,7 @@ import {HydraIcon, type HydraIconName} from './extended';
 
 export type DocumentKind = "report" | "pdf" | "csv" | "json" | "image" | "archive" | "code" | "generic";
 
-const kindLabels: Record<DocumentKind, string> = {
-  report: "Report", pdf: "PDF", csv: "CSV", json: "JSON", image: "Image", archive: "Archive", code: "Code", generic: "File",
-};
+
 
 export interface DocumentCardProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -17,6 +16,9 @@ export interface DocumentCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function DocumentCard({ name, kind = "generic", meta, action, className, ...props }: DocumentCardProps) {
+  const { messages } = useHydraLocale();
+  const kindLabels: Record<DocumentKind, string> = { report: messages.report, pdf: "PDF", csv: "CSV", json: "JSON", image: messages.image, archive: messages.archive, code: messages.code, generic: messages.file };
+
   return (
     <div className={cn("group flex items-center gap-3 rounded-hydra border border-hydra-line bg-hydra-surface p-3 transition hover:border-hydra-accent/60 hover:bg-hydra-surface-strong", className)} {...props}>
       <div className="hydra-file-icon grid size-11 shrink-0 place-items-center rounded-hydra-sm border border-hydra-line bg-hydra-canvas text-xs font-black text-hydra-accent" aria-hidden="true">

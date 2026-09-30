@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import {
   forwardRef,
   useEffect,
@@ -65,13 +66,16 @@ export function Filter({
   options,
   value,
   onValueChange,
-  label = "Filter",
+  label,
 }: {
   options: { value: string; label: string }[];
   value: string;
   onValueChange: (value: string) => void;
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.filter;
+
   const name = useId();
   return (
     <fieldset className="hydra-filter">
@@ -93,7 +97,7 @@ export function Filter({
           ))}
         {value && (
           <Button size="sm" variant="outline" onClick={() => onValueChange("")}>
-            Reset {label.toLowerCase()}
+            {messages.resetFilter(label)}
           </Button>
         )}
       </div>
@@ -117,6 +121,8 @@ export function Rating({
   disabled?: boolean;
   name?: string;
 }) {
+  const { messages } = useHydraLocale();
+
   const [current, set] = useControllable(value, defaultValue, onValueChange),
     id = useId();
   const count = Math.floor(clamp(max, 1, 10));
@@ -137,7 +143,7 @@ export function Rating({
               ★
             </span>
             <span className="sr-only">
-              {i + 1} of {count}
+              {messages.position(i + 1, count)}
             </span>
           </label>
         ))}
@@ -250,7 +256,10 @@ export function Swap({
     </Button>
   );
 }
-export function ThemeController({ label = "Color theme" }: { label?: string }) {
+export function ThemeController({ label }: { label?: string }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.colorTheme;
+
   const { theme, setTheme } = useHydraTheme(),
     id = useId();
   return (
@@ -258,14 +267,14 @@ export function ThemeController({ label = "Color theme" }: { label?: string }) {
       <legend>{label}</legend>
       <Radio
         name={id}
-        label="Nocturne"
+        label={messages.nocturne}
         value="nocturne"
         checked={theme === "nocturne"}
         onChange={() => setTheme("nocturne")}
       />
       <Radio
         name={id}
-        label="Daylight"
+        label={messages.daylight}
         value="daylight"
         checked={theme === "daylight"}
         onChange={() => setTheme("daylight")}
@@ -320,11 +329,15 @@ export function Calendar({
   onValueChange,
   min,
   max,
-  label = "Choose date",
-  locale = "en-US",
+  label,
+  locale,
   name,
   disabled,
 }: CalendarProps) {
+  const { messages, locale: inheritedLocale, direction } = useHydraLocale();
+  if (label === undefined) label = messages.chooseDate;
+  locale ??= inheritedLocale;
+
   const [selected, setSelected] = useControllable(
     value,
     defaultValue,
@@ -404,7 +417,7 @@ export function Calendar({
         <Button
           size="sm"
           variant="ghost"
-          aria-label="Previous month"
+          aria-label={messages.previousMonth}
           disabled={
             disabled || Boolean(minimum && shiftDate(month, -1) < minimum)
           }
@@ -413,7 +426,7 @@ export function Calendar({
             setFocus(isoDate(bounded(previous)));
           }}
         >
-          ‹
+          {direction === "rtl" ? "›" : "‹"}
         </Button>
         <strong id={id} aria-live="polite">
           {formatter.format(month)}
@@ -421,14 +434,14 @@ export function Calendar({
         <Button
           size="sm"
           variant="ghost"
-          aria-label="Next month"
+          aria-label={messages.nextMonth}
           disabled={disabled || Boolean(maximum && next > maximum)}
           onClick={() => {
             setMonth(next);
             setFocus(isoDate(bounded(next)));
           }}
         >
-          ›
+          {direction === "rtl" ? "‹" : "›"}
         </Button>
       </div>
       <table role="grid" aria-labelledby={id}>
@@ -469,8 +482,8 @@ export function Calendar({
                       }}
                       onKeyDown={(e) => {
                         const offsets: Record<string, number> = {
-                          ArrowLeft: -1,
-                          ArrowRight: 1,
+                          ArrowLeft: direction === "rtl" ? 1 : -1,
+                          ArrowRight: direction === "rtl" ? -1 : 1,
                           ArrowUp: -7,
                           ArrowDown: 7,
                           Home: -date.getUTCDay(),

@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Add a scoped, SSR-safe LocaleProvider with English/Spanish base-component messages, typed overrides and directional keyboard behavior; expose language/density/state previews.
+- Generate public component props/defaults for the showcase and docs from TypeScript, with a stale-reference check in CI.
+- Add reviewed visual baselines for themes, densities, application states, mobile and Spanish RTL; pin the Linux visual renderer and bundle showcase fonts for reproducibility.
+
+- Make Firebase an optional peer for the separate `/firebase` entry. UI-only installations no longer install the Firebase SDK; Firebase consumers must declare it explicitly.
+- Replace Anime.js and Framer Motion with native Web Animations/CSS while preserving shared reduced-motion, visibility and opt-out behavior; verify both UI-only and Firebase package consumers.
+
 - Add form-aware Combobox, MultiSelect, TagsInput and DateRangePicker with keyboard selection, controlled values, native reset and validation.
 - Add generic DataTable with stable sorting, persistent page selection, remote pagination and explicit loading/error/empty states; demonstrate all controls in the showcase.
 

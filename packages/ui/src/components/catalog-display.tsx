@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import {
   useEffect,
   useId,
@@ -110,11 +111,13 @@ export function Table({
   className,
   ...props
 }: TableHTMLAttributes<HTMLTableElement>) {
+  const { messages } = useHydraLocale();
+
   return (
     <div
       className="hydra-table-scroll"
       role="region"
-      aria-label="Scrollable table"
+      aria-label={props["aria-label"] ?? messages.scrollableTable}
       tabIndex={0}
     >
       <table className={cn("hydra-table", className)} {...props} />
@@ -163,13 +166,16 @@ export function ChatBubble({
 }
 export function Countdown({
   value,
-  label = "Remaining",
+  label,
   digits = 2,
 }: {
   value: number;
   label?: string;
   digits?: number;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.remaining;
+
   const text = Math.floor(clamp(value, 0, 999))
     .toString()
     .padStart(clamp(digits, 1, 3), "0");
@@ -190,7 +196,7 @@ export function Countdown({
 }
 export function Timeline({
   items,
-  label = "Timeline",
+  label,
 }: {
   items: {
     id: string;
@@ -201,6 +207,9 @@ export function Timeline({
   }[];
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.timeline;
+
   return (
     <ol className="hydra-timeline" aria-label={label}>
       {items.map((item) => (
@@ -218,12 +227,15 @@ export function Timeline({
   );
 }
 export function Loading({
-  label = "Loading",
+  label,
   variant = "spinner",
 }: {
   label?: string;
   variant?: "spinner" | "dots" | "bars";
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.loading;
+
   return (
     <span className="hydra-loading" role="status">
       <span aria-hidden="true" className={`hydra-loading-${variant}`}>
@@ -237,11 +249,14 @@ export function Loading({
 }
 export function RadialProgress({
   value,
-  label = "Progress",
+  label,
 }: {
   value: number;
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.progress;
+
   const safe = clamp(value);
   return (
     <div
@@ -259,9 +274,12 @@ export function RadialProgress({
 }
 export function Skeleton({
   className,
-  label = "Loading content",
+  label,
   ...props
 }: HTMLAttributes<HTMLDivElement> & { label?: string }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.loadingContent;
+
   return (
     <div
       role="status"
@@ -281,7 +299,7 @@ export interface GalleryItem {
 }
 export function Carousel({
   items,
-  label = "Carousel",
+  label,
   value,
   onValueChange,
 }: {
@@ -290,6 +308,9 @@ export function Carousel({
   value?: number;
   onValueChange?: (index: number) => void;
 }) {
+  const { messages, direction } = useHydraLocale();
+  if (label === undefined) label = messages.carousel;
+
   const [index, set] = useControllable(value, 0, onValueChange),
     id = useId();
   const current = clamp(index, 0, Math.max(0, items.length - 1));
@@ -297,7 +318,7 @@ export function Carousel({
   return (
     <section
       className="hydra-carousel"
-      aria-roledescription="carousel"
+      aria-roledescription={messages.carouselRole}
       aria-label={label}
     >
       <div id={id} className="hydra-carousel-slides">
@@ -305,8 +326,8 @@ export function Carousel({
           <div
             key={item.id}
             role="group"
-            aria-roledescription="slide"
-            aria-label={`${i + 1} of ${items.length}: ${item.label}`}
+            aria-roledescription={messages.slideRole}
+            aria-label={`${messages.position(i + 1, items.length)}: ${item.label}`}
             hidden={i !== current}
           >
             {item.content}
@@ -317,12 +338,12 @@ export function Carousel({
         <Button
           size="sm"
           variant="outline"
-          aria-label="Previous slide"
+          aria-label={messages.previousSlide}
           aria-controls={id}
           disabled={current === 0}
           onClick={() => set(current - 1)}
         >
-          ←
+          {direction === "rtl" ? "→" : "←"}
         </Button>
         <p aria-live="polite">
           {items[current].label} · {current + 1}/{items.length}
@@ -330,12 +351,12 @@ export function Carousel({
         <Button
           size="sm"
           variant="outline"
-          aria-label="Next slide"
+          aria-label={messages.nextSlide}
           aria-controls={id}
           disabled={current === items.length - 1}
           onClick={() => set(current + 1)}
         >
-          →
+          {direction === "rtl" ? "←" : "→"}
         </Button>
       </div>
     </section>
@@ -343,11 +364,14 @@ export function Carousel({
 }
 export function HoverGallery({
   items,
-  label = "Gallery",
+  label,
 }: {
   items: GalleryItem[];
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.gallery;
+
   const [index, set] = useState(0),
     id = useId();
   if (!items.length) return null;
@@ -418,9 +442,9 @@ export function HoverCard({
 export function Diff({
   before,
   after,
-  beforeLabel = "Before",
-  afterLabel = "After",
-  label = "Comparison",
+  beforeLabel,
+  afterLabel,
+  label,
 }: {
   before: ReactNode;
   after: ReactNode;
@@ -428,6 +452,11 @@ export function Diff({
   afterLabel?: string;
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (beforeLabel === undefined) beforeLabel = messages.before;
+  if (afterLabel === undefined) afterLabel = messages.after;
+  if (label === undefined) label = messages.comparison;
+
   const [value, set] = useState(50),
     id = useId();
   return (
@@ -470,12 +499,15 @@ export function Diff({
 export function TextRotate({
   items,
   interval = 4000,
-  label = "Rotating text",
+  label,
 }: {
   items: string[];
   interval?: number;
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.rotatingText;
+
   const active = useHydraMotion(),
     [index, set] = useState(0),
     [paused, pause] = useState(false),
@@ -504,10 +536,10 @@ export function TextRotate({
         <Button
           size="sm"
           variant="ghost"
-          aria-label={paused ? "Resume rotating text" : "Pause rotating text"}
+          aria-label={paused ? messages.resumeText : messages.pauseText}
           onClick={() => pause(!paused)}
         >
-          {paused ? "Resume" : "Pause"}
+          {paused ? messages.resume : messages.pause}
         </Button>
       )}
       <span className="sr-only">{items.join(". ")}</span>

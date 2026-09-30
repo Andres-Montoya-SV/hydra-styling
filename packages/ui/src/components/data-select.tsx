@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState, type InputHTMLAttributes } from "react";
 import { Input, useFieldControl } from "./field";
 import { useControllable } from "./catalog-shared";
@@ -42,12 +43,20 @@ interface PickerProps extends PickerBase {
 }
 const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
   options, label, values, defaults, onValuesChange, multiple, maxSelected = Infinity,
-  loading = false, emptyMessage = "No matching options", loadingMessage = "Loading options",
-  requiredMessage = "Choose an option from the list.", clearLabel = "Clear selection",
-  optionsLabel = "Show options", removeLabel = text => "Remove " + text,
+  loading = false, emptyMessage, loadingMessage,
+  requiredMessage, clearLabel,
+  optionsLabel, removeLabel,
   controlSize, className, name, id, disabled, readOnly, required,
   "aria-describedby": describedBy, "aria-invalid": invalid, onFocus, onBlur, onKeyDown, ...props
 }, forwardedRef) {
+  const { messages, locale } = useHydraLocale();
+  if (emptyMessage === undefined) emptyMessage = messages.noOptions;
+  if (loadingMessage === undefined) loadingMessage = messages.loadingOptions;
+  if (requiredMessage === undefined) requiredMessage = messages.requiredOption;
+  if (clearLabel === undefined) clearLabel = messages.clearSelection;
+  if (optionsLabel === undefined) optionsLabel = messages.showOptions;
+  if (removeLabel === undefined) removeLabel = messages.remove;
+
   const [selected, setSelected] = useControllable(values, defaults, onValuesChange);
   const [open, setOpen] = useState(false), [query, setQuery] = useState(""), [active, setActive] = useState("");
   const root = useRef<HTMLDivElement>(null), input = useRef<HTMLInputElement>(null), popup = useRef<HTMLDivElement>(null);
@@ -55,7 +64,7 @@ const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
   const control = useFieldControl({ id, disabled, readOnly, required, controlSize, "aria-describedby": describedBy, "aria-invalid": invalid });
   const resolvedId = control.id ?? generatedId;
   const locked = control.disabled || control.readOnly;
-  const filtered = options.filter(option => (option.label + " " + (option.description ?? "")).toLocaleLowerCase().includes(query.toLocaleLowerCase()));
+  const filtered = options.filter(option => (option.label + " " + (option.description ?? "")).toLocaleLowerCase(locale).includes(query.toLocaleLowerCase(locale)));
   const unavailable = (option: SelectOption) => option.disabled || loading ||
     (multiple && selected.length >= maxSelected && !selected.includes(option.value));
   const enabled = filtered.filter(option => !unavailable(option));
@@ -100,7 +109,7 @@ const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
   return <div ref={root} className={"hydra-picker " + (className ?? "")}
     onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) close(); }}>
     {label && <label className="hydra-label" htmlFor={resolvedId}>{label}</label>}
-    {multiple && selected.length > 0 && <ul className="hydra-token-list" aria-label={label ?? "Selected options"}>
+    {multiple && selected.length > 0 && <ul className="hydra-token-list" aria-label={label ?? messages.selectedOptions}>
       {selected.map(value => {
         const text = options.find(option => option.value === value)?.label ?? value;
         return <li key={value}><span>{text}</span><button type="button" disabled={locked} aria-label={removeLabel(text)}
@@ -133,11 +142,13 @@ const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
         {!multiple && selected.length > 0 && <button type="button" disabled={locked} aria-label={clearLabel}
           onMouseDown={e => e.preventDefault()} onClick={() => { setSelected([]); setQuery(""); input.current?.focus(); }}>×</button>}
         <button type="button" tabIndex={-1} disabled={locked} aria-label={optionsLabel}
-          onMouseDown={e => e.preventDefault()} onClick={() => { input.current?.focus(); setOpen(!open); }}>⌄</button>
+          onMouseDown={e => e.preventDefault()} onClick={() => { input.current?.focus(); setOpen(!open); }}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
       </span>} />
     {name && selected.map(value => <input key={value} type="hidden" form={props.form} name={name} value={value} disabled={control.disabled} />)}
     {open && !locked && <div ref={popup} className="hydra-option-list hydra-floating-surface" id={listId}
-      role="listbox" aria-label={label ?? props["aria-label"] ?? "Options"} aria-multiselectable={multiple || undefined}>
+      role="listbox" aria-label={label ?? props["aria-label"] ?? messages.options} aria-multiselectable={multiple || undefined}>
       {loading ? <div role="presentation" className="hydra-option-message">{loadingMessage}</div> :
         filtered.length ? filtered.map(option => <div role="option" key={option.value}
           id={listId + "-" + options.indexOf(option)} aria-selected={selected.includes(option.value)}
@@ -145,7 +156,7 @@ const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
           onPointerMove={() => { if (!unavailable(option)) setActive(option.value); }}
           onMouseDown={e => e.preventDefault()} onClick={() => choose(option)}>
           <span>{option.label}</span>{option.description && <small>{option.description}</small>}
-          {selected.includes(option.value) && <span aria-hidden="true" className="hydra-option-check">✓</span>}
+          {selected.includes(option.value) && <svg aria-hidden="true" className="hydra-option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="m5 12 4 4 10-10" /></svg>}
         </div>) : <div role="presentation" className="hydra-option-message">{emptyMessage}</div>}
     </div>}
     <span className="sr-only" role="status">{open ? loading ? loadingMessage : filtered.length === 0 ? emptyMessage : "" : ""}</span>

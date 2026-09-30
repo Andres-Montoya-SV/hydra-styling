@@ -86,6 +86,24 @@ button { -webkit-tap-highlight-color:transparent; }
 
 /* Application foundations: the same controls composed into a working surface. */
 .catalog-foundations-link { display: inline-flex; margin-block: 1rem 1.5rem; margin-inline-end: 1.5rem; }
+.catalog-detail-settings, .consistency-settings { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+.catalog-detail-settings { padding: 0 1.25rem 1rem; }
+.consistency-board { display: grid; gap: 1.2rem; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 1rem; background: var(--hs-canvas); border: 1px solid var(--hs-line); border-radius: .75rem; }
+.consistency-board > *, .consistency-board .hydra-card-content { min-width: 0; }
+.consistency-table { grid-column: 1 / -1; }
+.consistency-board .hydra-calendar { margin-inline: auto; }
+.catalog-api { min-width: 0; margin-top: 1.5rem; padding: 1.25rem; border: 1px solid var(--hs-line); border-radius: .625rem; background: var(--hs-surface); }
+.catalog-api h3 { font-weight: 700; margin-bottom: .5rem; }
+.catalog-api > p, .catalog-api details > p { color: var(--hs-muted); font-size: .8rem; margin-bottom: 1rem; }
+.catalog-api summary { cursor: pointer; padding: .75rem 0; color: var(--hs-accent-ink); font-weight: 600; }
+.catalog-api-scroll { overflow: auto; max-height: 32rem; border: 1px solid var(--hs-line); border-radius: .4rem; }
+.catalog-api table { border-collapse: collapse; width: 100%; font-size: .75rem; text-align: start; }
+.catalog-api th, .catalog-api td { text-align: start; border-bottom: 1px solid var(--hs-line); vertical-align: top; padding: .8rem; }
+.catalog-api th p { font-weight: 400; color: var(--hs-muted); margin-top: .4rem; }
+.catalog-api thead { background: var(--hs-surface-strong); position: sticky; top: 0; }
+.catalog-api td code { white-space: normal; overflow-wrap: anywhere; display: block; min-width: 10rem; max-width: 38rem; }
+.catalog-required { display: block; font-size: .625rem; color: var(--hs-muted); font-weight: 400; margin-top: .25rem; }
+@media (max-width: 760px) { .consistency-board { grid-template-columns: minmax(0, 1fr); padding: .75rem; } }
 .foundations-preview { display: grid; gap: 1.5rem; min-width: 0; }
 .foundations-heading { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
 .foundations-heading h2 { margin-top: .75rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 650; }
