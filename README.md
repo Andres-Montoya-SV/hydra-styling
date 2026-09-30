@@ -30,6 +30,10 @@ Open `/#components/foundations` to compare shared control sizes, comfortable/com
 connected form states, busy buttons, and menus/tooltips inside constrained surfaces.
 See [composition contracts, tokens and browser coverage](docs/foundations.md).
 
+Open `/#components/data-controls` for searchable selections, tags, date ranges and
+sortable/selectable tables with local or server-owned pages. See the
+[data control contracts and integration examples](docs/data-controls.md).
+
 ## Why it is not a daisyUI theme
 
 daisyUI is a useful reference for API ergonomics, but using it as the foundation would couple Hydra's identity to generic component markup and global class names. Hydra UI instead uses typed React components, semantic design tokens, and Tailwind-generated CSS. Consumers get predictable variants without inheriting a second design system.

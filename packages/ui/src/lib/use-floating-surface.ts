@@ -29,7 +29,7 @@ export function useFloatingSurface(
       catch { surface.removeAttribute("popover"); }
     }
     surface.dataset.hydraFloating = promoted ? "top-layer" : "fixed";
-    function update() {
+    function update(allowDismiss = true) {
       frame = 0;
       if (!anchor || !surface || !window) return;
       const box = anchor.getBoundingClientRect();
@@ -40,7 +40,7 @@ export function useFloatingSurface(
         height: visual?.height ?? (document.documentElement.clientHeight || window.innerHeight),
       };
       // A scrolled-away trigger should not leave an orphaned menu at a screen edge.
-      if (box.width > 0 && (box.bottom < viewport.top || box.top > viewport.top + viewport.height ||
+      if (allowDismiss && box.width > 0 && (box.bottom < viewport.top || box.top > viewport.top + viewport.height ||
         box.right < viewport.left || box.left > viewport.left + viewport.width)) {
         dismiss.current?.();
         return;
@@ -62,9 +62,12 @@ export function useFloatingSurface(
     }
     function schedule(event?: Event) {
       if (event?.target instanceof window!.Node && surface?.contains(event.target)) return;
-      if (!frame) frame = window!.requestAnimationFrame(update);
+      if (!frame) frame = window!.requestAnimationFrame(() => update());
     }
-    update();
+    // Make menus focusable immediately, but let native focus scrolling finish
+    // before deciding whether an opening input's anchor is off-screen.
+    update(false);
+    schedule();
     document.addEventListener("scroll", schedule, true);
     window.addEventListener("resize", schedule);
     window.visualViewport?.addEventListener("resize", schedule);
