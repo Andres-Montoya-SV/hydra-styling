@@ -272,3 +272,33 @@ it("restores the origin instead of targeting a disabled pending notification", (
   fireEvent.click(buttons[0]);
   expect(origin).toHaveFocus();
 });
+
+it("does not move focus across providers that reuse the same application notification ID", () => {
+  const scopes: Record<string, Notifications> = {};
+  function Scope({ name }: { name: string }) {
+    scopes[name] = useNotifications();
+    return <button>{name}</button>;
+  }
+  render(
+    <>
+      <NotificationProvider label="First queue">
+        <Scope name="First origin" />
+      </NotificationProvider>
+      <NotificationProvider label="Second queue">
+        <Scope name="Second origin" />
+      </NotificationProvider>
+    </>,
+  );
+  act(() => screen.getByText("First origin").focus());
+  act(() => {
+    scopes["First origin"].notify({ id: "save", message: "First notice" });
+    scopes["Second origin"].notify({ id: "save", message: "Second notice" });
+  });
+  const second = within(
+    screen.getByRole("region", { name: "Second queue" }),
+  ).getByRole("button", { name: "Dismiss notification" });
+  act(() => second.focus());
+  act(() => scopes["First origin"].dismiss("save"));
+  expect(second).toHaveFocus();
+  expect(screen.getByText("Second notice")).toBeVisible();
+});

@@ -17,7 +17,8 @@ test('real emulator registration, permission gate, profile persistence and sign-
   await page.getByLabel('Display name',{exact:true}).fill('Browser Analyst');
   await page.getByLabel('Username',{exact:true}).fill('browser.analyst');
   await page.getByRole('button',{name:'Save profile',exact:true}).click();
-  await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible();
+  // Wait for the real write acknowledgment, including cold emulator startup.
+  await expect(page.getByText('Profile saved.',{exact:true})).toBeVisible({timeout:15000});
   // Deletion must fail closed until the consumer supplies a real cleanup service.
   await expect(page.getByRole('button',{name:'Permanently delete account'})).toBeDisabled();
   await page.getByRole('button',{name:'Sign out',exact:true}).click();

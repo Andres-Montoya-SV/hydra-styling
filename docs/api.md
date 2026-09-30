@@ -53,6 +53,7 @@ Explicit confirmation with initial focus on Cancel and no backdrop dismissal.
 | onConfirm | `() => void` | yes | — | Application owns execution, errors and closing after successful confirmation. |
 | onOpenChange | `(open: boolean) => void` | yes | — |  |
 | open | `boolean` | yes | — |  |
+| returnFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — | The opener, or another logical target if confirmation removes the opener. |
 | title | `string` | yes | — |  |
 | tone | `"info" \| "danger" \| undefined` | no | "danger" |  |
 
@@ -566,6 +567,7 @@ Also accepts native React HTML attributes.
 | initialFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — |  |
 | onOpenChange | `(open: boolean) => void` | yes | — |  |
 | open | `boolean` | yes | — |  |
+| returnFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — | Explicit return target for pointer-opened dialogs, including Safari. Defaults to native restoration. |
 | role | `"dialog" \| "alertdialog" \| undefined` | no | — |  |
 | showCloseButton | `boolean \| undefined` | no | — |  |
 | side | `"left" \| "right" \| undefined` | no | "right" |  |
@@ -1046,6 +1048,7 @@ Native top-layer dialog supplies focus containment, inert background and Escape.
 | initialFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — |  |
 | onOpenChange | `(open: boolean) => void` | yes | — |  |
 | open | `boolean` | yes | — |  |
+| returnFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — | Explicit return target for pointer-opened dialogs, including Safari. Defaults to native restoration. |
 | role | `"dialog" \| "alertdialog" \| undefined` | no | "dialog" |  |
 | showCloseButton | `boolean \| undefined` | no | true |  |
 | title | `string` | yes | — |  |

@@ -26,6 +26,8 @@ export interface ModalProps {
   closeLabel?: string;
   role?: "dialog" | "alertdialog";
   initialFocusRef?: RefObject<HTMLElement | null>;
+  /** Explicit return target for pointer-opened dialogs, including Safari. Defaults to native restoration. */
+  returnFocusRef?: RefObject<HTMLElement | null>;
   dismissOnOutsideClick?: boolean;
   showCloseButton?: boolean;
 }
@@ -42,6 +44,7 @@ export function Modal({
   closeLabel,
   role = "dialog",
   initialFocusRef,
+  returnFocusRef,
   dismissOnOutsideClick = true,
   showCloseButton = true,
 }: ModalProps) {
@@ -58,8 +61,12 @@ export function Modal({
       dialog.showModal();
       initialFocusRef?.current?.focus({ preventScroll: true });
     }
-    if (!open && dialog.open) dialog.close();
-  }, [open, initialFocusRef]);
+    if (!open && dialog.open) {
+      dialog.close();
+      if (returnFocusRef?.current?.isConnected)
+        returnFocusRef.current.focus({ preventScroll: true });
+    }
+  }, [open, initialFocusRef, returnFocusRef]);
   return (
     <dialog
       ref={ref}

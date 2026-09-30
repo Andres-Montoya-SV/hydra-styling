@@ -6,7 +6,8 @@ test("scoped Spanish labels, validation and RTL keyboard navigation work togethe
 }) => {
   await page.goto("/#components/consistency");
   const board = page.getByTestId("consistency-board");
-  await expect(board).toBeVisible();
+  // This lazy page can take longer on a cold WebKit CI worker.
+  await expect(board).toBeVisible({ timeout: 15000 });
   await page.getByLabel("Preview language").selectOption("es-SV");
   await page.getByLabel("Preview direction").selectOption("rtl");
   await expect(

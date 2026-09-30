@@ -25,6 +25,8 @@ export interface AlertDialogProps {
   cancelLabel?: string;
   tone?: "danger" | "info";
   loading?: boolean;
+  /** The opener, or another logical target if confirmation removes the opener. */
+  returnFocusRef?: RefObject<HTMLElement | null>;
 }
 /** Explicit confirmation with initial focus on Cancel and no backdrop dismissal. */
 export function AlertDialog({
@@ -38,6 +40,7 @@ export function AlertDialog({
   cancelLabel,
   tone = "danger",
   loading = false,
+  returnFocusRef,
 }: AlertDialogProps) {
   const { messages } = useHydraLocale();
   const cancel = useRef<HTMLButtonElement>(null);
@@ -51,6 +54,7 @@ export function AlertDialog({
       description={description}
       role="alertdialog"
       initialFocusRef={cancel}
+      returnFocusRef={returnFocusRef}
       showCloseButton={false}
       dismissOnOutsideClick={false}
       footer={

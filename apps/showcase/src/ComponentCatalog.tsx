@@ -93,8 +93,7 @@ function CatalogCard({
         <div>
           <CodeMockup language="tsx" caption={entry.api} code={entry.code} />
           <p>
-            {t("Import from")}
-            <code>@hydra-security/ui</code>
+            {t("Import from")} <code>@hydra-security/ui</code>
             {t(". Supply your application data and callbacks.")}
           </p>
           <Link href={entry.source} target="_blank" rel="noreferrer">

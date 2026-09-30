@@ -180,6 +180,13 @@
         "description": ""
       },
       {
+        "name": "returnFocusRef",
+        "type": "RefObject<HTMLElement | null> | undefined",
+        "required": false,
+        "default": null,
+        "description": "The opener, or another logical target if confirmation removes the opener."
+      },
+      {
         "name": "title",
         "type": "string",
         "required": true,
@@ -2056,6 +2063,13 @@
         "description": ""
       },
       {
+        "name": "returnFocusRef",
+        "type": "RefObject<HTMLElement | null> | undefined",
+        "required": false,
+        "default": null,
+        "description": "Explicit return target for pointer-opened dialogs, including Safari. Defaults to native restoration."
+      },
+      {
         "name": "role",
         "type": "\"dialog\" | \"alertdialog\" | undefined",
         "required": false,
@@ -3636,6 +3650,13 @@
         "required": true,
         "default": null,
         "description": ""
+      },
+      {
+        "name": "returnFocusRef",
+        "type": "RefObject<HTMLElement | null> | undefined",
+        "required": false,
+        "default": null,
+        "description": "Explicit return target for pointer-opened dialogs, including Safari. Defaults to native restoration."
       },
       {
         "name": "role",

@@ -16,7 +16,7 @@ native HTML attributes and defaults derived at runtime.
 | TagsInput | Enter/comma commits; paste deduplicates; limits/custom errors retain rejected text and block submission | Supply domain-specific validation and limits |
 | DateRangePicker / Calendar | ISO values; native range validity; bounded calendar and keyboard navigation | Set business bounds and timezone semantics; the calendar week starts Sunday |
 | DataTable | Immutable sorting, bounded pages, stable selection, loading/error/empty states | Supply stable IDs; own remote pages, retries and selection cleanup after deletion |
-| Modal / Drawer | Open state is caller-owned; Escape closes the innermost overlay and focus returns to the trigger | Choose when opening/closing is appropriate and handle unsaved work |
+| Modal / Drawer | Open state is caller-owned; Escape closes the innermost overlay; native focus restoration or explicit returnFocusRef | Choose when opening/closing is appropriate and handle unsaved work |
 | Dropdown / Tooltip | Native top layer, collision handling, keyboard dismissal, inherited tokens | Provide short named actions/content; older browsers use a fixed-position fallback |
 | Alert / Toast / ResourceState | Named status/error/recovery; optional custom alert actions and dismissal | Supply context, recovery and message lifetime; never rely solely on color |
 | Snackbar / NotificationProvider | Scoped bounded queue, optional paused timers, async actions, localized recovery | Own I/O and translated messages; handle full queue with inline feedback |

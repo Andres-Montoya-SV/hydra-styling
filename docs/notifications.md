@@ -53,7 +53,10 @@ second entry. Clear only your provider's queue.
 
 For decisions requiring explicit consent, use `AlertDialog`. Its controlled `open`
 state and `onConfirm` leave asynchronous success/error ownership with your app.
-Focus starts on Cancel; outside clicks do not dismiss. Escape/Cancel close unless
+Focus starts on Cancel; outside clicks do not dismiss. Pass `returnFocusRef` for
+an explicit return target, particularly after a pointer-opened dialog in Safari
+(which does not focus clicked buttons). Without it, native previous-focus
+restoration applies. Escape/Cancel close unless
 `loading` is true. During loading, confirmation/cancel are disabled. Always release
 loading and show a recoverable inline error after failure.
 

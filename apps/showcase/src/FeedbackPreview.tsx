@@ -29,6 +29,7 @@ export default function FeedbackPreview() {
   const [queueFull, setQueueFull] = useState(false),
     [label, setLabel] = useState("external");
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const confirmTrigger = useRef<HTMLButtonElement>(null);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
   function notify(options: NotificationOptions) {
     setQueueFull(notifications.notify(options) === undefined);
@@ -226,11 +227,16 @@ export default function FeedbackPreview() {
                 "The safest action receives focus first. Closing the dialog returns you to its trigger.",
               )}
             </p>
-            <Button variant="danger" onClick={() => setConfirm(true)}>
+            <Button
+              ref={confirmTrigger}
+              variant="danger"
+              onClick={() => setConfirm(true)}
+            >
               {t("Remove demo scope")}
             </Button>
             <AlertDialog
               open={confirm}
+              returnFocusRef={confirmTrigger}
               onOpenChange={setConfirm}
               title={t("Remove this scope?")}
               description={t(

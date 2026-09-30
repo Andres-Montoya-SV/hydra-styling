@@ -298,6 +298,8 @@ export function NotificationProvider({
         return;
       const element = document.activeElement as HTMLElement | null;
       if (
+        element &&
+        viewport.current?.contains(element) &&
         element
           ?.closest("[data-notification-id]")
           ?.getAttribute("data-notification-id") === id
