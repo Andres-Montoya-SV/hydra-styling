@@ -1,9 +1,10 @@
 # Vitral visual regression
 
 The checked-in PNGs in `tests/visual/baselines/` are the reviewed reference for
-`/#components/consistency`. There are 13 scenarios: both themes and densities on
-desktop, both themes at 390px, six application states, and a Spanish RTL composition
-with an open native popover. Interaction and axe tests run separately.
+`/#components/consistency` and `/#components/feedback`. There are 19 scenarios:
+both themes and densities on desktop, both themes at 390px, six application states,
+a Spanish RTL composition with an open native popover, four feedback layouts and
+Brazilian Portuguese form/notification compositions. Interaction and axe tests run separately.
 
 ## Reproduce and review
 

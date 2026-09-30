@@ -1,3 +1,4 @@
+import { showcaseText, useShowcaseText } from "./showcase-i18n";
 import { lazy, Suspense, useState } from "react";
 import {
   Alert,
@@ -22,6 +23,7 @@ import {
   Tabs,
   Toast,
   Link,
+  useHydraLocale,
   type HydraDensity,
 } from "@hydra-security/ui";
 const ApiReference = lazy(() => import("./ApiReference"));
@@ -46,12 +48,14 @@ type State =
   | "empty"
   | "error";
 export default function ConsistencyPreview() {
-  const [locale, setLocale] = useState("en-US"),
+  const t = useShowcaseText();
+  const { locale: siteLocale } = useHydraLocale();
+  const [locale, setLocale] = useState(""),
     [direction, setDirection] = useState<"ltr" | "rtl">("ltr");
   const [density, setDensity] = useState<HydraDensity>("comfortable"),
     [state, setState] = useState<State>("default");
-  const es = locale.startsWith("es"),
-    disabled = state === "disabled",
+  const previewT = showcaseText(locale || siteLocale);
+  const disabled = state === "disabled",
     readOnly = state === "readonly",
     loading = state === "loading";
   return (
@@ -59,43 +63,46 @@ export default function ConsistencyPreview() {
       className="foundations-preview"
       aria-labelledby="consistency-title"
     >
-      <Link href="#components">← All components</Link>
+      <Link href="#components">{t("← All components")}</Link>
       <div className="foundations-heading">
         <div>
-          <Badge severity="info">APPLICATION CONTRACTS</Badge>
-          <h2 id="consistency-title">One system. Every state.</h2>
+          <Badge severity="info">{t("APPLICATION CONTRACTS")}</Badge>
+          <h2 id="consistency-title">{t("One system. Every state.")}</h2>
           <p>
-            Inspect the same controls across language, density, direction and
-            application state.
+            {t(
+              "Inspect the same controls across language, density, direction and application state.",
+            )}
           </p>
         </div>
       </div>
       <div className="consistency-settings">
-        <Field label="Preview language">
+        <Field label={t("Preview language")}>
           <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+            <option value="">{t("Use site language")}</option>
             <option value="en-US">English</option>
             <option value="es-SV">Español</option>
+            <option value="pt-BR">Português (Brasil)</option>
           </Select>
         </Field>
-        <Field label="Preview density">
+        <Field label={t("Preview density")}>
           <Select
             value={density}
             onChange={(e) => setDensity(e.target.value as HydraDensity)}
           >
-            <option value="comfortable">Comfortable</option>
-            <option value="compact">Compact</option>
+            <option value="comfortable">{t("Comfortable")}</option>
+            <option value="compact">{t("Compact")}</option>
           </Select>
         </Field>
-        <Field label="Preview direction">
+        <Field label={t("Preview direction")}>
           <Select
             value={direction}
             onChange={(e) => setDirection(e.target.value as "ltr" | "rtl")}
           >
-            <option value="ltr">Left to right</option>
-            <option value="rtl">Right to left</option>
+            <option value="ltr">{t("Left to right")}</option>
+            <option value="rtl">{t("Right to left")}</option>
           </Select>
         </Field>
-        <Field label="Preview state">
+        <Field label={t("Preview state")}>
           <Select
             value={state}
             onChange={(e) => setState(e.target.value as State)}
@@ -109,54 +116,44 @@ export default function ConsistencyPreview() {
               "empty",
               "error",
             ].map((value) => (
-              <option key={value}>{value}</option>
+              <option key={value} value={value}>
+                {t(value)}
+              </option>
             ))}
           </Select>
         </Field>
       </div>
-      <LocaleProvider locale={locale} direction={direction}>
+      <LocaleProvider locale={locale || siteLocale} direction={direction}>
         <DensityProvider density={density}>
-          <div
-            className="consistency-board"
-            data-testid="consistency-board"
-            key={locale}
-          >
+          <div className="consistency-board" data-testid="consistency-board">
             <Card>
               <CardHeader>
-                <CardTitle>
-                  {es ? "Configuración del alcance" : "Scope settings"}
-                </CardTitle>
+                <CardTitle>{previewT("Scope settings")}</CardTitle>
               </CardHeader>
               <CardContent className="foundations-form">
                 <Field
-                  label={es ? "Dominio autorizado" : "Authorized domain"}
+                  label={previewT("Authorized domain")}
                   required
                   disabled={disabled}
                   readOnly={readOnly}
-                  hint={
-                    es
-                      ? "Incluye solo activos autorizados."
-                      : "Include authorized assets only."
-                  }
+                  hint={previewT("Include authorized assets only.")}
                   error={
                     state === "invalid"
-                      ? es
-                        ? "Revisa el dominio antes de continuar."
-                        : "Review the domain before continuing."
+                      ? previewT("Review the domain before continuing.")
                       : undefined
                   }
                 >
                   <Input defaultValue="example.com" />
                 </Field>
                 <Field
-                  label={es ? "Clave de acceso" : "Access token"}
+                  label={previewT("Access token")}
                   disabled={disabled}
                   readOnly={readOnly}
                 >
                   <PasswordInput defaultValue="example-token" />
                 </Field>
                 <Field
-                  label={es ? "Equipo" : "Team"}
+                  label={previewT("Team")}
                   disabled={disabled}
                   readOnly={readOnly}
                 >
@@ -167,7 +164,7 @@ export default function ConsistencyPreview() {
                   />
                 </Field>
                 <Field
-                  label={es ? "Revisores" : "Reviewers"}
+                  label={previewT("Reviewers")}
                   disabled={disabled}
                   readOnly={readOnly}
                 >
@@ -178,69 +175,53 @@ export default function ConsistencyPreview() {
                   />
                 </Field>
                 <Field
-                  label={es ? "Etiquetas" : "Labels"}
+                  label={previewT("Labels")}
                   disabled={disabled}
                   readOnly={readOnly}
                 >
                   <TagsInput defaultValue={["external"]} />
                 </Field>
                 <Checkbox
-                  label={
-                    es ? "Confirmo la autorización" : "I confirm authorization"
-                  }
+                  label={previewT("I confirm authorization")}
                   defaultChecked
                   disabled={disabled || readOnly}
                 />
                 <div className="foundation-actions">
                   <Button disabled={disabled || readOnly} loading={loading}>
-                    {es ? "Guardar alcance" : "Save scope"}
+                    {previewT("Save scope")}
                   </Button>
                   <Button variant="outline" disabled={disabled}>
-                    {es ? "Cancelar" : "Cancel"}
+                    {previewT("Cancel")}
                   </Button>
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>
-                  {es ? "Estado y navegación" : "Status and navigation"}
-                </CardTitle>
+                <CardTitle>{previewT("Status and navigation")}</CardTitle>
               </CardHeader>
               <CardContent className="foundations-form">
                 <Alert
                   tone={
                     state === "invalid" || state === "error" ? "danger" : "info"
                   }
-                  title={es ? "Visibilidad continua" : "Continuous visibility"}
+                  title={previewT("Continuous visibility")}
                 >
-                  {es
-                    ? "Un mismo lenguaje para cada aplicación."
-                    : "One visual language for every application."}
+                  {previewT("One visual language for every application.")}
                 </Alert>
                 <Tabs
                   items={[
                     {
                       id: "overview",
-                      label: es ? "Resumen" : "Overview",
+                      label: previewT("Overview"),
                       content: (
-                        <p>
-                          {es
-                            ? "Revisa el alcance antes de guardar."
-                            : "Review the scope before saving."}
-                        </p>
+                        <p>{previewT("Review the scope before saving.")}</p>
                       ),
                     },
                     {
                       id: "activity",
-                      label: es ? "Actividad" : "Activity",
-                      content: (
-                        <p>
-                          {es
-                            ? "No hay cambios pendientes."
-                            : "No pending changes."}
-                        </p>
-                      ),
+                      label: previewT("Activity"),
+                      content: <p>{previewT("No pending changes.")}</p>,
                     },
                   ]}
                 />
@@ -251,27 +232,25 @@ export default function ConsistencyPreview() {
                   disabled={disabled || readOnly}
                 />
                 <Toast onDismiss={() => setState("default")}>
-                  {es
-                    ? "Preferencias listas para revisar."
-                    : "Preferences ready for review."}
+                  {previewT("Preferences ready for review.")}
                 </Toast>
               </CardContent>
             </Card>
             <div className="consistency-table">
               <DataTable
-                caption={es ? "Activos del alcance" : "Scope assets"}
+                caption={previewT("Scope assets")}
                 rows={state === "empty" ? [] : rows}
                 columns={[
                   {
                     id: "host",
-                    header: es ? "Activo" : "Asset",
+                    header: previewT("Asset"),
                     accessor: (row) => row.host,
                     rowHeader: true,
                     sortable: true,
                   },
                   {
                     id: "risk",
-                    header: es ? "Riesgo" : "Risk",
+                    header: previewT("Risk"),
                     accessor: (row) => row.risk,
                     sortable: true,
                   },
@@ -283,9 +262,7 @@ export default function ConsistencyPreview() {
                 loading={loading}
                 error={
                   state === "error"
-                    ? es
-                      ? "No se pudo obtener el resultado."
-                      : "The result could not be retrieved."
+                    ? previewT("The result could not be retrieved.")
                     : undefined
                 }
                 onRetry={() => setState("default")}
@@ -294,7 +271,7 @@ export default function ConsistencyPreview() {
           </div>
         </DensityProvider>
       </LocaleProvider>
-      <Suspense fallback={<p role="status">Loading API reference…</p>}>
+      <Suspense fallback={<p role="status">{t("Loading API reference…")}</p>}>
         <ApiReference exports="LocaleProvider DensityProvider" />
       </Suspense>
     </section>

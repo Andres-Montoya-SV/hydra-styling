@@ -8,6 +8,7 @@ import {
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
+  type RefObject,
 } from "react";
 import { cn } from "../lib/cn";
 import { Button } from "./button";
@@ -23,6 +24,10 @@ export interface ModalProps {
   footer?: ReactNode;
   className?: string;
   closeLabel?: string;
+  role?: "dialog" | "alertdialog";
+  initialFocusRef?: RefObject<HTMLElement | null>;
+  dismissOnOutsideClick?: boolean;
+  showCloseButton?: boolean;
 }
 
 /** Native top-layer dialog supplies focus containment, inert background and Escape. */
@@ -35,6 +40,10 @@ export function Modal({
   footer,
   className,
   closeLabel,
+  role = "dialog",
+  initialFocusRef,
+  dismissOnOutsideClick = true,
+  showCloseButton = true,
 }: ModalProps) {
   const { messages } = useHydraLocale();
   if (closeLabel === undefined) closeLabel = messages.closeDialog;
@@ -45,12 +54,17 @@ export function Modal({
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      initialFocusRef?.current?.focus({ preventScroll: true });
+    }
     if (!open && dialog.open) dialog.close();
-  }, [open]);
+  }, [open, initialFocusRef]);
   return (
     <dialog
       ref={ref}
+      role={role}
+      aria-modal="true"
       className={cn("hydra-modal", className)}
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
@@ -90,7 +104,7 @@ export function Modal({
         if (open && !ref.current?.open) onOpenChange(false);
       }}
       onClick={(event) => {
-        if (event.target === event.currentTarget) {
+        if (dismissOnOutsideClick && event.target === event.currentTarget) {
           const box = event.currentTarget.getBoundingClientRect();
           if (
             event.clientX < box.left ||
@@ -104,14 +118,16 @@ export function Modal({
     >
       <header className="hydra-modal-header">
         <h2 id={titleId}>{title}</h2>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => onOpenChange(false)}
-          aria-label={closeLabel}
-        >
-          ×
-        </Button>
+        {showCloseButton && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onOpenChange(false)}
+            aria-label={closeLabel}
+          >
+            ×
+          </Button>
+        )}
       </header>
       {description && (
         <p id={descriptionId} className="hydra-muted">
@@ -284,7 +300,14 @@ export function Fab({
   label: string;
   actions: DropdownItem[];
 }) {
-  return <Dropdown label={label} items={actions} placement="top-end" className="hydra-fab" />;
+  return (
+    <Dropdown
+      label={label}
+      items={actions}
+      placement="top-end"
+      className="hydra-fab"
+    />
+  );
 }
 
 export function Tooltip({
@@ -298,9 +321,12 @@ export function Tooltip({
 }) {
   const [open, setOpen] = useState(false),
     id = useId();
-  const anchor = useRef<HTMLSpanElement>(null), surface = useRef<HTMLSpanElement>(null);
+  const anchor = useRef<HTMLSpanElement>(null),
+    surface = useRef<HTMLSpanElement>(null);
   useFloatingSurface(open, anchor, surface, placement, () => setOpen(false));
-  const leaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined,
+  );
   useEffect(() => () => clearTimeout(leaveTimer.current), []);
   const hover = useRef(false),
     focus = useRef(false);
@@ -328,7 +354,8 @@ export function Tooltip({
       onPointerLeave={() => {
         hover.current = false;
         clearTimeout(leaveTimer.current);
-        if (!focus.current) leaveTimer.current = setTimeout(() => setOpen(false), 160);
+        if (!focus.current)
+          leaveTimer.current = setTimeout(() => setOpen(false), 160);
       }}
       onFocus={() => {
         focus.current = true;
@@ -346,7 +373,12 @@ export function Tooltip({
             .join(" ") || undefined,
       })}
       {open && (
-        <span ref={surface} role="tooltip" id={id} className="hydra-tooltip-content hydra-floating-surface">
+        <span
+          ref={surface}
+          role="tooltip"
+          id={id}
+          className="hydra-tooltip-content hydra-floating-surface"
+        >
           {content}
         </span>
       )}

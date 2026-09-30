@@ -2,6 +2,7 @@
 @import "./catalog.css";
 @import "./foundations.css";
 @import "./data-controls.css";
+@import "./notifications.css";
 @source "./**/*.{ts,tsx}";
 
 @theme inline {

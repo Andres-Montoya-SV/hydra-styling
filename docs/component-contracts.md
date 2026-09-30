@@ -18,7 +18,9 @@ native HTML attributes and defaults derived at runtime.
 | DataTable | Immutable sorting, bounded pages, stable selection, loading/error/empty states | Supply stable IDs; own remote pages, retries and selection cleanup after deletion |
 | Modal / Drawer | Open state is caller-owned; Escape closes the innermost overlay and focus returns to the trigger | Choose when opening/closing is appropriate and handle unsaved work |
 | Dropdown / Tooltip | Native top layer, collision handling, keyboard dismissal, inherited tokens | Provide short named actions/content; older browsers use a fixed-position fallback |
-| Toast / Alert / ResourceState | Named status/error/recovery; toasts persist until caller dismissal | Manage a notification queue/lifetime; never rely solely on color |
+| Alert / Toast / ResourceState | Named status/error/recovery; optional custom alert actions and dismissal | Supply context, recovery and message lifetime; never rely solely on color |
+| Snackbar / NotificationProvider | Scoped bounded queue, optional paused timers, async actions, localized recovery | Own I/O and translated messages; handle full queue with inline feedback |
+| AlertDialog / Popover | Explicit modal confirmation or non-modal rich content with focus/dismissal contracts | Own open state, successful confirmation, errors and pending state |
 | Tabs / pagination / menu | Semantic navigation, active/current state, bounded keyboard movement | Provide destinations, selected value or fetched page |
 | Gallery / rotating text | Named navigation, motion opt-out and pause behavior | Supply meaningful item labels and media alternatives |
 | Card / layout / mockups | Presentational composition with shared surfaces and spacing | Supply headings/content; do not use a static mockup as a real interactive control |
@@ -50,3 +52,5 @@ accessibility rules. [Visual baselines](visual-testing.md) cover a representativ
 composition across themes, densities and states. These layers complement manual
 keyboard, screen-reader and product-content review; screenshots are not a claim
 of exhaustive coverage of every possible combination of all 68 families.
+
+See [application feedback](notifications.md), [localization boundaries](localization.md) and [shadcn pattern mappings](shadcn-coverage.md).

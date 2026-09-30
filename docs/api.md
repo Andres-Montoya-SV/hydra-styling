@@ -22,17 +22,39 @@ For behavioral states see [component contracts](component-contracts.md), [founda
 
 | Prop | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
+| action | `ReactNode` | no | — |  |
 | aria-label | `string \| undefined` | no | — | Defines a string value that labels the current element. |
 | children | `ReactNode` | no | — |  |
 | className | `string \| undefined` | no | — |  |
 | defaultValue | `string \| number \| readonly string[] \| undefined` | no | — |  |
+| dismissLabel | `string \| undefined` | no | — |  |
 | icon | `ReactNode` | no | — |  |
 | id | `string \| undefined` | no | — |  |
 | onChange | `ChangeEventHandler<HTMLDivElement, Element> \| undefined` | no | — |  |
-| title | `string \| undefined` | no | — |  |
+| onDismiss | `(() => void) \| undefined` | no | — |  |
+| title | `ReactNode` | no | — |  |
 | tone | `"success" \| "info" \| "danger" \| "warning" \| null \| undefined` | no | "info" |  |
+| variant | `"outline" \| "soft" \| undefined` | no | "soft" |  |
 
 Also accepts native React HTML attributes.
+
+## AlertDialog
+
+[Source](../packages/ui/src/components/application-overlays.tsx)
+Explicit confirmation with initial focus on Cancel and no backdrop dismissal.
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| cancelLabel | `string \| undefined` | no | — |  |
+| children | `ReactNode` | no | — |  |
+| confirmLabel | `string \| undefined` | no | — |  |
+| description | `string` | yes | — |  |
+| loading | `boolean \| undefined` | no | false |  |
+| onConfirm | `() => void` | yes | — | Application owns execution, errors and closing after successful confirmation. |
+| onOpenChange | `(open: boolean) => void` | yes | — |  |
+| open | `boolean` | yes | — |  |
+| title | `string` | yes | — |  |
+| tone | `"info" \| "danger" \| undefined` | no | "danger" |  |
 
 ## AssetInventory
 
@@ -539,9 +561,13 @@ Also accepts native React HTML attributes.
 | className | `string \| undefined` | no | — |  |
 | closeLabel | `string \| undefined` | no | — |  |
 | description | `string \| undefined` | no | — |  |
+| dismissOnOutsideClick | `boolean \| undefined` | no | — |  |
 | footer | `ReactNode` | no | — |  |
+| initialFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — |  |
 | onOpenChange | `(open: boolean) => void` | yes | — |  |
 | open | `boolean` | yes | — |  |
+| role | `"dialog" \| "alertdialog" \| undefined` | no | — |  |
+| showCloseButton | `boolean \| undefined` | no | — |  |
 | side | `"left" \| "right" \| undefined` | no | "right" |  |
 | title | `string` | yes | — |  |
 
@@ -961,8 +987,8 @@ SSR-safe scoped locale. A nested locale change resets messages to that language.
 | children | `ReactNode` | yes | — |  |
 | className | `string \| undefined` | no | — |  |
 | direction | `"ltr" \| "rtl" \| undefined` | no | — |  |
-| locale | `string \| undefined` | no | — | BCP 47 locale. English and Spanish messages are included; other locales use English fallback. |
-| messages | `Partial<{ loading: string; loadingContent: string; loadingHydra: string; closeDialog: string; dismissNotification: string; showPassword: string; hidePassword: string; fileSelectionHint: string; assetHierarchy: string; breadcrumb: string; menu: string; explore: string; pagination: string; previousPage: string; nextPage: string; page: (n: number) => string; pagesFor: (name: string) => string; progressSteps: string; complete: string; tabs: string; filter: string; resetFilter: (name: string) => string; position: (n: number, total: number) => string; colorTheme: string; useLight: string; useDark: string; letLightIn: string; afterDark: string; daylight: string; nocturne: string; chooseDate: string; previousMonth: string; nextMonth: string; scrollableTable: string; remaining: string; timeline: string; progress: string; carousel: string; carouselRole: string; slideRole: string; previousSlide: string; nextSlide: string; gallery: string; before: string; after: string; comparison: string; rotatingText: string; pauseText: string; resumeText: string; pause: string; resume: string; code: string; codeExample: (language: string) => string; phonePreview: string; noOptions: string; loadingOptions: string; requiredOption: string; clearSelection: string; showOptions: string; selectedOptions: string; options: string; remove: (name: string) => string; tags: string; tagLimit: string; requiredTag: string; startDate: string; endDate: string; chooseDates: string; invalidRange: string; noRecords: string; loadingRecords: string; retry: string; selectPage: string; selectRow: (name: string) => string; tableSummary: (page: number, pages: number, count: number, selected: number) => string; loadingData: string; loadError: string; noData: string; viewError: string; viewErrorHint: string; reload: string; report: string; image: string; archive: string; file: string; footerTagline: string; footerHeadline: string; footerHorizon: string; footerCredit: string; }> \| undefined` | no | — | Partial, typed overrides. Explicit component labels take precedence. |
+| locale | `string \| undefined` | no | — | BCP 47 locale. English, Spanish and Brazilian Portuguese are included; other languages fall back to English. |
+| messages | `Partial<{ loading: string; loadingContent: string; loadingHydra: string; closeDialog: string; dismissNotification: string; notifications: string; pauseNotifications: string; resumeNotifications: string; queuedNotifications: (count: number) => string; notificationActionFailed: string; confirm: string; cancel: string; showPassword: string; hidePassword: string; fileSelectionHint: string; assetHierarchy: string; breadcrumb: string; menu: string; explore: string; pagination: string; previousPage: string; nextPage: string; page: (n: number) => string; pagesFor: (name: string) => string; progressSteps: string; complete: string; tabs: string; filter: string; resetFilter: (name: string) => string; position: (n: number, total: number) => string; colorTheme: string; useLight: string; useDark: string; letLightIn: string; afterDark: string; daylight: string; nocturne: string; chooseDate: string; previousMonth: string; nextMonth: string; scrollableTable: string; remaining: string; timeline: string; progress: string; carousel: string; carouselRole: string; slideRole: string; previousSlide: string; nextSlide: string; gallery: string; before: string; after: string; comparison: string; rotatingText: string; pauseText: string; resumeText: string; pause: string; resume: string; code: string; codeExample: (language: string) => string; phonePreview: string; noOptions: string; loadingOptions: string; requiredOption: string; clearSelection: string; showOptions: string; selectedOptions: string; options: string; remove: (name: string) => string; tags: string; tagLimit: string; requiredTag: string; startDate: string; endDate: string; chooseDates: string; invalidRange: string; noRecords: string; loadingRecords: string; retry: string; selectPage: string; selectRow: (name: string) => string; tableSummary: (page: number, pages: number, count: number, selected: number) => string; loadingData: string; loadError: string; noData: string; viewError: string; viewErrorHint: string; reload: string; report: string; image: string; archive: string; file: string; footerTagline: string; footerHeadline: string; footerHorizon: string; footerCredit: string; }> \| undefined` | no | — | Partial, typed overrides. Explicit component labels take precedence. |
 
 ## Mask
 
@@ -1015,9 +1041,13 @@ Native top-layer dialog supplies focus containment, inert background and Escape.
 | className | `string \| undefined` | no | — |  |
 | closeLabel | `string \| undefined` | no | locale.closeDialog |  |
 | description | `string \| undefined` | no | — |  |
+| dismissOnOutsideClick | `boolean \| undefined` | no | true |  |
 | footer | `ReactNode` | no | — |  |
+| initialFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — |  |
 | onOpenChange | `(open: boolean) => void` | yes | — |  |
 | open | `boolean` | yes | — |  |
+| role | `"dialog" \| "alertdialog" \| undefined` | no | "dialog" |  |
+| showCloseButton | `boolean \| undefined` | no | true |  |
 | title | `string` | yes | — |  |
 
 ## Motion
@@ -1097,6 +1127,20 @@ Also accepts native React HTML attributes.
 
 Also accepts native React HTML attributes.
 
+## NotificationProvider
+
+[Source](../packages/ui/src/components/notifications.tsx)
+Scoped FIFO queue. Persistent by default; timed messages pause for hover, focus, hidden tabs and manual pause.
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| children | `ReactNode` | yes | — |  |
+| defaultDuration | `number \| undefined` | no | 0 |  |
+| label | `string \| undefined` | no | — |  |
+| maxQueue | `number \| undefined` | no | 20 | Includes visible notifications. New entries are refused when this limit is reached. |
+| maxVisible | `number \| undefined` | no | 3 |  |
+| placement | `"top-start" \| "top-end" \| "bottom-start" \| "bottom-end" \| undefined` | no | "bottom-end" |  |
+
 ## OtpInput
 
 [Source](../packages/ui/src/components/catalog-input.tsx)
@@ -1172,6 +1216,23 @@ Also accepts native React HTML attributes.
 | children | `ReactNode` | yes | — |  |
 | className | `string \| undefined` | no | — |  |
 | label | `string \| undefined` | no | locale.phonePreview |  |
+
+## Popover
+
+[Source](../packages/ui/src/components/application-overlays.tsx)
+Non-modal rich content, positioned by the same native top-layer engine as menus.
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| children | `ReactNode` | yes | — |  |
+| className | `string \| undefined` | no | — |  |
+| defaultOpen | `boolean \| undefined` | no | false |  |
+| initialFocusRef | `RefObject<HTMLElement \| null> \| undefined` | no | — |  |
+| label | `string` | yes | — |  |
+| onOpenChange | `((open: boolean) => void) \| undefined` | no | — |  |
+| open | `boolean \| undefined` | no | — |  |
+| placement | `FloatingPlacement \| undefined` | no | "bottom-start" |  |
+| title | `string` | yes | — |  |
 
 ## Progress
 
@@ -1375,6 +1436,23 @@ Also accepts native React HTML attributes.
 | onChange | `ChangeEventHandler<HTMLDivElement, Element> \| undefined` | no | — |  |
 
 Also accepts native React HTML attributes.
+
+## Snackbar
+
+[Source](../packages/ui/src/components/notifications.tsx)
+An in-flow notification. It does not steal focus or own its lifetime.
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| action | `NotificationAction \| undefined` | no | — |  |
+| actionErrorMessage | `string \| undefined` | no | — |  |
+| children | `ReactNode` | yes | — |  |
+| className | `string \| undefined` | no | — |  |
+| dismissLabel | `string \| undefined` | no | — |  |
+| icon | `ReactNode` | no | — |  |
+| onDismiss | `(() => void) \| undefined` | no | — |  |
+| title | `ReactNode` | no | — |  |
+| tone | `NotificationTone \| undefined` | no | "info" |  |
 
 ## Stack
 

@@ -119,3 +119,9 @@ button { -webkit-tap-highlight-color:transparent; }
   .foundation-size-row { grid-template-columns: minmax(0, 1fr) minmax(5rem, .8fr); }
   .foundation-size-row > .hydra-button { grid-column: 1 / -1; justify-self: start; }
 }
+
+.showcase-language { display:flex; align-items:center; gap:.5rem; font-size:.75rem; color:var(--hs-muted); }
+.showcase-language select { min-width:10rem; }
+.feedback-board { display:grid; gap:1.25rem; grid-template-columns:repeat(2,minmax(0,1fr)); }
+.feedback-board .hydra-card { min-width:0; }
+@media (max-width:760px) { .feedback-board { grid-template-columns:minmax(0,1fr); } .showcase-language { margin-inline-start:auto; } }

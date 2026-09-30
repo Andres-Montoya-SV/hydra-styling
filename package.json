@@ -29,7 +29,7 @@
     "test:package": "node scripts/test-package.mjs",
     "test:integration": "node tools/firebase/node_modules/firebase-tools/lib/bin/firebase.js emulators:exec --project demo-hydra-ui --only auth,firestore,storage \"node --test --test-concurrency=1 tests/firebase-rules.test.mjs && npm run test:browser\"",
     "docs:api": "node scripts/generate-api.mjs",
-    "docs:check": "node scripts/generate-api.mjs --check",
+    "docs:check": "node scripts/generate-api.mjs --check && node scripts/check-locales.mjs",
     "test:visual": "node scripts/test-visual.mjs",
     "test:visual:update": "node scripts/test-visual.mjs --update-snapshots"
   },

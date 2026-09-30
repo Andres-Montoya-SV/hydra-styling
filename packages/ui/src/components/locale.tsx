@@ -7,6 +7,13 @@ export const enMessages = {
   loadingHydra: "Loading Hydra…",
   closeDialog: "Close dialog",
   dismissNotification: "Dismiss notification",
+  notifications: "Notifications",
+  pauseNotifications: "Pause dismissals",
+  resumeNotifications: "Resume dismissals",
+  queuedNotifications: (count: number) => `${count} queued`,
+  notificationActionFailed: "The action could not be completed. Try again.",
+  confirm: "Continue",
+  cancel: "Cancel",
   showPassword: "Show password",
   hidePassword: "Hide password",
   fileSelectionHint: "Selection only; files are not uploaded automatically.",
@@ -107,6 +114,13 @@ export const esMessages: HydraMessages = {
   loadingHydra: "Cargando Hydra…",
   closeDialog: "Cerrar diálogo",
   dismissNotification: "Descartar notificación",
+  notifications: "Notificaciones",
+  pauseNotifications: "Pausar cierres automáticos",
+  resumeNotifications: "Reanudar cierres automáticos",
+  queuedNotifications: (count) => `${count} en espera`,
+  notificationActionFailed: "No se pudo completar la acción. Reintenta.",
+  confirm: "Continuar",
+  cancel: "Cancelar",
   showPassword: "Mostrar contraseña",
   hidePassword: "Ocultar contraseña",
   fileSelectionHint:
@@ -197,6 +211,110 @@ export const esMessages: HydraMessages = {
   footerCredit: "Creado con propósito · El Salvador",
 };
 
+/** Brazilian Portuguese; used for pt and pt-BR unless the application overrides it. */
+export const ptBRMessages: HydraMessages = {
+  loading: "Carregando",
+  loadingContent: "Carregando conteúdo",
+  loadingHydra: "Carregando Hydra…",
+  closeDialog: "Fechar diálogo",
+  dismissNotification: "Dispensar notificação",
+  notifications: "Notificações",
+  pauseNotifications: "Pausar fechamento automático",
+  resumeNotifications: "Retomar fechamento automático",
+  queuedNotifications: (count) => `${count} na fila`,
+  notificationActionFailed:
+    "Não foi possível concluir a ação. Tente novamente.",
+  confirm: "Continuar",
+  cancel: "Cancelar",
+  showPassword: "Mostrar senha",
+  hidePassword: "Ocultar senha",
+  fileSelectionHint:
+    "Apenas seleção; os arquivos não são enviados automaticamente.",
+  assetHierarchy: "Hierarquia de ativos",
+  breadcrumb: "Caminho de navegação",
+  menu: "Menu",
+  explore: "Explorar",
+  pagination: "Paginação",
+  previousPage: "Página anterior",
+  nextPage: "Próxima página",
+  page: (n) => `Página ${n}`,
+  pagesFor: (name) => `Páginas de ${name}`,
+  progressSteps: "Etapas do progresso",
+  complete: "concluído",
+  tabs: "Abas",
+  filter: "Filtro",
+  resetFilter: (name) => `Redefinir ${name.toLowerCase()}`,
+  position: (n, total) => `${n} de ${total}`,
+  colorTheme: "Tema de cores",
+  useLight: "Usar tema claro",
+  useDark: "Usar tema escuro",
+  letLightIn: "Deixar a luz entrar",
+  afterDark: "Ao anoitecer",
+  daylight: "Luz do dia",
+  nocturne: "Noturno",
+  chooseDate: "Escolher data",
+  previousMonth: "Mês anterior",
+  nextMonth: "Próximo mês",
+  scrollableTable: "Tabela rolável",
+  remaining: "Restante",
+  timeline: "Linha do tempo",
+  progress: "Progresso",
+  carousel: "Carrossel",
+  carouselRole: "carrossel",
+  slideRole: "slide",
+  previousSlide: "Slide anterior",
+  nextSlide: "Próximo slide",
+  gallery: "Galeria",
+  before: "Antes",
+  after: "Depois",
+  comparison: "Comparação",
+  rotatingText: "Texto rotativo",
+  pauseText: "Pausar texto rotativo",
+  resumeText: "Retomar texto rotativo",
+  pause: "Pausar",
+  resume: "Retomar",
+  code: "Código",
+  codeExample: (language) => `Exemplo de ${language}`,
+  phonePreview: "Prévia de celular",
+  noOptions: "Nenhuma opção encontrada",
+  loadingOptions: "Carregando opções",
+  requiredOption: "Escolha uma opção da lista.",
+  clearSelection: "Limpar seleção",
+  showOptions: "Mostrar opções",
+  selectedOptions: "Opções selecionadas",
+  options: "Opções",
+  remove: (name) => `Remover ${name}`,
+  tags: "Etiquetas",
+  tagLimit: "O limite de etiquetas foi atingido.",
+  requiredTag: "Adicione pelo menos uma etiqueta.",
+  startDate: "Data inicial",
+  endDate: "Data final",
+  chooseDates: "Escolher datas",
+  invalidRange: "A data final deve ser igual ou posterior à data inicial.",
+  noRecords: "Nenhum registro encontrado.",
+  loadingRecords: "Carregando registros",
+  retry: "Tentar novamente",
+  selectPage: "Selecionar esta página",
+  selectRow: (name) => `Selecionar ${name}`,
+  tableSummary: (page, pages, count, selected) =>
+    `Página ${page} de ${pages} · ${count} ${count === 1 ? "registro" : "registros"} · ${selected} ${selected === 1 ? "selecionado" : "selecionados"}`,
+  loadingData: "Carregando…",
+  loadError: "Não foi possível carregar os dados",
+  noData: "Nenhum dado disponível.",
+  viewError: "Não foi possível carregar esta página",
+  viewErrorHint:
+    "Tente novamente ou recarregue para obter a versão mais recente. Alterações não salvas podem ser perdidas ao recarregar.",
+  reload: "Recarregar aplicativo",
+  report: "Relatório",
+  image: "Imagem",
+  archive: "Arquivo compactado",
+  file: "Arquivo",
+  footerTagline: "Conheça seu território. Proteja o que importa.",
+  footerHeadline: "Clareza além",
+  footerHorizon: "do horizonte.",
+  footerCredit: "Criado com propósito · El Salvador",
+};
+
 export interface HydraLocale {
   locale: string;
   direction: "ltr" | "rtl";
@@ -209,7 +327,7 @@ export const LocaleContext = createContext<HydraLocale>({
 });
 export interface LocaleProviderProps {
   children: ReactNode;
-  /** BCP 47 locale. English and Spanish messages are included; other locales use English fallback. */
+  /** BCP 47 locale. English, Spanish and Brazilian Portuguese are included; other languages fall back to English. */
   locale?: string;
   direction?: "ltr" | "rtl";
   /** Partial, typed overrides. Explicit component labels take precedence. */
@@ -241,7 +359,9 @@ export function LocaleProvider({
         ...(locale && locale !== parent.locale
           ? language === "es"
             ? esMessages
-            : enMessages
+            : language === "pt"
+              ? ptBRMessages
+              : enMessages
           : parent.messages),
         ...messages,
       },
