@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Consolidate form identity and descriptions, inherit field state, preserve native size attributes and forward PasswordInput refs.
+- Add accessible busy buttons, shared control geometry and scoped comfortable/compact density for forms, cards, tables and menus.
+- Share collision-aware, native top-layer positioning between dropdowns and tooltips, preserving theme scope and nested dialog Escape behavior.
+- Add an application foundations showcase and focused Chromium, Firefox and WebKit interaction/accessibility coverage.
+
 - Pin the Firebase Node transport to `@grpc/grpc-js@1.13.6` in the workspace and bundled starter to resolve GHSA-m9gg-hp2v-232j and GHSA-f596-whhp-79r4 found by remote CI. Document the required consumer override; Firebase itself is not downgraded.
 
 - Cover all 68 daisyUI component families with exported Vitral React components, including native dialogs/drawers, keyboard menus/tabs, a bounded date calendar, OTP, validation, galleries and mockups. No new dependency is required.

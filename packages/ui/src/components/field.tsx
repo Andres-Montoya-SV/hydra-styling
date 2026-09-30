@@ -1,96 +1,151 @@
-import { createContext, forwardRef, useContext, useId, type HTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
+import {
+  Children, Fragment, createContext, forwardRef, isValidElement, useContext, useId,
+  type AriaAttributes, type HTMLAttributes, type InputHTMLAttributes,
+  type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes,
+} from "react";
 import { cn } from "../lib/cn";
+import type { ControlSize } from "./density";
 
-type FieldContextValue = { id: string; invalid: boolean; describedBy?: string };
+type FieldContextValue = {
+  id: string; invalid: boolean; describedBy?: string; controlSize: ControlSize;
+  disabled?: boolean; readOnly?: boolean; required?: boolean;
+};
 const FieldContext = createContext<FieldContextValue | null>(null);
 
 export interface FieldProps extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  label: string;
-  hint?: string;
-  error?: string;
+  label: ReactNode;
+  hint?: ReactNode;
+  error?: ReactNode;
   optional?: boolean;
+  optionalLabel?: ReactNode;
+  /** Identity of the control, separate from the wrapper's native id. */
+  controlId?: string;
+  controlSize?: ControlSize;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
   children: ReactNode;
 }
 
-export function Field({ label, hint, error, optional, children, className, ...props }: FieldProps) {
-  const id = useId();
-  const descriptionId = hint || error ? `${id}-description` : undefined;
+function childControlId(children: ReactNode): string | undefined {
+  const elements = Children.toArray(children).filter(isValidElement);
+  if (elements.length !== 1) return undefined;
+  const child = elements[0];
+  const props = child.props as { id?: string; children?: ReactNode };
+  if (child.type === Fragment) return childControlId(props.children);
+  if (typeof child.type !== "string" || ["input", "select", "textarea"].includes(child.type))
+    return props.id;
+  return undefined;
+}
+function descriptions(...values: (string | undefined)[]) {
+  return [...new Set(values.flatMap(value => value?.split(/\s+/).filter(Boolean) ?? []))].join(" ") || undefined;
+}
+export interface FieldControlOptions extends Pick<AriaAttributes, "aria-invalid" | "aria-describedby"> {
+  id?: string;
+  controlSize?: ControlSize;
+  disabled?: boolean;
+  readOnly?: boolean;
+  required?: boolean;
+}
+/** Use in composite controls so identity, errors and descriptions stay connected. */
+export function useFieldControl(options: FieldControlOptions = {}) {
+  const field = useContext(FieldContext);
+  return {
+    id: field?.id ?? options.id,
+    "aria-invalid": options["aria-invalid"] ?? (field?.invalid || undefined),
+    "aria-describedby": descriptions(field?.describedBy, options["aria-describedby"]),
+    controlSize: options.controlSize ?? field?.controlSize ?? "md",
+    disabled: options.disabled ?? field?.disabled,
+    readOnly: options.readOnly ?? field?.readOnly,
+    required: options.required ?? field?.required,
+  };
+}
+
+export function Field({
+  label, hint, error, optional, optionalLabel = "Optional", children, className,
+  controlId, controlSize = "md", disabled, readOnly, required, ...props
+}: FieldProps) {
+  const generatedId = useId();
+  const id = controlId ?? childControlId(children) ?? generatedId;
+  const hintId = hint ? id + "-hint" : undefined;
+  const errorId = error ? id + "-error" : undefined;
   return (
-    <FieldContext.Provider value={{ id, invalid: Boolean(error), describedBy: descriptionId }}>
-      <div className={cn("grid min-w-0 gap-2", className)} {...props}>
+    <FieldContext.Provider value={{
+      id, invalid: Boolean(error), describedBy: descriptions(hintId, errorId),
+      controlSize, disabled, readOnly, required,
+    }}>
+      <div {...props} className={cn("hydra-field grid min-w-0", className)}>
         <label htmlFor={id} className="flex items-center justify-between text-sm font-semibold text-hydra-text">
           <span>{label}</span>
-          {optional && <span className="text-xs font-normal text-hydra-muted">Optional</span>}
+          {optional && !required && <span className="text-xs font-normal text-hydra-muted">{optionalLabel}</span>}
         </label>
         {children}
-        {(error || hint) && (
-          <p id={descriptionId} className={cn("text-xs", error ? "text-hydra-danger" : "text-hydra-muted")}>
-            {error ?? hint}
-          </p>
-        )}
+        {hint && <p id={hintId} className="text-xs text-hydra-muted">{hint}</p>}
+        {error && <p id={errorId} className="text-xs text-hydra-danger">{error}</p>}
       </div>
     </FieldContext.Provider>
   );
 }
+function isInvalid(value: AriaAttributes["aria-invalid"]) {
+  return value !== undefined && value !== false && value !== "false";
+}
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & { leading?: ReactNode; trailing?: ReactNode };
-
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  leading?: ReactNode;
+  trailing?: ReactNode;
+  /** Visual size; native numeric size keeps its HTML meaning. */
+  controlSize?: ControlSize;
+  inputClassName?: string;
+}
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, leading, trailing, id, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props }, ref) => {
-    const field = useContext(FieldContext);
-    const invalid = ariaInvalid ?? field?.invalid;
+  ({ className, inputClassName, leading, trailing, id, controlSize, disabled, readOnly, required,
+    "aria-invalid": invalid, "aria-describedby": describedBy, ...props }, ref) => {
+    const { controlSize: size, ...control } = useFieldControl({
+      id, controlSize, disabled, readOnly, required, "aria-invalid": invalid, "aria-describedby": describedBy,
+    });
     return (
-      <div className={cn("hydra-control group flex items-center gap-2", invalid && "hydra-control-invalid", className)}>
-        {leading && <span className="shrink-0 text-hydra-accent" aria-hidden="true">{leading}</span>}
-        <input
-          ref={ref}
-          id={id ?? field?.id}
-          aria-invalid={invalid || undefined}
-          aria-describedby={ariaDescribedBy ?? field?.describedBy}
-          className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-hydra-text outline-none placeholder:text-hydra-muted"
-          {...props}
-        />
-        {trailing && <span className="shrink-0 text-hydra-muted" aria-hidden="true">{trailing}</span>}
+      <div className={cn("hydra-control hydra-input group flex items-center gap-2", "hydra-size-" + size,
+        isInvalid(control["aria-invalid"]) && "hydra-control-invalid", className)}
+        data-disabled={control.disabled || undefined} data-readonly={control.readOnly || undefined}>
+        {leading && <span className="shrink-0 text-hydra-accent">{leading}</span>}
+        <input {...props} {...control} ref={ref} className={cn("hydra-input-element min-w-0 flex-1 bg-transparent text-hydra-text outline-none placeholder:text-hydra-muted", inputClassName)} />
+        {trailing && <span className="shrink-0 text-hydra-muted">{trailing}</span>}
       </div>
     );
   },
 );
 Input.displayName = "Input";
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<HTMLTextAreaElement>>(
-  ({ className, id, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, ...props }, ref) => {
-    const field = useContext(FieldContext);
-    const invalid = ariaInvalid ?? field?.invalid;
-    return (
-      <textarea
-        ref={ref}
-        id={id ?? field?.id}
-        aria-invalid={invalid || undefined}
-        aria-describedby={ariaDescribedBy ?? field?.describedBy}
-        className={cn("hydra-control min-h-28 resize-y bg-transparent px-3.5 py-3 text-sm text-hydra-text outline-none placeholder:text-hydra-muted", invalid && "hydra-control-invalid", className)}
-        {...props}
-      />
-    );
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  controlSize?: ControlSize;
+}
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, id, controlSize, disabled, readOnly, required, "aria-invalid": invalid,
+    "aria-describedby": describedBy, ...props }, ref) => {
+    const { controlSize: size, ...control } = useFieldControl({
+      id, controlSize, disabled, readOnly, required, "aria-invalid": invalid, "aria-describedby": describedBy,
+    });
+    return <textarea {...props} {...control} ref={ref} className={cn(
+      "hydra-control hydra-textarea resize-y bg-transparent text-hydra-text outline-none placeholder:text-hydra-muted",
+      "hydra-size-" + size, isInvalid(control["aria-invalid"]) && "hydra-control-invalid", className,
+    )} />;
   },
 );
 Textarea.displayName = "Textarea";
 
-export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
-  ({ className, id, "aria-invalid": ariaInvalid, "aria-describedby": ariaDescribedBy, children, ...props }, ref) => {
-    const field = useContext(FieldContext);
-    const invalid = ariaInvalid ?? field?.invalid;
-    return (
-      <select
-        ref={ref}
-        id={id ?? field?.id}
-        aria-invalid={invalid || undefined}
-        aria-describedby={ariaDescribedBy ?? field?.describedBy}
-        className={cn("hydra-control h-10 w-full appearance-none bg-hydra-canvas px-3.5 text-sm text-hydra-text outline-none", invalid && "hydra-control-invalid", className)}
-        {...props}
-      >
-        {children}
-      </select>
-    );
+export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+  controlSize?: ControlSize;
+}
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+  ({ className, id, controlSize, disabled, required, "aria-invalid": invalid,
+    "aria-describedby": describedBy, children, ...props }, ref) => {
+    const { controlSize: size, readOnly: _readOnly, ...control } = useFieldControl({
+      id, controlSize, disabled, required, "aria-invalid": invalid, "aria-describedby": describedBy,
+    });
+    return <select {...props} {...control} ref={ref} className={cn(
+      "hydra-control hydra-select w-full bg-hydra-canvas text-hydra-text outline-none", "hydra-size-" + size,
+      isInvalid(control["aria-invalid"]) && "hydra-control-invalid", className,
+    )}>{children}</select>;
   },
 );
 Select.displayName = "Select";

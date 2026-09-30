@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./catalog.css";
+@import "./foundations.css";
 @source "./**/*.{ts,tsx}";
 
 @theme inline {
@@ -129,10 +130,10 @@
 }
 
 .hydra-theme { min-height:100%; background-color:var(--hs-canvas); color:var(--hs-text); }
-:root, [data-hydra-theme] { transition:background-color .7s ease,color .7s ease; }
+:root, [data-hydra-theme] { transition:background-color var(--hs-motion-theme) ease,color var(--hs-motion-theme) ease; }
 
 @layer components {
-  .hydra-button { position:relative; isolation:isolate; border-radius:.45rem; transition-duration:200ms; }
+  .hydra-button { position:relative; isolation:isolate; border-radius:var(--hs-radius-control); transition-duration:var(--hs-motion-fast); }
   .hydra-button-primary {
     border:1px solid color-mix(in srgb,var(--hs-accent) 75%,var(--hs-glass-ice));
     background-color:var(--hs-accent);
@@ -146,11 +147,11 @@
   .hydra-button-danger { background-color:#a32949; border:1px solid #b93a59; }
   .hydra-button-danger:hover:not(:disabled) { background-color:#8e1c39; }
   .hydra-control {
-    min-width:0; width:100%; min-height:2.625rem; padding-inline:.875rem;
-    border:1px solid var(--hs-control-line); border-radius:.4rem;
+    min-width:0; width:100%; min-height:var(--hs-control-height-md); padding-inline:var(--hs-control-padding-md);
+    border:1px solid var(--hs-control-line); border-radius:var(--hs-radius-control);
     background:linear-gradient(118deg,transparent 0 91%,color-mix(in srgb,var(--hs-glass-cyan) 20%,transparent) 91% 91.5%,transparent 91.5%),linear-gradient(48deg,transparent 0 95%,color-mix(in srgb,var(--hs-glass-violet) 12%,transparent) 95%),linear-gradient(115deg,var(--hs-glass-shine),transparent 38%),var(--hs-surface);
     box-shadow:inset 0 1px 4px color-mix(in srgb,var(--hs-shadow) 12%,transparent),inset 0 -1px 0 var(--hs-glass-shine);
-    transition:border-color .2s ease,box-shadow .2s ease;
+    transition:border-color var(--hs-motion-fast) ease,box-shadow var(--hs-motion-fast) ease;
   }
   .hydra-control:hover:not(:disabled):not(:has(:disabled)) { border-color:var(--hs-accent); }
   .hydra-control:focus,.hydra-control:focus-within {
@@ -161,9 +162,9 @@
   .hydra-control:disabled,.hydra-control:has(:disabled) { opacity:.5; cursor:not-allowed; }
   select.hydra-control { appearance:auto; padding-right:.6rem; }
   input::file-selector-button { border:1px solid var(--hs-control-line); border-radius:.25rem; padding:.3rem .65rem; margin-right:.75rem; background:var(--hs-surface-strong); color:var(--hs-text); }
-  .hydra-card { min-width:0; position:relative; border:1px solid var(--hs-line); border-radius:.75rem; }
+  .hydra-card { min-width:0; position:relative; border:1px solid var(--hs-line); border-radius:var(--hs-radius-surface); }
   .hydra-card::before { content:""; position:absolute; left:1rem; right:1rem; top:-1px; height:1px; background:linear-gradient(90deg,transparent,var(--hs-glass-cyan),var(--hs-glass-violet),transparent); opacity:.7; pointer-events:none; }
-  .hydra-card-float { box-shadow:0 8px 28px color-mix(in srgb,var(--hs-shadow) 14%,transparent),inset 0 1px 0 var(--hs-glass-shine); transition:border-color .25s ease,box-shadow .25s ease; }
+  .hydra-card-float { box-shadow:0 8px 28px color-mix(in srgb,var(--hs-shadow) 14%,transparent),inset 0 1px 0 var(--hs-glass-shine); transition:border-color var(--hs-motion-normal) ease,box-shadow var(--hs-motion-normal) ease; }
   .hydra-card-float:not(.hydra-parchment):not(.hydra-card-danger) { background-image:linear-gradient(130deg,var(--hs-glass-shine),transparent 32%); }
   .hydra-parchment { background:linear-gradient(135deg,#edf5ff,#dbe9f7); color:var(--hs-ink); }
   .hydra-parchment .text-hydra-text { color:var(--hs-ink); }
@@ -269,7 +270,7 @@
 @property --hs-graph-ip { syntax:"<color>"; inherits:true; initial-value:#88ddc8; }
 @property --hs-graph-service { syntax:"<color>"; inherits:true; initial-value:#c1acf5; }
 @property --hs-graph-vulnerability { syntax:"<color>"; inherits:true; initial-value:#ff9cae; }
-:root, [data-hydra-theme] { transition: --hs-canvas 700ms cubic-bezier(.22,.68,0,1), --hs-surface 700ms cubic-bezier(.22,.68,0,1), --hs-surface-strong 700ms cubic-bezier(.22,.68,0,1), --hs-line 700ms cubic-bezier(.22,.68,0,1), --hs-control-line 700ms cubic-bezier(.22,.68,0,1), --hs-text 700ms cubic-bezier(.22,.68,0,1), --hs-muted 700ms cubic-bezier(.22,.68,0,1), --hs-accent 700ms cubic-bezier(.22,.68,0,1), --hs-accent-ink 700ms cubic-bezier(.22,.68,0,1), --hs-on-accent 700ms cubic-bezier(.22,.68,0,1), --hs-orange 700ms cubic-bezier(.22,.68,0,1), --hs-success 700ms cubic-bezier(.22,.68,0,1), --hs-warning 700ms cubic-bezier(.22,.68,0,1), --hs-danger 700ms cubic-bezier(.22,.68,0,1), --hs-info 700ms cubic-bezier(.22,.68,0,1), --hs-focus 700ms cubic-bezier(.22,.68,0,1), --hs-ink 700ms cubic-bezier(.22,.68,0,1), --hs-shadow 700ms cubic-bezier(.22,.68,0,1), --hs-lead 700ms cubic-bezier(.22,.68,0,1), --hs-glass-blue 700ms cubic-bezier(.22,.68,0,1), --hs-glass-cyan 700ms cubic-bezier(.22,.68,0,1), --hs-glass-violet 700ms cubic-bezier(.22,.68,0,1), --hs-glass-ice 700ms cubic-bezier(.22,.68,0,1), --hs-glass-shine 700ms cubic-bezier(.22,.68,0,1), --hs-graph-edge 700ms cubic-bezier(.22,.68,0,1), --hs-graph-domain 700ms cubic-bezier(.22,.68,0,1), --hs-graph-subdomain 700ms cubic-bezier(.22,.68,0,1), --hs-graph-ip 700ms cubic-bezier(.22,.68,0,1), --hs-graph-service 700ms cubic-bezier(.22,.68,0,1), --hs-graph-vulnerability 700ms cubic-bezier(.22,.68,0,1); }
+:root, [data-hydra-theme] { transition: --hs-canvas var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-surface var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-surface-strong var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-line var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-control-line var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-text var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-muted var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-accent var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-accent-ink var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-on-accent var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-orange var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-success var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-warning var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-danger var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-info var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-focus var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-ink var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-shadow var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-lead var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-glass-blue var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-glass-cyan var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-glass-violet var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-glass-ice var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-glass-shine var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-edge var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-domain var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-subdomain var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-ip var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-service var(--hs-motion-theme) cubic-bezier(.22,.68,0,1), --hs-graph-vulnerability var(--hs-motion-theme) cubic-bezier(.22,.68,0,1); }
 
 [data-hydra-motion="off"], [data-hydra-motion="off"] *, [data-hydra-motion="off"] *::before, [data-hydra-motion="off"] *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
 [data-hydra-motion="off"] .hydra-button:active { transform:none!important; }

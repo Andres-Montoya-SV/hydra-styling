@@ -27,7 +27,7 @@ try {
     }
     for(const entry of ['@hydra-security/ui/styles.css','@hydra-security/ui/firebase-rules/firestore.rules','@hydra-security/ui/firebase-rules/storage.rules']) require.resolve(entry);
     const ui=await import('@hydra-security/ui');
-    for(const name of ['Calendar','Modal','Tabs','OtpInput','Dropdown','CodeMockup']) {
+    for(const name of ['Calendar','Modal','Tabs','OtpInput','Dropdown','CodeMockup','DensityProvider','useFieldControl','PasswordInput']) {
       if(!ui[name] || !require('@hydra-security/ui')[name]) throw Error('Missing catalog export: '+name);
     }
     const {createElement}=await import('react');

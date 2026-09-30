@@ -14,6 +14,11 @@ The repository showcase provides searchable previews and usage examples at
 `/#components`; the [catalog guide](https://github.com/Andres-Montoya-SV/hydra-styling/blob/main/docs/component-catalog.md)
 documents exact coverage and behavior.
 
+Use `DensityProvider` to scope comfortable/compact layouts. Fields share visual
+sizes and connect labels, help and errors; buttons support an accessible `loading`
+state. See [application foundations](https://github.com/Andres-Montoya-SV/hydra-styling/blob/main/docs/foundations.md)
+for composition contracts and the live `/#components/foundations` examples.
+
 ```tsx
 import {Button, ErrorBoundary, MotionProvider} from '@hydra-security/ui';
 import '@hydra-security/ui/styles.css';
