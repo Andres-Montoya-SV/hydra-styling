@@ -169,7 +169,7 @@ const outputs = [
     "apps/showcase/src/component-api.generated.json",
     JSON.stringify(sorted, null, 2) + "\n",
   ],
-  ["docs/api.md", markdown.join("\n") + "\n"],
+  ["docs/api.md", markdown.join("\n").trimEnd() + "\n"],
 ];
 for (const [path, content] of outputs) {
   if (process.argv.includes("--check")) {

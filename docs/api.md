@@ -1665,4 +1665,3 @@ Decorative architectural panes; keep these behind, never over, readable content.
 | children | `ReactNode` | yes | — |  |
 | className | `string \| undefined` | no | — |  |
 | title | `string` | yes | — |  |
-
