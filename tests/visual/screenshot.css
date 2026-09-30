@@ -1,0 +1,3 @@
+/* Exclude the surrounding sticky application chrome from component-only captures.
+   Keep the preview's own headers, inputs, popovers and scroll geometry intact. */
+header.sticky { visibility: hidden !important; }

@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import {
   useId,
   useRef,
@@ -25,11 +26,14 @@ export function Link({
 
 export function Breadcrumbs({
   items,
-  label = "Breadcrumb",
+  label,
 }: {
   items: { label: string; href?: string }[];
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.breadcrumb;
+
   return (
     <nav aria-label={label}>
       <ol className="hydra-breadcrumbs">
@@ -53,7 +57,7 @@ export function Breadcrumbs({
 export function Menu({
   items,
   activeId,
-  label = "Menu",
+  label,
   orientation = "vertical",
   className,
 }: {
@@ -63,6 +67,9 @@ export function Menu({
   orientation?: "vertical" | "horizontal";
   className?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.menu;
+
   return (
     <nav
       aria-label={label}
@@ -118,12 +125,15 @@ export function Navbar({
 }
 
 export function MegaMenu({
-  label = "Explore",
+  label,
   groups,
 }: {
   label?: string;
   groups: { title: string; items: NavigationItem[] }[];
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.explore;
+
   const root = useRef<HTMLDetailsElement>(null);
   return (
     <details
@@ -160,13 +170,16 @@ export function Pagination({
   page,
   totalPages,
   onPageChange,
-  label = "Pagination",
+  label,
 }: {
   page: number;
   totalPages: number;
   onPageChange: (page: number) => void;
   label?: string;
 }) {
+  const { messages, direction } = useHydraLocale();
+  if (label === undefined) label = messages.pagination;
+
   const count = Math.max(
       1,
       Math.floor(Number.isFinite(totalPages) ? totalPages : 1),
@@ -185,10 +198,10 @@ export function Pagination({
         size="sm"
         variant="outline"
         disabled={current === 1}
-        aria-label="Previous page"
+        aria-label={messages.previousPage}
         onClick={() => onPageChange(current - 1)}
       >
-        ‹
+        {direction === "rtl" ? "›" : "‹"}
       </Button>
       {pages.map((n, i) => (
         <span key={n} className="hydra-pagination-item">
@@ -196,7 +209,7 @@ export function Pagination({
           <Button
             size="sm"
             variant={n === current ? "primary" : "outline"}
-            aria-label={`Page ${n}`}
+            aria-label={messages.page(n)}
             aria-current={n === current ? "page" : undefined}
             onClick={() => onPageChange(n)}
           >
@@ -208,10 +221,10 @@ export function Pagination({
         size="sm"
         variant="outline"
         disabled={current === count}
-        aria-label="Next page"
+        aria-label={messages.nextPage}
         onClick={() => onPageChange(current + 1)}
       >
-        ›
+        {direction === "rtl" ? "‹" : "›"}
       </Button>
     </nav>
   );
@@ -220,12 +233,15 @@ export function Pagination({
 export function Steps({
   steps,
   current,
-  label = "Progress steps",
+  label,
 }: {
   steps: string[];
   current: number;
   label?: string;
 }) {
+  const { messages } = useHydraLocale();
+  if (label === undefined) label = messages.progressSteps;
+
   return (
     <ol aria-label={label} className="hydra-steps">
       {steps.map((step, i) => (
@@ -239,7 +255,7 @@ export function Steps({
           </span>
           <span>
             {step}
-            {i < current && <span className="sr-only"> — complete</span>}
+            {i < current && <span className="sr-only"> — {messages.complete}</span>}
           </span>
         </li>
       ))}
@@ -258,7 +274,7 @@ export function Tabs({
   value,
   defaultValue,
   onValueChange,
-  label = "Tabs",
+  label,
 }: {
   items: TabItem[];
   value?: string;
@@ -266,6 +282,9 @@ export function Tabs({
   onValueChange?: (value: string) => void;
   label?: string;
 }) {
+  const { messages, direction } = useHydraLocale();
+  if (label === undefined) label = messages.tabs;
+
   const [selected, set] = useControllable(
     value,
     defaultValue ?? items.find((i) => !i.disabled)?.id ?? "",
@@ -294,7 +313,7 @@ export function Tabs({
                 : e.key === "End"
                   ? enabled.length - 1
                   : (index +
-                      (e.key === "ArrowRight" ? 1 : -1) +
+                      (e.key === "ArrowRight" ? 1 : -1) * (direction === "rtl" ? -1 : 1) +
                       enabled.length) %
                     enabled.length;
             const item = enabled[next];

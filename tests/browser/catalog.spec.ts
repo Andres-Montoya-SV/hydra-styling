@@ -5,7 +5,7 @@ async function component(page: import("@playwright/test").Page, id: string) {
   await page.goto(`/#components/${id}`);
   const card = page.locator(`[data-component="${id}"]`);
   await expect(card).toBeVisible();
-  return card;
+  return card.locator(".catalog-card-preview");
 }
 
 test("all 68 components are discoverable by category, search and direct link", async ({

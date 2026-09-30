@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import {
   createContext,
   useContext,
@@ -77,13 +78,15 @@ export function useHydraTheme() {
 }
 
 export function ThemeToggle({ className }: { className?: string }) {
+  const { messages } = useHydraLocale();
+
   const { theme, setTheme } = useHydraTheme();
   const dark = theme === "nocturne";
   return (
     <Button
       variant="outline"
       className={className}
-      aria-label={`Use ${dark ? "light" : "dark"} theme`}
+      aria-label={dark ? messages.useLight : messages.useDark}
       onClick={() => setTheme(dark ? "daylight" : "nocturne")}
     >
       <svg
@@ -105,7 +108,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         )}
       </svg>
       <span className="hydra-theme-toggle-label">
-        {dark ? "Let light in" : "After dark"}
+        {dark ? messages.letLightIn : messages.afterDark}
       </span>
     </Button>
   );

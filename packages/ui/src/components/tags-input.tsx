@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { forwardRef, useEffect, useId, useImperativeHandle, useRef, useState, type InputHTMLAttributes } from "react";
 import { Input, useFieldControl } from "./field";
 import { useControllable } from "./catalog-shared";
@@ -17,12 +18,18 @@ export interface TagsInputProps extends Omit<InputHTMLAttributes<HTMLInputElemen
 }
 export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(function TagsInput({
   label, value, defaultValue = [], onValueChange, maxTags = 20, validateTag,
-  removeLabel = tag => "Remove " + tag, limitMessage = "The tag limit has been reached.",
-  requiredMessage = "Add at least one tag.", controlSize, id, name, disabled, readOnly, required,
+  removeLabel, limitMessage,
+  requiredMessage, controlSize, id, name, disabled, readOnly, required,
   "aria-describedby": describedBy, "aria-invalid": invalid, onKeyDown, onPaste, className, ...props
 }, forwardedRef) {
+  const { messages } = useHydraLocale();
+  if (removeLabel === undefined) removeLabel = messages.remove;
+  if (limitMessage === undefined) limitMessage = messages.tagLimit;
+  if (requiredMessage === undefined) requiredMessage = messages.requiredTag;
+
   const [tags, setTags] = useControllable(value, defaultValue, onValueChange);
-  const [draft, setDraft] = useState(""), [error, setError] = useState("");
+  const [draft, setDraft] = useState(""), [tagError, setTagError] = useState<string | { type: "limit" }>("");
+  const error = typeof tagError === "string" ? tagError : limitMessage;
   const input = useRef<HTMLInputElement>(null), generatedId = useId();
   const control = useFieldControl({ id, disabled, readOnly, required, controlSize, "aria-describedby": describedBy, "aria-invalid": invalid });
   const locked = control.disabled || control.readOnly, errorId = generatedId + "-message";
@@ -30,26 +37,26 @@ export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(function T
   useEffect(() => { input.current?.setCustomValidity(error || (control.required && tags.length === 0 ? requiredMessage : "")); }, [tags.length, control.required, requiredMessage, error]);
   useEffect(() => {
     const form = input.current?.form;
-    const reset = () => { if (value === undefined) setTags(defaultValue); setDraft(""); setError(""); };
+    const reset = () => { if (value === undefined) setTags(defaultValue); setDraft(""); setTagError(""); };
     form?.addEventListener("reset", reset);
     return () => form?.removeEventListener("reset", reset);
   }, [value, defaultValue, setTags]);
   function add(text: string) {
     if (locked) return;
     const next = [...tags], rejected: string[] = [];
-    let message = "";
+    let message: typeof tagError = "";
     for (const item of text.split(/[,\n]+/).map(t => t.trim()).filter(Boolean)) {
       if (next.includes(item)) continue;
       const problem = validateTag?.(item);
-      if (problem || next.length >= maxTags) { message ||= problem ?? limitMessage; rejected.push(item); }
+      if (problem || next.length >= maxTags) { message ||= problem ?? { type: "limit" }; rejected.push(item); }
       else next.push(item);
     }
     if (next.length !== tags.length) setTags(next);
-    setDraft(rejected.join(", ")); setError(message);
+    setDraft(rejected.join(", ")); setTagError(message);
   }
   return <div className={"hydra-tags-input " + (className ?? "")}>
     {label && <label htmlFor={control.id ?? generatedId} className="hydra-label">{label}</label>}
-    {tags.length > 0 && <ul className="hydra-token-list" aria-label={label ?? "Tags"}>
+    {tags.length > 0 && <ul className="hydra-token-list" aria-label={label ?? messages.tags}>
       {tags.map(tag => <li key={tag}><span>{tag}</span><button type="button" disabled={locked}
         aria-label={removeLabel(tag)} onClick={() => { setTags(tags.filter(t => t !== tag)); input.current?.focus(); }}>×</button></li>)}
     </ul>}
@@ -57,7 +64,7 @@ export const TagsInput = forwardRef<HTMLInputElement, TagsInputProps>(function T
       aria-required={control.required || undefined}
       aria-invalid={error ? true : control["aria-invalid"]}
       aria-describedby={[control["aria-describedby"], error ? errorId : undefined].filter(Boolean).join(" ") || undefined}
-      onChange={event => { setDraft(event.target.value); setError(""); }}
+      onChange={event => { setDraft(event.target.value); setTagError(""); }}
       onKeyDown={event => {
         onKeyDown?.(event);
         if (event.defaultPrevented || event.nativeEvent.isComposing || locked) return;
