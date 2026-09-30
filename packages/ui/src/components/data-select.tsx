@@ -80,7 +80,14 @@ const Picker = forwardRef<HTMLInputElement, PickerProps>(function Picker({
     return () => document.removeEventListener("pointerdown", outside);
   }, [open]);
   useEffect(() => {
-    if (open && highlighted) document.getElementById(listId + "-" + options.indexOf(highlighted))?.scrollIntoView?.({ block: "nearest" });
+    // Scroll only the list. scrollIntoView can also scroll page ancestors of a
+    // top-layer popover in Firefox/WebKit and move its anchor out of view.
+    const surface = popup.current;
+    const option = highlighted && document.getElementById(listId + "-" + options.indexOf(highlighted));
+    if (!open || !surface || !option) return;
+    const bounds = surface.getBoundingClientRect(), item = option.getBoundingClientRect();
+    if (item.top < bounds.top) surface.scrollTop -= bounds.top - item.top;
+    else if (item.bottom > bounds.bottom) surface.scrollTop += item.bottom - bounds.bottom;
   }, [open, highlighted?.value, listId, options]);
   useEffect(() => { if (locked) close(); }, [locked]);
   function choose(option: SelectOption) {
