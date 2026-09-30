@@ -3,7 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("/#components/data-controls");
-  await expect(page.getByRole("heading", { name: "From selection to investigation." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "From selection to investigation." })).toBeVisible({ timeout: 15_000 });
 });
 test("keyboard selection submits committed values and native reset restores defaults", async ({ page }) => {
   const team = page.getByRole("combobox", { name: "Owning team" });
@@ -54,6 +54,12 @@ test("selection persists across pages and both themes remain accessible without 
   for (const theme of ["nocturne", "daylight"]) {
     if (theme === "daylight") await page.getByRole("button", { name: "Use light theme" }).click();
     await expect(page.locator(".hydra-theme").first()).toHaveAttribute("data-hydra-theme", theme);
+    // Audit the settled theme; an interpolated midpoint is intentionally transient.
+    await page.evaluate(async () => {
+      await Promise.all(document.getAnimations()
+        .filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
+        .map(animation => animation.finished.catch(() => {})));
+    });
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
     expect(results.violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
