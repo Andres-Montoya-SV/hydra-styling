@@ -39,7 +39,7 @@ OrganizationPicker accumulates pages with “Load more organizations”; refresh
 
 ## Motion and accessibility
 
-Anime.js owns entry/focus effects; Framer Motion owns card hover and ocean transforms. Avoid animating the same transform on one DOM node with both engines. The shared provider stops effects for hidden documents, reduced-motion preferences and explicit opt-out; it cleans up listeners and animations. Ocean effects remain decorative and cannot intercept input. Keep the ocean background mounted only once per app shell.
+Anime.js owns entry/focus effects; Framer Motion owns card hover and loader transforms. Avoid animating the same transform on one DOM node with both engines. The shared provider stops effects for hidden documents, reduced-motion preferences and explicit opt-out; it cleans up listeners and animations. Vitral backgrounds remain static and decorative and cannot intercept input. Keep the Vitral background mounted only once per app shell.
 
 The browser suite runs desktop and narrow-screen Chromium, scans all four account previews in dark/light themes with axe, submits by keyboard, verifies reduced motion and exercises the real Firebase emulator starter. Automated axe scans are not a complete accessibility audit; still review focus order, screen-reader announcements and glass backgrounds manually. See [Playwright accessibility guidance](https://playwright.dev/docs/accessibility-testing).
 

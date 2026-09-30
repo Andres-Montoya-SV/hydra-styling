@@ -14,7 +14,7 @@ import {
   Card,
   CardContent,
   ResourceState,
-  MotionProvider, OceanBackground, SiteLoader,
+  MotionProvider, VitralBackground, ThemeProvider, ThemeToggle, SiteLoader,
 } from "@hydra-security/ui";
 import {
   initializeHydraFirebase,
@@ -114,8 +114,8 @@ function Account() {
 }
 function App() {
   return (
-    <main className="starter-shell"><OceanBackground/>
-      <HydraMark wordmark className="starter-logo" />
+    <main className="starter-shell"><VitralBackground/>
+      <div className="starter-bar"><HydraMark wordmark className="starter-logo"/><ThemeToggle/></div>
       <PublicOnly loading={<SiteLoader label="Checking your session…"/>}>
         <Login />
       </PublicOnly>
@@ -148,9 +148,9 @@ async function start() {
   }
   await setPersistence(services.auth, browserSessionPersistence);
   appRoot.render(
-    <ErrorBoundary><MotionProvider><div className="hydra-ocean-shell"><FirebaseProvider services={services}>
+    <ErrorBoundary><MotionProvider><ThemeProvider storageKey="hydra:theme"><div className="hydra-ocean-shell"><FirebaseProvider services={services}>
       <App />
-    </FirebaseProvider></div></MotionProvider></ErrorBoundary>,
+    </FirebaseProvider></div></ThemeProvider></MotionProvider></ErrorBoundary>,
   );
 }
 const appRoot=createRoot(document.getElementById('root')!);

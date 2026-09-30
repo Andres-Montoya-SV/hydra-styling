@@ -10,3 +10,18 @@ it('bounds zoom and resets the view',()=>{render(<AssetMap nodes={nodes} edges={
 it('reports dangling edges instead of hiding them',()=>{render(<AssetMap nodes={[]} edges={[{source:'missing',target:'other',label:'invalid'}]}/>);expect(screen.getByRole('alert')).toHaveTextContent('references an unknown asset');});
 it('handles an empty valid graph',()=>{render(<AssetMap nodes={[]} edges={[]}/>);expect(screen.getByText('No assets to display.')).toBeInTheDocument();});
 it('expands in place and clears the selected asset',()=>{render(<AssetMap nodes={nodes} edges={[]}/>);fireEvent.click(screen.getByRole('button',{name:'Expand map'}));expect(screen.getByRole('button',{name:'Reduce map'})).toHaveAttribute('aria-pressed','true');fireEvent.click(screen.getByRole('button',{name:'HTTPS, service'}));fireEvent.click(screen.getByRole('button',{name:'Clear selection'}));expect(screen.getByRole('button',{name:'HTTPS, service'})).toHaveAttribute('aria-pressed','false');});
+it('search highlights matches without removing assets or breaking keyboard selection',()=>{
+ render(<AssetMap nodes={nodes} edges={[{source:'a',target:'b',label:'exposes'}]}/>);
+ fireEvent.change(screen.getByRole('searchbox',{name:'Find asset'}),{target:{value:'HTTPS'}});
+ expect(screen.getByRole('status',{name:'Search results'})).toHaveTextContent('1 matching assets');
+ expect(screen.getByRole('button',{name:'example.com, domain'})).toBeInTheDocument();
+ fireEvent.keyDown(screen.getByRole('button',{name:'HTTPS, service'}),{key:'Enter'});
+ expect(screen.getByText('example.com → exposes → HTTPS')).toBeInTheDocument();
+});
+it('retains unsaved session positions when upstream discovery adds an asset',()=>{
+ const {rerender}=render(<AssetMap nodes={nodes} edges={[]}/>);
+ fireEvent.keyDown(screen.getByRole('button',{name:'example.com, domain'}),{key:'ArrowRight'});
+ rerender(<AssetMap nodes={[...nodes,{id:'new',label:'new.example.com',kind:'subdomain',x:400,y:300}]} edges={[]}/>);
+ expect(screen.getByRole('button',{name:'example.com, domain'})).toHaveAttribute('transform','translate(510 250)');
+ expect(screen.getByRole('button',{name:'new.example.com, subdomain'})).toBeInTheDocument();
+});

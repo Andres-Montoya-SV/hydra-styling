@@ -1,3 +1,5 @@
+> The current art direction is [Vitral](vitral.md). The catalog below includes legacy motifs for compatibility.
+
 # Icon and input expansion
 
 216 namespaced SVG assets adapted from the supplied archive. The existing HydraMark
@@ -23,4 +25,4 @@ branches, inspired by https://markmap.js.org/docs/markmap. Supply a finite tree 
 unique node IDs. It is a hierarchy, not a general cyclic graph: shared infrastructure
 and cross-links require a graph model. Example data is synthetic, not a live scan.
 
-This iteration has type, component and build checks; visual browser QA is pending.
+See `vitral.md` and the browser suite for current visual and accessibility validation.

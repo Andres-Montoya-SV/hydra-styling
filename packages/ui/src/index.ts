@@ -18,5 +18,9 @@ export { Stat, type StatProps } from "./components/stat";
 export { DocumentCard, type DocumentCardProps, type DocumentKind } from "./components/document-card";
 export { HydraMark, FolkSun, type HydraMarkProps } from "./components/hydra-mark";
 export {OceanBackground, SiteLoader} from './components/ocean';
+export {RoseWindow, VitralBackdrop, VitralBackground} from './components/vitral';
+export {ThemeProvider, ThemeToggle, useHydraTheme, resolveHydraTheme, type HydraTheme, type HydraThemeInput} from './components/theme';
 
 export {ErrorBoundary} from './components/error-boundary';
+
+export {layoutAssetGraph} from './lib/graph-layout';
