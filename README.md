@@ -228,3 +228,10 @@ MIT © Hydra Security
 - [Changelog](CHANGELOG.md)
 
 `npm run check` requires Node 24, Java 21, the Firebase tooling setup and Playwright Chromium. It runs browser/accessibility and clean-package consumer checks as well as the existing build, unit and security-rule gates. See the integration guide for setup.
+
+### Feedback and three-language static UI
+
+Visit `/#components/feedback` for custom alerts, snackbars, async notification actions,
+AlertDialog and Popover. The site language selector supports EN, ES and PT-BR.
+See [feedback contracts](docs/notifications.md), [translation scope](docs/localization.md)
+and the [64-family shadcn comparison](docs/shadcn-coverage.md).

@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased — feedback and localization
+
+- Add custom alert actions/dismissal, Snackbar, scoped notification queues, AlertDialog and Popover.
+- Add the complete pt-BR base dictionary and persistent EN/ES/PT-BR showcase selection.
+- Translate catalog/static feedback copy; preserve business data, route IDs and source examples.
+- Document all 64 shadcn families with explicit gaps; retain the 68-family daisyUI inventory.
+- Add async/queue/focus/localization tests and six reviewed visual scenarios.
+- Prevent initial profile snapshots from discarding early edits and retain combobox queries during native focus scrolling.
+
 ## Unreleased
 
 - Add a scoped, SSR-safe LocaleProvider with English/Spanish base-component messages, typed overrides and directional keyboard behavior; expose language/density/state previews.

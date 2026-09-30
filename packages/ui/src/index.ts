@@ -37,4 +37,6 @@ export {Combobox, MultiSelect, type ComboboxProps, type MultiSelectProps, type S
 export {TagsInput, type TagsInputProps} from "./components/tags-input";
 export {DateRangePicker, type DateRangeValue, type DateRangePickerProps} from "./components/date-range-picker";
 export {DataTable, type DataColumn, type DataSorting, type DataTableProps} from "./components/data-table";
-export {LocaleProvider, useHydraLocale, enMessages, esMessages, type HydraMessages, type HydraLocale, type LocaleProviderProps} from "./components/locale";
+export {LocaleProvider, useHydraLocale, enMessages, esMessages, ptBRMessages, type HydraMessages, type HydraLocale, type LocaleProviderProps} from "./components/locale";
+export {Snackbar, NotificationProvider, useNotifications, type SnackbarProps, type NotificationTone, type NotificationAction, type NotificationOptions, type Notifications, type NotificationProviderProps} from "./components/notifications";
+export {AlertDialog, Popover, type AlertDialogProps, type PopoverProps} from "./components/application-overlays";

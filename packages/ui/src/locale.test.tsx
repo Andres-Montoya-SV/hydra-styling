@@ -169,3 +169,33 @@ it("RTL reverses horizontal tab and calendar movement while retaining Home/End b
     within(grid).getByRole("button", { name: "Tuesday, September 15, 2026" }),
   ).toHaveFocus();
 });
+
+it("provides a complete Brazilian Portuguese dictionary with date and validation behavior", async () => {
+  const { enMessages, ptBRMessages } = await import("./index");
+  expect(Object.keys(ptBRMessages).sort()).toEqual(
+    Object.keys(enMessages).sort(),
+  );
+  const html = renderToString(
+    <LocaleProvider locale="pt-BR">
+      <Calendar defaultValue="2026-09-14" />
+      <Button loading>Salvar</Button>
+    </LocaleProvider>,
+  );
+  expect(html).toContain('lang="pt-BR"');
+  expect(html).toContain("setembro de 2026");
+  expect(html).toContain("Carregando");
+  const view = render(
+    <LocaleProvider locale="en-US">
+      <TagsInput label="Labels" defaultValue={["one"]} maxTags={1} />
+    </LocaleProvider>,
+  );
+  fireEvent.change(screen.getByRole("textbox"), { target: { value: "two" } });
+  fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter" });
+  view.rerender(
+    <LocaleProvider locale="pt-BR">
+      <TagsInput label="Labels" defaultValue={["one"]} maxTags={1} />
+    </LocaleProvider>,
+  );
+  expect(screen.getByRole("status")).toHaveTextContent(ptBRMessages.tagLimit);
+  expect(screen.getByRole("textbox")).toHaveValue("two");
+});

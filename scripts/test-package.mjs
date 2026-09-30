@@ -31,7 +31,7 @@ try {
     for(const ui of [await import('@hydra-security/ui'),require('@hydra-security/ui')]) {
       const html=renderToString(createElement(ui.Button,null,'Inspect'));
       if(!html.includes('Inspect')) throw Error('UI-only SSR failed');
-      for(const name of ['Combobox','MultiSelect','TagsInput','DateRangePicker','DataTable','LocaleProvider','useHydraLocale','esMessages'])
+      for(const name of ['Combobox','MultiSelect','TagsInput','DateRangePicker','DataTable','LocaleProvider','useHydraLocale','esMessages','ptBRMessages','Snackbar','NotificationProvider','useNotifications','AlertDialog','Popover'])
         if(!ui[name]) throw Error('Missing data export: '+name);
     }
     await import('@hydra-security/ui/hydra');require('@hydra-security/ui/hydra');
@@ -62,7 +62,7 @@ try {
     if(!renderToString(createElement(ui.Calendar,{defaultValue:'2026-09-30'})).includes('September 2026')) throw Error('Calendar SSR failed in installed package.');
     const {readFileSync}=await import('node:fs');
     const css=readFileSync(require.resolve('@hydra-security/ui/styles.css'),'utf8');
-    if(!css.includes('.hydra-calendar') || !css.includes('.hydra-modal')) throw Error('Catalog styles missing from package.');
+    if(!css.includes('.hydra-calendar') || !css.includes('.hydra-modal') || !css.includes('.hydra-snackbar') || !css.includes('.hydra-popover')) throw Error('Catalog styles missing from package.');
     const grpc=require('@grpc/grpc-js/package.json').version.split('.').map(Number);
     if(grpc[0]<1 || (grpc[0]===1 && (grpc[1]<13 || (grpc[1]===13 && grpc[2]<6)))) throw Error('Starter installed an affected gRPC transport.');
   `],{cwd:app,stdio:'inherit'});

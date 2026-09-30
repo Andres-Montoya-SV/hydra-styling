@@ -8,6 +8,11 @@ test.beforeEach(async ({ page }) => {
 test("keyboard selection submits committed values and native reset restores defaults", async ({ page }) => {
   const team = page.getByRole("combobox", { name: "Owning team" });
   await team.fill("secu");
+  // WebKit can fill an offscreen field without scrolling to it. Bring its
+  // anchor into view before checking the popup, retaining the entered query.
+  await team.scrollIntoViewIfNeeded();
+  await expect(team).toBeInViewport();
+  await expect(team).toHaveValue("secu");
   await expect(page.getByRole("listbox")).toHaveAttribute("data-hydra-floating", "top-layer");
   await team.press("Enter");
   await expect(team).toHaveValue("Security");

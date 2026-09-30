@@ -1,3 +1,4 @@
+import { useShowcaseText } from "./showcase-i18n";
 import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Badge,
@@ -9,6 +10,7 @@ import {
   VitralBackdrop,
   DensityProvider,
   LocaleProvider,
+  useHydraLocale,
   Field,
   Select,
   type HydraDensity,
@@ -19,6 +21,7 @@ import HydraExtras from "./HydraExtras";
 import FoundationsPreview from "./FoundationsPreview";
 import DataControlsPreview from "./DataControlsPreview";
 const ConsistencyPreview = lazy(() => import("./ConsistencyPreview"));
+const FeedbackPreview = lazy(() => import("./FeedbackPreview"));
 const ApiReference = lazy(() => import("./ApiReference"));
 import {
   catalog,
@@ -34,8 +37,10 @@ function CatalogCard({
   entry: CatalogEntry;
   detail?: boolean;
 }) {
+  const t = useShowcaseText();
+  const { locale: siteLocale } = useHydraLocale();
   const [density, setDensity] = useState<HydraDensity>("comfortable"),
-    [locale, setLocale] = useState("en-US");
+    [locale, setLocale] = useState("");
   return (
     <article
       className={`catalog-card${detail ? " catalog-card-detail" : ""}`}
@@ -44,35 +49,37 @@ function CatalogCard({
     >
       <header>
         <div>
-          <p className="catalog-card-category">{entry.category}</p>
+          <p className="catalog-card-category">{t(entry.category)}</p>
           <h2 id={`catalog-title-${entry.id}`}>
             <a href={`#components/${entry.id}`}>{entry.name}</a>
           </h2>
         </div>
         <code>{entry.api}</code>
       </header>
-      <p className="catalog-card-description">{entry.description}</p>
+      <p className="catalog-card-description">{t(entry.description)}</p>
       {detail && (
         <div className="catalog-detail-settings">
-          <Field label="Component density">
+          <Field label={t("Component density")}>
             <Select
               value={density}
               onChange={(e) => setDensity(e.target.value as HydraDensity)}
             >
-              <option value="comfortable">Comfortable</option>
-              <option value="compact">Compact</option>
+              <option value="comfortable">{t("Comfortable")}</option>
+              <option value="compact">{t("Compact")}</option>
             </Select>
           </Field>
-          <Field label="Component language">
+          <Field label={t("Component language")}>
             <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+              <option value="">{t("Use site language")}</option>
               <option value="en-US">English</option>
               <option value="es-SV">Español</option>
+              <option value="pt-BR">Português (Brasil)</option>
             </Select>
           </Field>
         </div>
       )}
       <div className="catalog-card-preview">
-        <LocaleProvider locale={locale} className="contents">
+        <LocaleProvider locale={locale || siteLocale} className="contents">
           <DensityProvider density={density} className="contents">
             <ComponentPreview id={entry.id} />
           </DensityProvider>
@@ -80,21 +87,22 @@ function CatalogCard({
       </div>
       <details className="catalog-code" open={detail || undefined}>
         <summary>
-          Usage example <span aria-hidden="true">⌘</span>
+          {t("Usage example")}
+          <span aria-hidden="true">⌘</span>
         </summary>
         <div>
           <CodeMockup language="tsx" caption={entry.api} code={entry.code} />
           <p>
-            Import from <code>@hydra-security/ui</code>. Supply your application
-            data and callbacks.
+            {t("Import from")} <code>@hydra-security/ui</code>
+            {t(". Supply your application data and callbacks.")}
           </p>
           <Link href={entry.source} target="_blank" rel="noreferrer">
-            daisyUI reference ↗
+            {t("daisyUI reference ↗")}
           </Link>
         </div>
       </details>
       {detail && (
-        <Suspense fallback={<p role="status">Loading API reference…</p>}>
+        <Suspense fallback={<p role="status">{t("Loading API reference…")}</p>}>
           <ApiReference exports={entry.api} />
         </Suspense>
       )}
@@ -102,6 +110,7 @@ function CatalogCard({
   );
 }
 export default function ComponentCatalog() {
+  const t = useShowcaseText();
   const [search, setSearch] = useState(""),
     [category, setCategory] = useState<CatalogCategory | "All">("All"),
     [selected, setSelected] = useState("");
@@ -120,7 +129,7 @@ export default function ComponentCatalog() {
   const filtered = catalog.filter(
     (item) =>
       (category === "All" || item.category === category) &&
-      `${item.name} ${item.api} ${item.description}`
+      `${item.name} ${item.api} ${item.description} ${t(item.description)} ${t(item.category)}`
         .toLowerCase()
         .includes(search.toLowerCase().trim()),
   );
@@ -135,36 +144,45 @@ export default function ComponentCatalog() {
       <section className="catalog-intro">
         <VitralBackdrop />
         <div className="catalog-intro-copy">
-          <Badge severity="info">VITRAL / COMPONENT LIBRARY</Badge>
-          <h1>Glass, made functional.</h1>
+          <Badge severity="info">{t("VITRAL / COMPONENT LIBRARY")}</Badge>
+          <h1>{t("Glass, made functional.")}</h1>
           <p>
-            One visual language. Every building block.
+            {t("One visual language. Every building block.")}
             <br />
-            Explore {catalog.length} interactive components, from a single input
-            to an entire workspace.
+            {t(
+              "Explore {count} interactive components, from a single input to an entire workspace.",
+              { count: catalog.length },
+            )}
           </p>
           <div className="catalog-intro-meta">
-            <span>{catalog.length} COMPONENTS</span>
-            <span>7 CATEGORIES</span>
-            <span>2 THEMES</span>
+            <span>{t("{count} COMPONENTS", { count: catalog.length })}</span>
+            <span>{t("7 CATEGORIES")}</span>
+            <span>{t("2 THEMES")}</span>
           </div>
         </div>
         <RoseWindow className="catalog-intro-window" />
       </section>
       <Link className="catalog-foundations-link" href="#components/foundations">
-        Explore application foundations →
+        {t("Explore application foundations →")}
       </Link>
       <Link
         className="catalog-foundations-link"
         href="#components/data-controls"
       >
-        Explore data controls →
+        {t("Explore data controls →")}
       </Link>
       <Link className="catalog-foundations-link" href="#components/consistency">
-        Explore states and language →
+        {t("Explore states and language →")}
       </Link>
-      {selected === "consistency" ? (
-        <Suspense fallback={<p role="status">Loading state preview…</p>}>
+      <Link className="catalog-foundations-link" href="#components/feedback">
+        {t("Explore alerts and notifications →")}
+      </Link>
+      {selected === "feedback" ? (
+        <Suspense fallback={<p role="status">{t("Loading state preview…")}</p>}>
+          <FeedbackPreview />
+        </Suspense>
+      ) : selected === "consistency" ? (
+        <Suspense fallback={<p role="status">{t("Loading state preview…")}</p>}>
           <ConsistencyPreview />
         </Suspense>
       ) : selected === "data-controls" ? (
@@ -173,26 +191,34 @@ export default function ComponentCatalog() {
         <FoundationsPreview />
       ) : entry ? (
         <>
-          <nav className="catalog-detail-nav" aria-label="Component navigation">
+          <nav
+            className="catalog-detail-nav"
+            aria-label={t("Component navigation")}
+          >
             <Button variant="ghost" onClick={showAll}>
               <ArrowLeft size={16} />
-              All components
+              {t("All components")}
             </Button>
             <div>
               {index > 0 && (
                 <Link
                   href={`#components/${catalog[index - 1].id}`}
-                  aria-label={`Previous component: ${catalog[index - 1].name}`}
+                  aria-label={t("Previous component: {name}", {
+                    name: catalog[index - 1].name,
+                  })}
                 >
-                  ← Previous
+                  {t("← Previous")}
                 </Link>
               )}
               {index < catalog.length - 1 && (
                 <Link
                   href={`#components/${catalog[index + 1].id}`}
-                  aria-label={`Next component: ${catalog[index + 1].name}`}
+                  aria-label={t("Next component: {name}", {
+                    name: catalog[index + 1].name,
+                  })}
                 >
-                  Next <ArrowRight size={14} />
+                  {t("Next")}
+                  <ArrowRight size={14} />
                 </Link>
               )}
             </div>
@@ -203,21 +229,27 @@ export default function ComponentCatalog() {
         <>
           <div className="catalog-tools">
             <label className="catalog-search">
-              <span className="sr-only">Search components</span>
+              <span className="sr-only">{t("Search components")}</span>
               <Input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search components…"
-                aria-label="Search components"
+                placeholder={t("Search components…")}
+                aria-label={t("Search components")}
                 leading={<Search size={16} />}
               />
             </label>
             <span className="catalog-result-count" role="status">
-              {filtered.length} of {catalog.length} components
+              {t("{shown} of {count} components", {
+                shown: filtered.length,
+                count: catalog.length,
+              })}
             </span>
           </div>
-          <nav className="catalog-categories" aria-label="Component categories">
+          <nav
+            className="catalog-categories"
+            aria-label={t("Component categories")}
+          >
             {(["All", ...categories] as const).map((item) => (
               <Button
                 key={item}
@@ -226,7 +258,7 @@ export default function ComponentCatalog() {
                 aria-pressed={category === item}
                 onClick={() => setCategory(item)}
               >
-                {item}
+                {t(item)}
                 <span>
                   {item === "All"
                     ? catalog.length
@@ -237,7 +269,7 @@ export default function ComponentCatalog() {
           </nav>
           {selected && !entry && (
             <p role="status" className="catalog-empty">
-              That component could not be found. Choose one below.
+              {t("That component could not be found. Choose one below.")}
             </p>
           )}
           <div className="catalog-grid">
@@ -247,25 +279,29 @@ export default function ComponentCatalog() {
           </div>
           {!filtered.length && (
             <div className="catalog-empty">
-              <h2>No matching components</h2>
-              <p>Try another name or reset the filters.</p>
+              <h2>{t("No matching components")}</h2>
+              <p>{t("Try another name or reset the filters.")}</p>
               <Button variant="outline" onClick={showAll}>
-                Reset filters
+                {t("Reset filters")}
               </Button>
             </div>
           )}
         </>
       )}
       {!entry &&
-        !["foundations", "data-controls", "consistency"].includes(selected) &&
+        !["foundations", "data-controls", "consistency", "feedback"].includes(
+          selected,
+        ) &&
         !search &&
         category === "All" && <HydraExtras />}
       <footer className="catalog-footnote">
-        Component coverage based on the daisyUI catalog · Original Hydra
-        implementations and Vitral styling.
+        {t(
+          "Component coverage based on the daisyUI catalog · Original Hydra implementations and Vitral styling.",
+        )}
         <br />
-        Previews use demonstration data. Interactive controls do not run scans
-        or send requests.
+        {t(
+          "Previews use demonstration data. Interactive controls do not run scans or send requests.",
+        )}
       </footer>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import {
   createUserWithEmailAndPassword,
   EmailAuthProvider,
@@ -221,7 +221,9 @@ function ProfileFields() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+  const dirty = useRef({ displayName: false, username: false });
   useEffect(() => {
+    dirty.current = { displayName: false, username: false };
     setLoaded("");
     setError("");
     setSaved(false);
@@ -229,8 +231,10 @@ function ProfileFields() {
     return onSnapshot(
       doc(services.db, "users", safeSegment(user.uid)),
       (snap) => {
-        setName(String(snap.data()?.displayName ?? user.displayName ?? ""));
-        setUsername(String(snap.data()?.username ?? ""));
+        if (!dirty.current.displayName)
+          setName(String(snap.data()?.displayName ?? user.displayName ?? ""));
+        if (!dirty.current.username)
+          setUsername(String(snap.data()?.username ?? ""));
         setLoaded(user.uid);
       },
       () => setError("Profile could not be loaded."),
@@ -242,7 +246,7 @@ function ProfileFields() {
     );
   async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!user || busy) return;
+    if (!user || busy || loaded !== user.uid) return;
     setError("");
     setSaved(false);
     const result = profileSchema.safeParse({ displayName, username });
@@ -258,6 +262,9 @@ function ProfileFields() {
         ...result.data,
         updatedAt: serverTimestamp(),
       });
+      dirty.current = { displayName: false, username: false };
+      setName(result.data.displayName);
+      setUsername(result.data.username);
       setSaved(true);
     } catch (e) {
       setError(firebaseMessage(e));
@@ -266,20 +273,29 @@ function ProfileFields() {
     }
   }
   return (
-    <form onSubmit={submit} aria-label="Profile" className="grid gap-4">
+    <form
+      onSubmit={submit}
+      aria-label="Profile"
+      aria-busy={busy || loaded !== user.uid}
+      className="grid gap-4"
+    >
       <Field label="Account email">
         <Input value={user.email ?? ""} readOnly />
       </Field>
-      <Field label="Display name">
+      <Field label="Display name" disabled={busy || loaded !== user.uid}>
         <Input
           required
           maxLength={80}
           value={displayName}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            dirty.current.displayName = true;
+            setName(e.target.value);
+          }}
         />
       </Field>
       <Field
         label="Username"
+        disabled={busy || loaded !== user.uid}
         hint="Display identifier; not a unique login name."
       >
         <Input
@@ -287,7 +303,10 @@ function ProfileFields() {
           minLength={3}
           maxLength={32}
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            dirty.current.username = true;
+            setUsername(e.target.value);
+          }}
         />
       </Field>
       {error && <Alert tone="danger">{error}</Alert>}
