@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Make Firebase an optional peer for the separate `/firebase` entry. UI-only installations no longer install the Firebase SDK; Firebase consumers must declare it explicitly.
+- Replace Anime.js and Framer Motion with native Web Animations/CSS while preserving shared reduced-motion, visibility and opt-out behavior; verify both UI-only and Firebase package consumers.
+
 - Add form-aware Combobox, MultiSelect, TagsInput and DateRangePicker with keyboard selection, controlled values, native reset and validation.
 - Add generic DataTable with stable sorting, persistent page selection, remote pagination and explicit loading/error/empty states; demonstrate all controls in the showcase.
 

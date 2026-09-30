@@ -101,7 +101,12 @@ export function ScanForm() {
 
 The package supports React 18.3 and 19. It ships ESM, CommonJS, TypeScript declarations, and compiled CSS.
 
-The current Firebase SDK pins an older Node gRPC transport. Keep the following
+Firebase is an **optional peer dependency**. Installing the base UI does not install
+the SDK or an animation engine. To use `@hydra-security/ui/firebase`, explicitly
+install `firebase@12.19.0` (the starter already does). Motion uses browser-native
+Web Animations and CSS under one shared provider.
+
+For **Firebase consumers**, the current SDK pins an older Node gRPC transport. Keep the following
 override in the **consuming application's** `package.json` until Firebase updates
 that dependency. npm does not inherit a library's overrides. The repository and
 the supplied starter already include it:
