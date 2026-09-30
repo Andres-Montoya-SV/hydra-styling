@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Pin the Firebase Node transport to `@grpc/grpc-js@1.13.6` in the workspace and bundled starter to resolve GHSA-m9gg-hp2v-232j and GHSA-f596-whhp-79r4 found by remote CI. Document the required consumer override; Firebase itself is not downgraded.
+
 - Cover all 68 daisyUI component families with exported Vitral React components, including native dialogs/drawers, keyboard menus/tabs, a bounded date calendar, OTP, validation, galleries and mockups. No new dependency is required.
 - Replace the small component lab with a searchable, categorized catalog, direct component links and usage examples; preserve Hydra-specific examples.
 - Add keyboard, focus, constraint-validation and date-boundary tests; verify the full catalog in both themes and mobile layouts.

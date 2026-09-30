@@ -36,6 +36,8 @@ try {
     const {readFileSync}=await import('node:fs');
     const css=readFileSync(require.resolve('@hydra-security/ui/styles.css'),'utf8');
     if(!css.includes('.hydra-calendar') || !css.includes('.hydra-modal')) throw Error('Catalog styles missing from package.');
+    const grpc=require('@grpc/grpc-js/package.json').version.split('.').map(Number);
+    if(grpc[0]<1 || (grpc[0]===1 && (grpc[1]<13 || (grpc[1]===13 && grpc[2]<6)))) throw Error('Starter installed an affected gRPC transport.');
   `],{cwd:app,stdio:'inherit'});
   if(check.status!==0)throw new Error('Published exports failed the consumer smoke test.');
   console.log('Packed library installed and built in a clean consumer; ESM/CJS and rules exports passed.');

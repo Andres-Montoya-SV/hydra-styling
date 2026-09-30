@@ -2,6 +2,11 @@
 
 React components, Tailwind styling, EASM views and optional Firebase integration.
 
+Firebase currently pins a Node gRPC version affected by GHSA-m9gg-hp2v-232j and
+GHSA-f596-whhp-79r4. Include `"overrides": { "@grpc/grpc-js": "1.13.6" }` in your
+application's package.json (already configured in the bundled starter). npm does
+not propagate a dependency package's overrides to the application.
+
 Includes Vitral equivalents of all 68 daisyUI component families: dialogs, menus,
 tabs, calendars, OTP, validation, galleries, navigation, feedback and mockup frames.
 Each is exported from the main package with TypeScript types and compiled styles.

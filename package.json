@@ -39,6 +39,7 @@
     "@playwright/test": "1.63.0"
   },
   "overrides": {
-    "esbuild": "0.28.2"
+    "esbuild": "0.28.2",
+    "@grpc/grpc-js": "1.13.6"
   }
 }

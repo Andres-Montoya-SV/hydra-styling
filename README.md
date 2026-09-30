@@ -91,6 +91,17 @@ export function ScanForm() {
 
 The package supports React 18.3 and 19. It ships ESM, CommonJS, TypeScript declarations, and compiled CSS.
 
+The current Firebase SDK pins an older Node gRPC transport. Keep the following
+override in the **consuming application's** `package.json` until Firebase updates
+that dependency. npm does not inherit a library's overrides. The repository and
+the supplied starter already include it:
+
+```json
+{ "overrides": { "@grpc/grpc-js": "1.13.6" } }
+```
+
+This clears GHSA-m9gg-hp2v-232j and GHSA-f596-whhp-79r4 without downgrading Firebase.
+
 ## Hydra backend data
 
 Open **Hydra runs** in the showcase to import a real `output/<run_id>/assets.json`
