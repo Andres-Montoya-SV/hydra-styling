@@ -1,4 +1,4 @@
-import {mkdtemp,cp,writeFile,rm,readFile} from 'node:fs/promises';
+import {mkdtemp,mkdir,cp,writeFile,rm,readFile} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {spawnSync} from 'node:child_process';
@@ -12,6 +12,33 @@ function npm(args,cwd, capture=false){
 }
 try {
   const packed=JSON.parse(npm(['pack','-w','@hydra-security/ui','--json','--pack-destination',temp],root,true))[0];
+  const core=join(temp,'ui-only');
+  await mkdir(core);
+  await writeFile(join(core,'package.json'),JSON.stringify({private:true,type:'module',dependencies:{
+    '@hydra-security/ui':`file:${join(temp,packed.filename)}`,react:'19.3.0','react-dom':'19.3.0',
+  }}));
+  npm(['install','--ignore-scripts','--no-audit','--no-fund'],core);
+  const lock=JSON.parse(await readFile(join(core,'package-lock.json'),'utf8'));
+  for(const name of Object.keys(lock.packages)) {
+    if(/node_modules\/(?:firebase|@firebase\/[^/]+|animejs|framer-motion|motion-dom|motion-utils)$/.test(name))
+      throw new Error('UI-only install unexpectedly includes '+name);
+  }
+  const coreCheck=spawnSync(process.execPath,['--input-type=module','-e',`
+    import {createRequire} from 'node:module';
+    import {createElement} from 'react';
+    import {renderToString} from 'react-dom/server';
+    const require=createRequire(import.meta.url);
+    for(const ui of [await import('@hydra-security/ui'),require('@hydra-security/ui')]) {
+      const html=renderToString(createElement(ui.Button,null,'Inspect'));
+      if(!html.includes('Inspect')) throw Error('UI-only SSR failed');
+      for(const name of ['Combobox','MultiSelect','TagsInput','DateRangePicker','DataTable'])
+        if(!ui[name]) throw Error('Missing data export: '+name);
+    }
+    await import('@hydra-security/ui/hydra');require('@hydra-security/ui/hydra');
+    require.resolve('@hydra-security/ui/styles.css');
+  `],{cwd:core,stdio:'inherit'});
+  if(coreCheck.status!==0)throw new Error('UI-only consumer failed without Firebase.');
+  console.log('UI-only ESM/CJS/SSR consumer passed without Firebase or animation engines.');
   const app=join(temp,'consumer');
   await cp(join(root,'packages/ui/starter'),app,{recursive:true,filter:source=>!source.split('/').some(part=>['node_modules','dist'].includes(part))&&!source.endsWith('.env.local')});
   const pkg=JSON.parse(await readFile(join(app,'package.json'),'utf8'));
