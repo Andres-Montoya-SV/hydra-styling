@@ -34,6 +34,12 @@ Open `/#components/data-controls` for searchable selections, tags, date ranges a
 sortable/selectable tables with local or server-owned pages. See the
 [data control contracts and integration examples](docs/data-controls.md).
 
+Open `/#components/consistency` to inspect application states in English/Spanish,
+both text directions and both densities. Individual component pages include props
+generated from TypeScript. See [composition contracts](docs/component-contracts.md),
+[localization](docs/localization.md), [public API](docs/api.md) and
+[visual regression](docs/visual-testing.md).
+
 ## Why it is not a daisyUI theme
 
 daisyUI is a useful reference for API ergonomics, but using it as the foundation would couple Hydra's identity to generic component markup and global class names. Hydra UI instead uses typed React components, semantic design tokens, and Tailwind-generated CSS. Consumers get predictable variants without inheriting a second design system.

@@ -1,6 +1,7 @@
 import { type HTMLAttributes, type ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { useHydraLocale } from "./locale";
 
 const alertVariants = cva("hydra-alert flex gap-3 border p-4 text-sm", {
   variants: {
@@ -36,6 +37,7 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
   showValue?: boolean;
 }
 export function Progress({ value, label, showValue = true, className, ...props }: ProgressProps) {
+  const { messages } = useHydraLocale();
   const safeValue = Math.min(100, Math.max(0, value));
   return (
     <div className={cn("grid gap-2", className)} {...props}>
@@ -44,7 +46,7 @@ export function Progress({ value, label, showValue = true, className, ...props }
           <span>{label}</span><span>{showValue ? `${safeValue}%` : null}</span>
         </div>
       )}
-      <div className="h-2 overflow-hidden rounded-full bg-hydra-surface-strong" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={safeValue} aria-label={label}>
+      <div className="h-2 overflow-hidden rounded-full bg-hydra-surface-strong" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={safeValue} aria-label={label ?? messages.progress}>
         <div className="hydra-progress h-full rounded-full transition-[width] duration-500" style={{ width: `${safeValue}%` }} />
       </div>
     </div>

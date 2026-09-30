@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   Badge,
   Button,
@@ -7,12 +7,19 @@ import {
   Link,
   RoseWindow,
   VitralBackdrop,
+  DensityProvider,
+  LocaleProvider,
+  Field,
+  Select,
+  type HydraDensity,
 } from "@hydra-security/ui";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import ComponentPreview from "./ComponentPreview";
 import HydraExtras from "./HydraExtras";
 import FoundationsPreview from "./FoundationsPreview";
 import DataControlsPreview from "./DataControlsPreview";
+const ConsistencyPreview = lazy(() => import("./ConsistencyPreview"));
+const ApiReference = lazy(() => import("./ApiReference"));
 import {
   catalog,
   categories,
@@ -27,6 +34,8 @@ function CatalogCard({
   entry: CatalogEntry;
   detail?: boolean;
 }) {
+  const [density, setDensity] = useState<HydraDensity>("comfortable"),
+    [locale, setLocale] = useState("en-US");
   return (
     <article
       className={`catalog-card${detail ? " catalog-card-detail" : ""}`}
@@ -43,8 +52,31 @@ function CatalogCard({
         <code>{entry.api}</code>
       </header>
       <p className="catalog-card-description">{entry.description}</p>
+      {detail && (
+        <div className="catalog-detail-settings">
+          <Field label="Component density">
+            <Select
+              value={density}
+              onChange={(e) => setDensity(e.target.value as HydraDensity)}
+            >
+              <option value="comfortable">Comfortable</option>
+              <option value="compact">Compact</option>
+            </Select>
+          </Field>
+          <Field label="Component language">
+            <Select value={locale} onChange={(e) => setLocale(e.target.value)}>
+              <option value="en-US">English</option>
+              <option value="es-SV">Español</option>
+            </Select>
+          </Field>
+        </div>
+      )}
       <div className="catalog-card-preview">
-        <ComponentPreview id={entry.id} />
+        <LocaleProvider locale={locale} className="contents">
+          <DensityProvider density={density} className="contents">
+            <ComponentPreview id={entry.id} />
+          </DensityProvider>
+        </LocaleProvider>
       </div>
       <details className="catalog-code" open={detail || undefined}>
         <summary>
@@ -61,6 +93,11 @@ function CatalogCard({
           </Link>
         </div>
       </details>
+      {detail && (
+        <Suspense fallback={<p role="status">Loading API reference…</p>}>
+          <ApiReference exports={entry.api} />
+        </Suspense>
+      )}
     </article>
   );
 }
@@ -114,9 +151,27 @@ export default function ComponentCatalog() {
         </div>
         <RoseWindow className="catalog-intro-window" />
       </section>
-      <Link className="catalog-foundations-link" href="#components/foundations">Explore application foundations →</Link>
-      <Link className="catalog-foundations-link" href="#components/data-controls">Explore data controls →</Link>
-      {selected === "data-controls" ? <DataControlsPreview /> : selected === "foundations" ? <FoundationsPreview /> : entry ? (
+      <Link className="catalog-foundations-link" href="#components/foundations">
+        Explore application foundations →
+      </Link>
+      <Link
+        className="catalog-foundations-link"
+        href="#components/data-controls"
+      >
+        Explore data controls →
+      </Link>
+      <Link className="catalog-foundations-link" href="#components/consistency">
+        Explore states and language →
+      </Link>
+      {selected === "consistency" ? (
+        <Suspense fallback={<p role="status">Loading state preview…</p>}>
+          <ConsistencyPreview />
+        </Suspense>
+      ) : selected === "data-controls" ? (
+        <DataControlsPreview />
+      ) : selected === "foundations" ? (
+        <FoundationsPreview />
+      ) : entry ? (
         <>
           <nav className="catalog-detail-nav" aria-label="Component navigation">
             <Button variant="ghost" onClick={showAll}>
@@ -201,7 +256,10 @@ export default function ComponentCatalog() {
           )}
         </>
       )}
-      {!entry && !["foundations", "data-controls"].includes(selected) && !search && category === "All" && <HydraExtras />}
+      {!entry &&
+        !["foundations", "data-controls", "consistency"].includes(selected) &&
+        !search &&
+        category === "All" && <HydraExtras />}
       <footer className="catalog-footnote">
         Component coverage based on the daisyUI catalog · Original Hydra
         implementations and Vitral styling.

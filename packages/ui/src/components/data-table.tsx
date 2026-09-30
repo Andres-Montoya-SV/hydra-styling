@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import { useEffect, useId, useMemo, useRef, type ReactNode } from "react";
 import { Button } from "./button";
 import { Pagination } from "./catalog-navigation";
@@ -60,12 +61,21 @@ export function DataTable<T>({
   rows, columns, getRowId, caption, locale, mode = "client", totalRows,
   sorting, defaultSorting = null, onSortingChange, page, defaultPage = 1, pageSize = 25, onPageChange,
   selectable = false, selectedIds, defaultSelectedIds = [], onSelectionChange, isRowSelectable = () => true,
-  rowLabel = getRowId, loading = false, error, onRetry, emptyMessage = "No matching records.",
-  loadingMessage = "Loading records", retryLabel = "Try again", selectPageLabel = "Select this page",
-  selectRowLabel = label => "Select " + label,
-  summaryLabel = (current, pages, count, selected) => "Page " + current + " of " + pages + " · " + count + " records · " + selected + " selected",
+  rowLabel = getRowId, loading = false, error, onRetry, emptyMessage,
+  loadingMessage, retryLabel, selectPageLabel,
+  selectRowLabel,
+  summaryLabel,
   maxHeight, className,
 }: DataTableProps<T>) {
+  const { messages, locale: inheritedLocale } = useHydraLocale();
+  if (emptyMessage === undefined) emptyMessage = messages.noRecords;
+  if (loadingMessage === undefined) loadingMessage = messages.loadingRecords;
+  if (retryLabel === undefined) retryLabel = messages.retry;
+  if (selectPageLabel === undefined) selectPageLabel = messages.selectPage;
+  if (selectRowLabel === undefined) selectRowLabel = messages.selectRow;
+  if (summaryLabel === undefined) summaryLabel = messages.tableSummary;
+  locale ??= inheritedLocale;
+
   const [sort, setSort] = useControllable(sorting, defaultSorting, onSortingChange);
   const [current, setPage] = useControllable(page, defaultPage, onPageChange);
   const [selection, setSelection] = useControllable(selectedIds, defaultSelectedIds, onSelectionChange);
@@ -109,7 +119,9 @@ export function DataTable<T>({
               onClick={() => {
                 setSort({ columnId: column.id, direction: sort?.columnId === column.id && sort.direction === "asc" ? "desc" : "asc" });
                 setPage(1);
-              }}>{column.header}<span aria-hidden="true">{sort?.columnId === column.id ? sort.direction === "asc" ? " ↑" : " ↓" : " ↕"}</span></button> : column.header}
+              }}>{column.header}<svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d={sort?.columnId === column.id ? sort.direction === "asc" ? "M12 19V5m-5 5 5-5 5 5" : "M12 5v14m-5-5 5 5 5-5" : "M8 20V4m-4 4 4-4 4 4M16 4v16m-4-4 4 4 4-4"} />
+              </svg></button> : column.header}
           </th>)}
         </tr></thead>
         <tbody>{!error && visible.map(row => {
@@ -130,7 +142,7 @@ export function DataTable<T>({
     </div>
     <div className="hydra-data-table-footer">
       <p role="status">{loading ? loadingMessage : summaryLabel(displayedPage, pages, count, selection.length)}</p>
-      <fieldset disabled={loading || Boolean(error)}><Pagination page={displayedPage} totalPages={pages} onPageChange={setPage} label={caption + " pages"} /></fieldset>
+      <fieldset disabled={loading || Boolean(error)}><Pagination page={displayedPage} totalPages={pages} onPageChange={setPage} label={messages.pagesFor(caption)} /></fieldset>
     </div>
   </section>;
 }

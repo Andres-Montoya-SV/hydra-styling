@@ -31,7 +31,7 @@ try {
     for(const ui of [await import('@hydra-security/ui'),require('@hydra-security/ui')]) {
       const html=renderToString(createElement(ui.Button,null,'Inspect'));
       if(!html.includes('Inspect')) throw Error('UI-only SSR failed');
-      for(const name of ['Combobox','MultiSelect','TagsInput','DateRangePicker','DataTable'])
+      for(const name of ['Combobox','MultiSelect','TagsInput','DateRangePicker','DataTable','LocaleProvider','useHydraLocale','esMessages'])
         if(!ui[name]) throw Error('Missing data export: '+name);
     }
     await import('@hydra-security/ui/hydra');require('@hydra-security/ui/hydra');

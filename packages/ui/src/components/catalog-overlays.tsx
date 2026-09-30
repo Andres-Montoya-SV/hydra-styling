@@ -1,3 +1,4 @@
+import { useHydraLocale } from "./locale";
 import {
   cloneElement,
   useEffect,
@@ -33,8 +34,11 @@ export function Modal({
   children,
   footer,
   className,
-  closeLabel = "Close dialog",
+  closeLabel,
 }: ModalProps) {
+  const { messages } = useHydraLocale();
+  if (closeLabel === undefined) closeLabel = messages.closeDialog;
+
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId(),
     descriptionId = useId();
@@ -360,9 +364,12 @@ export interface ToastProps {
 export function Toast({
   children,
   onDismiss,
-  dismissLabel = "Dismiss notification",
+  dismissLabel,
   tone = "info",
 }: ToastProps) {
+  const { messages } = useHydraLocale();
+  if (dismissLabel === undefined) dismissLabel = messages.dismissNotification;
+
   return (
     <div className="hydra-toast" data-tone={tone}>
       <div role={tone === "danger" ? "alert" : "status"}>{children}</div>
