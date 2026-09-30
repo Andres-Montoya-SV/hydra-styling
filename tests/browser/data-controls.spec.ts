@@ -52,10 +52,14 @@ test("selection persists across pages and both themes remain accessible without 
   await table.getByRole("checkbox", { name: "Select asset-011.example.com" }).check();
   await expect(table.getByRole("status")).toContainText("11 selected");
   for (const theme of ["nocturne", "daylight"]) {
+    // Start each theme audit at the same viewport. WebKit defers transitions
+    // on offscreen navigation; painting it first makes the settled audit real.
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     if (theme === "daylight") await page.getByRole("button", { name: "Use light theme" }).click();
     await expect(page.locator(".hydra-theme").first()).toHaveAttribute("data-hydra-theme", theme);
     // Audit the settled theme; an interpolated midpoint is intentionally transient.
     await page.evaluate(async () => {
+      await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
       await Promise.all(document.getAnimations()
         .filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
         .map(animation => animation.finished.catch(() => {})));
