@@ -33,3 +33,7 @@ export {Divider, Hero, Indicator, Join, Mask, Stack, BrowserMockup, CodeMockup, 
 
 export {DensityProvider, type DensityProviderProps, type HydraDensity, type ControlSize} from "./components/density";
 export type {FloatingPlacement} from "./lib/floating-position";
+export {Combobox, MultiSelect, type ComboboxProps, type MultiSelectProps, type SelectOption} from "./components/data-select";
+export {TagsInput, type TagsInputProps} from "./components/tags-input";
+export {DateRangePicker, type DateRangeValue, type DateRangePickerProps} from "./components/date-range-picker";
+export {DataTable, type DataColumn, type DataSorting, type DataTableProps} from "./components/data-table";

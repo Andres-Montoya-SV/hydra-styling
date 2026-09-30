@@ -85,7 +85,7 @@ button { -webkit-tap-highlight-color:transparent; }
 }
 
 /* Application foundations: the same controls composed into a working surface. */
-.catalog-foundations-link { display: inline-flex; margin-block: 1rem 1.5rem; }
+.catalog-foundations-link { display: inline-flex; margin-block: 1rem 1.5rem; margin-inline-end: 1.5rem; }
 .foundations-preview { display: grid; gap: 1.5rem; min-width: 0; }
 .foundations-heading { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
 .foundations-heading h2 { margin-top: .75rem; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 650; }

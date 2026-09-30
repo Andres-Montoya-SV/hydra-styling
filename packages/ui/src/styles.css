@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./catalog.css";
 @import "./foundations.css";
+@import "./data-controls.css";
 @source "./**/*.{ts,tsx}";
 
 @theme inline {

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add form-aware Combobox, MultiSelect, TagsInput and DateRangePicker with keyboard selection, controlled values, native reset and validation.
+- Add generic DataTable with stable sorting, persistent page selection, remote pagination and explicit loading/error/empty states; demonstrate all controls in the showcase.
+
 - Consolidate form identity and descriptions, inherit field state, preserve native size attributes and forward PasswordInput refs.
 - Add accessible busy buttons, shared control geometry and scoped comfortable/compact density for forms, cards, tables and menus.
 - Share collision-aware, native top-layer positioning between dropdowns and tooltips, preserving theme scope and nested dialog Escape behavior.
