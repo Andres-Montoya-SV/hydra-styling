@@ -120,28 +120,48 @@ test("theme colors interpolate and the animation switch can disable the transiti
       getComputedStyle(e).getPropertyValue("--hs-canvas"),
     );
   const before = await read();
-  await page.getByRole("button", { name: "Use light theme" }).click();
-  await page.evaluate(
-    () =>
-      new Promise((resolve) =>
-        requestAnimationFrame(() => requestAnimationFrame(resolve)),
-      ),
-  );
-  const during = await read();
-  await page.evaluate(async () => {
-    await Promise.all(
-      document
+  // Capture the real CSS transition in the theme mutation's microtask, then
+  // seek its timeline. RPC/runner latency must not decide which frame we test.
+  await boundary.evaluate((element) => {
+    const observer = new MutationObserver(() => {
+      const transition = element
         .getAnimations()
-        .filter((a) => a.effect?.getComputedTiming().iterations !== Infinity)
-        .map((a) => a.finished.catch(() => {})),
-    );
+        .find(
+          (animation) =>
+            animation instanceof CSSTransition &&
+            animation.transitionProperty === "--hs-canvas",
+        );
+      if (transition) {
+        transition.pause();
+        transition.currentTime =
+          Number(transition.effect!.getTiming().duration) / 2;
+        element.setAttribute(
+          "data-transition-sample",
+          getComputedStyle(element).getPropertyValue("--hs-canvas"),
+        );
+      }
+      observer.disconnect();
+    });
+    observer.observe(element, {
+      attributes: true,
+      attributeFilter: ["data-hydra-theme"],
+    });
+  });
+  await page.getByRole("button", { name: "Use light theme" }).click();
+  await expect(boundary).toHaveAttribute("data-transition-sample", /rgb/);
+  const during = await boundary.getAttribute("data-transition-sample");
+  await boundary.evaluate((element) => {
+    element.getAnimations().forEach((animation) => animation.finish());
+    element.removeAttribute("data-transition-sample");
   });
   const after = await read();
   expect(during).not.toBe(before);
   expect(during).not.toBe(after);
   await page.getByRole("switch", { name: "Animations" }).focus();
   await page.keyboard.press("Space");
-  await expect(page.getByRole("switch", { name: "Animations" })).not.toBeChecked();
+  await expect(
+    page.getByRole("switch", { name: "Animations" }),
+  ).not.toBeChecked();
   await page.getByRole("button", { name: "Use dark theme" }).click();
   expect(
     await boundary.evaluate((e) => getComputedStyle(e).transitionDuration),
