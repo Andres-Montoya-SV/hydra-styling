@@ -10,6 +10,20 @@ This repository contains:
 - components for actions, forms, findings, progress, statistics, and evidence files.
 - a custom vector Hydra mark. No external logo asset is required.
 
+## Component catalog
+
+Open **Components** (`/#components`) for equivalents of all **68 component families**
+in the daisyUI catalog checked on 2026-09-30. Search by name or React export, filter
+seven categories, interact with live previews, and expand usage examples. Each
+component has a direct link, for example `/#components/calendar`.
+
+All components use Vitral's Nocturne/Daylight tokens and the shared motion setting.
+Hydra-specific icons, evidence cards and specialized inputs remain available below
+the catalog. This is a React implementation, not daisyUI class-name compatibility
+or an implementation of every daisyUI example variant.
+
+See the [complete coverage map and integration guide](docs/component-catalog.md).
+
 ## Why it is not a daisyUI theme
 
 daisyUI is a useful reference for API ergonomics, but using it as the foundation would couple Hydra's identity to generic component markup and global class names. Hydra UI instead uses typed React components, semantic design tokens, and Tailwind-generated CSS. Consumers get predictable variants without inheriting a second design system.

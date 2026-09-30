@@ -17,11 +17,11 @@ const ProductScreen = lazy(() =>
 );
 import MapDemo, { demoMetrics } from "./MapDemo";
 const AccountScreen = lazy(() => import("./AccountScreen"));
+const ComponentCatalog = lazy(() => import("./ComponentCatalog"));
 import {
   Activity,
   ChevronRight,
   CircleDot,
-  FileDown,
   FileText,
   Fingerprint,
   Globe2,
@@ -43,11 +43,6 @@ import {
   X,
 } from "lucide-react";
 import {
-  HydraIcon,
-  PasswordInput,
-  RangeInput,
-  FileInput,
-  RadioGroup,
   MotionProvider,
   Motion,
   Footer,
@@ -64,16 +59,12 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-  Checkbox,
-  DocumentCard,
-  Field,
   HydraMark,
   Input,
   Progress,
   Select,
   Stat,
   Switch,
-  Textarea,
 } from "@hydra-security/ui";
 
 type Icon = ComponentType<SVGProps<SVGSVGElement>>;
@@ -395,198 +386,6 @@ function Dashboard({ navigate }: { navigate: (view: string) => void }) {
   );
 }
 
-function ComponentLab() {
-  const [profile, setProfile] = useState("passive");
-  return (
-    <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
-      <div>
-        <Badge severity="info">VITRAL / COMPONENT LIBRARY</Badge>
-        <h1 className="mt-3 font-display text-4xl font-bold">
-          Glass, made functional.
-        </h1>
-        <p className="mt-2 max-w-2xl text-hydra-muted">
-          Faceted controls, quiet surfaces and light with a purpose. One visual
-          language, from a single input to your entire workspace.
-        </p>
-      </div>
-      <div className="grid items-start gap-6 lg:grid-cols-2">
-        <Card className="lg:row-span-2">
-          <CardHeader>
-            <CardTitle>Inputs</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <Field label="Scan target" hint="Domain, IP, CIDR, or asset file">
-              <Input
-                leading={<Search className="size-4" />}
-                placeholder="example.com"
-              />
-            </Field>
-            <Field label="Profile">
-              <Select defaultValue="full">
-                <option value="full">Full reconnaissance</option>
-                <option value="passive">Passive discovery</option>
-              </Select>
-            </Field>
-            <Field label="Notes" optional>
-              <Textarea placeholder="Context for the security team…" />
-            </Field>
-            <Field
-              label="Validation state"
-              error="Enter a domain without a protocol."
-            >
-              <Input defaultValue="https://example.com" />
-            </Field>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-3">
-            <Button>
-              <Play className="size-4" />
-              Run scan
-            </Button>
-            <Button variant="secondary">Enumerate</Button>
-            <Button variant="outline">Compare</Button>
-            <Button variant="ghost">Cancel</Button>
-            <Button variant="danger">Delete</Button>
-            <Button disabled>Pending review</Button>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Preferences</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-5">
-            <Checkbox
-              label="Validate findings"
-              description="Reduce false positives with safe verification."
-              defaultChecked
-            />
-            <Switch
-              label="Continuous monitoring"
-              description="Watch the external attack surface."
-              defaultChecked
-            />
-            <Alert
-              tone="warning"
-              icon={<TriangleAlert className="size-5" />}
-              title="Potential disruption"
-            >
-              Active checks may trigger defensive controls.
-            </Alert>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Severity</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
-            <Badge severity="critical">Critical</Badge>
-            <Badge severity="high">High</Badge>
-            <Badge severity="medium">Medium</Badge>
-            <Badge severity="low">Low</Badge>
-            <Badge severity="info">Info</Badge>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>System iconography</CardTitle>
-          </CardHeader>
-          <CardContent className="grid grid-cols-3 gap-5">
-            {(
-              [
-                "01-general-ui/search",
-                "01-general-ui/menu",
-                "01-general-ui/close",
-                "03-recon-network/subdomain",
-                "02-states-severity/vulnerable",
-                "05-technologies/react",
-              ] as const
-            ).map((name) => (
-              <div key={name} className="grid justify-items-center gap-2">
-                <HydraIcon name={name} className="size-12" />
-                <span className="text-xs">{name.split("/")[1]}</span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Documents & evidence</CardTitle>
-            <Button variant="outline" size="sm">
-              <FileDown className="size-4" />
-              Export all
-            </Button>
-          </CardHeader>
-          <CardContent className="grid gap-3 md:grid-cols-2">
-            <DocumentCard
-              name="executive-surface-report.pdf"
-              kind="pdf"
-              meta="2.4 MB · just now"
-            />
-            <DocumentCard
-              name="asset-inventory.csv"
-              kind="csv"
-              meta="342 rows"
-            />
-            <DocumentCard name="scan-evidence.json" kind="json" meta="Signed" />
-            <DocumentCard
-              name="screenshots.zip"
-              kind="archive"
-              meta="18 files"
-            />
-          </CardContent>
-        </Card>
-        <Card className="lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Advanced controls</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <Field label="API credential">
-              <PasswordInput autoComplete="off" />
-            </Field>
-            <RangeInput label="Concurrency" min={1} max={20} defaultValue={4} />
-            <FileInput
-              label="Import asset inventory"
-              accept=".csv,.json"
-              multiple
-            />
-            <RadioGroup
-              label="Scan mode"
-              name="scan-mode"
-              options={[
-                { value: "passive", label: "Passive" },
-                { value: "active", label: "Active" },
-              ]}
-              value={profile}
-              onChange={setProfile}
-            />
-            {(
-              [
-                "date",
-                "time",
-                "datetime-local",
-                "number",
-                "color",
-                "email",
-                "url",
-                "search",
-                "tel",
-              ] as const
-            ).map((type) => (
-              <Field key={type} label={type}>
-                <Input type={type} />
-              </Field>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-}
-
 export default function App() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [view, setView] = useState("dashboard");
@@ -626,7 +425,8 @@ export default function App() {
   const [animated, setAnimated] = useState(true);
   useEffect(() => {
     const sync = () => {
-      const hash = decodeURIComponent(window.location.hash.slice(1));
+      let hash = "";
+      try { hash = decodeURIComponent(window.location.hash.slice(1)).split("/")[0]; } catch { /* Treat malformed fragments as the overview. */ }
       const known = [
         "account",
         "App toolkit",
@@ -740,7 +540,7 @@ export default function App() {
                   {view === "dashboard" ? (
                     <Dashboard navigate={navigate} />
                   ) : view === "components" ? (
-                    <ComponentLab />
+                    <ComponentCatalog />
                   ) : (
                     <div className="mx-auto max-w-6xl space-y-6 p-4 md:p-8">
                       <h1 className="font-display text-3xl capitalize">

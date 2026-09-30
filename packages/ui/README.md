@@ -2,6 +2,13 @@
 
 React components, Tailwind styling, EASM views and optional Firebase integration.
 
+Includes Vitral equivalents of all 68 daisyUI component families: dialogs, menus,
+tabs, calendars, OTP, validation, galleries, navigation, feedback and mockup frames.
+Each is exported from the main package with TypeScript types and compiled styles.
+The repository showcase provides searchable previews and usage examples at
+`/#components`; the [catalog guide](https://github.com/Andres-Montoya-SV/hydra-styling/blob/main/docs/component-catalog.md)
+documents exact coverage and behavior.
+
 ```tsx
 import {Button, ErrorBoundary, MotionProvider} from '@hydra-security/ui';
 import '@hydra-security/ui/styles.css';

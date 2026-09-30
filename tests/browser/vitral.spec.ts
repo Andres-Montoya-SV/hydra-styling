@@ -4,12 +4,15 @@ import AxeBuilder from "@axe-core/playwright";
 test("Vitral renders accessible controls in both themes with no horizontal overflow", async ({
   page,
 }) => {
+  test.setTimeout(120_000);
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   for (const route of ["dashboard", "components"]) {
     await page.goto(`/#${route}`);
     await expect(page.getByRole("main")).toBeVisible();
     await expect(page.locator(".hydra-theme")).toBeVisible();
+    if (route === "components")
+      await expect(page.locator("[data-component]")).toHaveCount(68);
     for (const theme of ["nocturne", "daylight"]) {
       const boundary = page.locator(".hydra-theme");
       if ((await boundary.getAttribute("data-hydra-theme")) !== theme)
