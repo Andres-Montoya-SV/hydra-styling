@@ -114,6 +114,10 @@ test("both themes keep the foundations accessible and constrained on the page", 
     await expect(tooltip).toBeVisible();
     await insideViewport(page, tooltip);
     await page.keyboard.press("Escape");
+    await expect(tooltip).toHaveCount(0);
+    // Escape keeps focus on the trigger. Leave it before the next theme re-enters.
+    await page.keyboard.press("Tab");
+    await expect(tooltipTrigger).not.toBeFocused();
     const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
     expect(results.violations).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
