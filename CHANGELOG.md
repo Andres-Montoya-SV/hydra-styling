@@ -7,6 +7,7 @@
 - Translate catalog/static feedback copy; preserve business data, route IDs and source examples.
 - Document all 64 shadcn families with explicit gaps; retain the 68-family daisyUI inventory.
 - Add async/queue/focus/localization tests and six reviewed visual scenarios.
+- Prevent initial profile snapshots from discarding early edits and retain combobox queries during native focus scrolling.
 
 ## Unreleased
 

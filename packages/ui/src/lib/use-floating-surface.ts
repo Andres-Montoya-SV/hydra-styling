@@ -23,6 +23,7 @@ export function useFloatingSurface(
     if (!window) return;
     let frame = 0;
     let promoted = false;
+    let anchorWasVisible = false;
     if (typeof surface.showPopover === "function") {
       surface.setAttribute("popover", "manual");
       try { surface.showPopover(); promoted = true; }
@@ -40,8 +41,12 @@ export function useFloatingSurface(
         height: visual?.height ?? (document.documentElement.clientHeight || window.innerHeight),
       };
       // A scrolled-away trigger should not leave an orphaned menu at a screen edge.
-      if (allowDismiss && box.width > 0 && (box.bottom < viewport.top || box.top > viewport.top + viewport.height ||
-        box.right < viewport.left || box.left > viewport.left + viewport.width)) {
+      const outside = box.width > 0 && (box.bottom < viewport.top || box.top > viewport.top + viewport.height ||
+        box.right < viewport.left || box.left > viewport.left + viewport.width);
+      // Focus can start native smooth scrolling that lasts beyond one frame,
+      // especially in WebKit. Do not discard a query before its anchor arrives.
+      if (!outside) anchorWasVisible = true;
+      if (allowDismiss && outside && anchorWasVisible) {
         dismiss.current?.();
         return;
       }
@@ -56,7 +61,7 @@ export function useFloatingSurface(
       Object.assign(surface.style, {
         position: "fixed", inset: "auto", margin: "0", transform: "none",
         left: position.x + "px", top: position.y + "px",
-        maxHeight: position.maxHeight + "px", visibility: "visible",
+        maxHeight: position.maxHeight + "px", visibility: outside ? "hidden" : "visible",
       });
       surface.dataset.side = position.side;
     }
@@ -64,8 +69,7 @@ export function useFloatingSurface(
       if (event?.target instanceof window!.Node && surface?.contains(event.target)) return;
       if (!frame) frame = window!.requestAnimationFrame(() => update());
     }
-    // Make menus focusable immediately, but let native focus scrolling finish
-    // before deciding whether an opening input's anchor is off-screen.
+    // Hide an offscreen opening surface until native focus scrolling reaches it.
     update(false);
     schedule();
     document.addEventListener("scroll", schedule, true);

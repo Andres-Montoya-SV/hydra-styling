@@ -154,15 +154,42 @@ test("translated feedback is accessible in both themes without horizontal overfl
   for (const locale of ["en-US", "es-SV", "pt-BR"]) {
     await page.locator(".showcase-language select").selectOption(locale);
     for (const theme of ["nocturne", "daylight"]) {
+      // WebKit defers painting offscreen navigation. Start from the same viewport.
+      await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
       if (
         (await page
-          .locator("[data-hydra-theme]")
+          .locator(".hydra-theme")
           .first()
           .getAttribute("data-hydra-theme")) !== theme
       )
         await page.locator("button:has(.hydra-theme-toggle-label)").click();
-      // Settle the theme's registered CSS color transitions before sampling contrast.
-      await page.waitForTimeout(750);
+      await expect(page.locator(".hydra-theme").first()).toHaveAttribute(
+        "data-hydra-theme",
+        theme,
+      );
+      // Wait for actual registered-property transitions, not a wall-clock estimate.
+      await page.evaluate(async () => {
+        // Child color transitions can be retargeted while theme tokens interpolate.
+        for (let pass = 0; pass < 10; pass++) {
+          await new Promise<void>((resolve) =>
+            requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+          );
+          const active = document
+            .getAnimations()
+            .filter(
+              (animation) =>
+                (animation.playState === "running" || animation.pending) &&
+                animation.effect?.getComputedTiming().iterations !== Infinity,
+            );
+          if (!active.length) return;
+          await Promise.all(
+            active.map((animation) => animation.finished.catch(() => {})),
+          );
+        }
+        throw new Error(
+          "Theme transitions did not settle before the contrast audit.",
+        );
+      });
       const results = await new AxeBuilder({ page })
         .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
         .analyze();

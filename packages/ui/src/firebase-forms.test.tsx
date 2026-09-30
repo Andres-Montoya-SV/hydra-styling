@@ -10,11 +10,15 @@ import {
 } from "@testing-library/react";
 import { afterEach, beforeEach, it, expect, vi } from "vitest";
 import { FirebaseProvider } from "./firebase/auth";
-import { AuthForm, ChangePasswordForm } from "./firebase/forms";
-import {DeleteAccountForm} from './firebase/delete-account';
+import { AuthForm, ChangePasswordForm, ProfileForm } from "./firebase/forms";
+import { DeleteAccountForm } from "./firebase/delete-account";
 import type { HydraFirebaseServices } from "./firebase/services";
 const mocks = vi.hoisted(() => ({
   listener: null as null | ((user: unknown) => void),
+  profile: null as
+    | null
+    | ((snapshot: { data: () => Record<string, string> }) => void),
+  saveProfile: vi.fn(),
   signIn: vi.fn(),
   signUp: vi.fn(),
   reset: vi.fn(),
@@ -37,6 +41,15 @@ vi.mock("firebase/auth", () => ({
     credential: (email: string, password: string) => ({ email, password }),
   },
 }));
+vi.mock("firebase/firestore", () => ({
+  doc: vi.fn((_db, ...path) => path.join("/")),
+  onSnapshot: vi.fn((_ref, next) => {
+    mocks.profile = next;
+    return () => {};
+  }),
+  setDoc: mocks.saveProfile,
+  serverTimestamp: () => "server-time",
+}));
 const services = {
   app: { name: "test" },
   auth: {},
@@ -44,7 +57,7 @@ const services = {
   storage: {},
 } as unknown as HydraFirebaseServices;
 const user = {
-  getIdToken:vi.fn().mockResolvedValue('fresh-token'),
+  getIdToken: vi.fn().mockResolvedValue("fresh-token"),
   uid: "alice",
   email: "alice@example.com",
   emailVerified: true,
@@ -159,28 +172,108 @@ it("does not update a password when reauthentication fails", async () => {
   expect(mocks.update).not.toHaveBeenCalled();
   expect(screen.getByLabelText("New password")).toHaveValue("");
 });
-it('deletion requires confirmation, reauthentication and a fresh token',async()=>{
- const remove=vi.fn().mockResolvedValue(undefined);
- render(<FirebaseProvider services={services}><DeleteAccountForm onDeleteAccount={remove}/></FirebaseProvider>);
- act(()=>mocks.listener!(user));
- fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));expect(remove).not.toHaveBeenCalled();
- fireEvent.change(screen.getByLabelText('Current password'),{target:{value:'password'}});
- fireEvent.change(screen.getByLabelText('Type DELETE to confirm'),{target:{value:'DELETE'}});
- fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));
- await screen.findByText('Account deletion completed.');
- expect(mocks.reauth).toHaveBeenCalled();expect(user.getIdToken).toHaveBeenCalledWith(true);expect(remove).toHaveBeenCalledWith('fresh-token');
+it("deletion requires confirmation, reauthentication and a fresh token", async () => {
+  const remove = vi.fn().mockResolvedValue(undefined);
+  render(
+    <FirebaseProvider services={services}>
+      <DeleteAccountForm onDeleteAccount={remove} />
+    </FirebaseProvider>,
+  );
+  act(() => mocks.listener!(user));
+  fireEvent.submit(screen.getByRole("form", { name: "Delete account" }));
+  expect(remove).not.toHaveBeenCalled();
+  fireEvent.change(screen.getByLabelText("Current password"), {
+    target: { value: "password" },
+  });
+  fireEvent.change(screen.getByLabelText("Type DELETE to confirm"), {
+    target: { value: "DELETE" },
+  });
+  fireEvent.submit(screen.getByRole("form", { name: "Delete account" }));
+  await screen.findByText("Account deletion completed.");
+  expect(mocks.reauth).toHaveBeenCalled();
+  expect(user.getIdToken).toHaveBeenCalledWith(true);
+  expect(remove).toHaveBeenCalledWith("fresh-token");
 });
-it('deletion does not call the service when reauthentication fails',async()=>{
- mocks.reauth.mockRejectedValue({code:'auth/invalid-credential'});const remove=vi.fn();
- render(<FirebaseProvider services={services}><DeleteAccountForm onDeleteAccount={remove}/></FirebaseProvider>);
- act(()=>mocks.listener!(user));
- fireEvent.change(screen.getByLabelText('Current password'),{target:{value:'wrong'}});
- fireEvent.change(screen.getByLabelText('Type DELETE to confirm'),{target:{value:'DELETE'}});
- fireEvent.submit(screen.getByRole('form',{name:'Delete account'}));
- await waitFor(()=>expect(screen.getByLabelText('Current password')).toHaveValue(''));
- expect(remove).not.toHaveBeenCalled();expect(screen.queryByText('Account deletion completed.')).toBeNull();
+it("deletion does not call the service when reauthentication fails", async () => {
+  mocks.reauth.mockRejectedValue({ code: "auth/invalid-credential" });
+  const remove = vi.fn();
+  render(
+    <FirebaseProvider services={services}>
+      <DeleteAccountForm onDeleteAccount={remove} />
+    </FirebaseProvider>,
+  );
+  act(() => mocks.listener!(user));
+  fireEvent.change(screen.getByLabelText("Current password"), {
+    target: { value: "wrong" },
+  });
+  fireEvent.change(screen.getByLabelText("Type DELETE to confirm"), {
+    target: { value: "DELETE" },
+  });
+  fireEvent.submit(screen.getByRole("form", { name: "Delete account" }));
+  await waitFor(() =>
+    expect(screen.getByLabelText("Current password")).toHaveValue(""),
+  );
+  expect(remove).not.toHaveBeenCalled();
+  expect(screen.queryByText("Account deletion completed.")).toBeNull();
 });
-it('deletion is unavailable without a configured service',()=>{
- render(<FirebaseProvider services={services}><DeleteAccountForm/></FirebaseProvider>);act(()=>mocks.listener!(user));
- expect(screen.getByRole('button',{name:'Permanently delete account'})).toBeDisabled();
+it("deletion is unavailable without a configured service", () => {
+  render(
+    <FirebaseProvider services={services}>
+      <DeleteAccountForm />
+    </FirebaseProvider>,
+  );
+  act(() => mocks.listener!(user));
+  expect(
+    screen.getByRole("button", { name: "Permanently delete account" }),
+  ).toBeDisabled();
+});
+
+it("locks profile editing until hydration and while saving so a late snapshot cannot erase early edits", async () => {
+  let finish!: () => void;
+  mocks.saveProfile.mockImplementationOnce(
+    () =>
+      new Promise<void>((resolve) => {
+        finish = resolve;
+      }),
+  );
+  render(
+    <FirebaseProvider services={services}>
+      <ProfileForm />
+    </FirebaseProvider>,
+  );
+  act(() => mocks.listener!(user));
+  const name = screen.getByLabelText("Display name"),
+    username = screen.getByLabelText("Username");
+  expect(name).toBeDisabled();
+  expect(username).toBeDisabled();
+  expect(screen.getByRole("form", { name: "Profile" })).toHaveAttribute(
+    "aria-busy",
+    "true",
+  );
+  fireEvent.submit(screen.getByRole("form", { name: "Profile" }));
+  expect(mocks.saveProfile).not.toHaveBeenCalled();
+  act(() => mocks.profile!({ data: () => ({}) }));
+  expect(name).toBeEnabled();
+  expect(username).toBeEnabled();
+  fireEvent.change(name, { target: { value: "Browser Analyst" } });
+  fireEvent.change(username, { target: { value: "browser.analyst" } });
+  act(() =>
+    mocks.profile!({
+      data: () => ({ displayName: "Stale snapshot", username: "stale" }),
+    }),
+  );
+  expect(name).toHaveValue("Browser Analyst");
+  expect(username).toHaveValue("browser.analyst");
+  fireEvent.submit(screen.getByRole("form", { name: "Profile" }));
+  expect(name).toBeDisabled();
+  expect(username).toBeDisabled();
+  expect(mocks.saveProfile).toHaveBeenCalledWith("users/alice", {
+    displayName: "Browser Analyst",
+    username: "browser.analyst",
+    updatedAt: "server-time",
+  });
+  await act(async () => finish());
+  expect(screen.getByText("Profile saved.")).toBeVisible();
+  expect(name).toHaveValue("Browser Analyst");
+  expect(name).toBeEnabled();
 });
