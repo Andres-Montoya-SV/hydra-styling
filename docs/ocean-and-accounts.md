@@ -1,6 +1,9 @@
-# Ocean surfaces and account screens
+# Glass surfaces and account screens
 
-`framer-motion@13.4.0` powers card hover, ambient ocean layers and the loader.
+The current art direction is [Vitral](vitral.md). `OceanBackground` remains a
+compatibility alias; new integrations should use `VitralBackground`.
+
+Framer Motion powers subtle card hover and the loader. Vitral backgrounds are static.
 Existing Anime.js entrance/input effects remain compatible. Wrap the application
 in `MotionProvider`; its switch, parent opt-out and OS reduced-motion preference
 control the effects. Content is usable without animation. Cards keep the same DOM

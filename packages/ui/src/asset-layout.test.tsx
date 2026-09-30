@@ -15,11 +15,14 @@ it('converts screen coordinates with zoom, pan and letterboxing',()=>{
  expect(mapPoint(700,450,{left:0,top:0,width:1000,height:700},2,{x:20,y:30})).toEqual({x:580,y:280});
  expect(mapPoint(0,0,{left:0,top:0,width:0,height:0},1,{x:0,y:0})).toBeNull();
 });
-it('anchors links to envelopes and distinguishes reverse links and loops',()=>{
- expect(relationPath(nodes[0],{...nodes[1],y:228})).toMatch(/^M 592 221 C/);
+it('anchors links to circle boundaries and distinguishes reverse links and loops',()=>{
+ const b={...nodes[1],y:228};
+ const values=relationPath(nodes[0],b).match(/-?\d+(?:\.\d+)?/g)!.map(Number);
+ expect(Math.hypot(values[0]-nodes[0].x,values[1]-nodes[0].y)).toBeCloseTo(8);
+ expect(Math.hypot(values[2]-b.x,values[3]-b.y)).toBeCloseTo(4.2);
  expect(relationPath(nodes[0],nodes[1])).not.toEqual(relationPath(nodes[0],nodes[1],1));
  expect(relationPath(nodes[1],nodes[0],1)).not.toEqual(relationPath(nodes[0],nodes[1]));
- expect(relationPath(nodes[0],nodes[0])).toMatch(/^M 500 152 C/);
+ expect(relationPath(nodes[0],nodes[0])).toMatch(/^M 492 250 C/);
  expect(relationPath(nodes[0],{...nodes[1],x:500,y:228})).not.toMatch(/NaN|Infinity/);
 });
 it.each([

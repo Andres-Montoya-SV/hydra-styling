@@ -47,7 +47,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           id={id ?? field?.id}
           aria-invalid={invalid || undefined}
           aria-describedby={ariaDescribedBy ?? field?.describedBy}
-          className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-hydra-text outline-none placeholder:text-hydra-muted/70"
+          className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-hydra-text outline-none placeholder:text-hydra-muted"
           {...props}
         />
         {trailing && <span className="shrink-0 text-hydra-muted" aria-hidden="true">{trailing}</span>}
@@ -67,7 +67,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaHTMLAttributes<H
         id={id ?? field?.id}
         aria-invalid={invalid || undefined}
         aria-describedby={ariaDescribedBy ?? field?.describedBy}
-        className={cn("hydra-control min-h-28 resize-y bg-transparent px-3.5 py-3 text-sm text-hydra-text outline-none placeholder:text-hydra-muted/70", invalid && "hydra-control-invalid", className)}
+        className={cn("hydra-control min-h-28 resize-y bg-transparent px-3.5 py-3 text-sm text-hydra-text outline-none placeholder:text-hydra-muted", invalid && "hydra-control-invalid", className)}
         {...props}
       />
     );

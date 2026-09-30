@@ -24,7 +24,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(({ className, variant,
   useImperativeHandle(ref,()=>scope.current!,[scope]);
   useEffect(()=>{if(!active&&scope.current)void animate(scope.current,{y:0},{duration:0});},[active,animate,scope]);
   return <div ref={scope} className={cn(cardVariants({variant}),'hydra-card-float',className)} {...props}
-    onPointerEnter={event=>{onPointerEnter?.(event);if(active&&event.pointerType==='mouse')void animate(scope.current,{y:-4},{type:'spring',stiffness:220,damping:24});}}
+    onPointerEnter={event=>{onPointerEnter?.(event);if(active&&event.pointerType==='mouse')void animate(scope.current,{y:-1},{type:'spring',stiffness:220,damping:24});}}
     onPointerLeave={event=>{onPointerLeave?.(event);if(active)void animate(scope.current,{y:0},{type:'spring',stiffness:220,damping:24});}}/>;
 });
 Card.displayName = "Card";

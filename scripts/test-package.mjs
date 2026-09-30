@@ -26,6 +26,18 @@ try {
       await import(entry); require(entry);
     }
     for(const entry of ['@hydra-security/ui/styles.css','@hydra-security/ui/firebase-rules/firestore.rules','@hydra-security/ui/firebase-rules/storage.rules']) require.resolve(entry);
+    const ui=await import('@hydra-security/ui');
+    for(const name of ['Calendar','Modal','Tabs','OtpInput','Dropdown','CodeMockup']) {
+      if(!ui[name] || !require('@hydra-security/ui')[name]) throw Error('Missing catalog export: '+name);
+    }
+    const {createElement}=await import('react');
+    const {renderToString}=await import('react-dom/server');
+    if(!renderToString(createElement(ui.Calendar,{defaultValue:'2026-09-30'})).includes('September 2026')) throw Error('Calendar SSR failed in installed package.');
+    const {readFileSync}=await import('node:fs');
+    const css=readFileSync(require.resolve('@hydra-security/ui/styles.css'),'utf8');
+    if(!css.includes('.hydra-calendar') || !css.includes('.hydra-modal')) throw Error('Catalog styles missing from package.');
+    const grpc=require('@grpc/grpc-js/package.json').version.split('.').map(Number);
+    if(grpc[0]<1 || (grpc[0]===1 && (grpc[1]<13 || (grpc[1]===13 && grpc[2]<6)))) throw Error('Starter installed an affected gRPC transport.');
   `],{cwd:app,stdio:'inherit'});
   if(check.status!==0)throw new Error('Published exports failed the consumer smoke test.');
   console.log('Packed library installed and built in a clean consumer; ESM/CJS and rules exports passed.');

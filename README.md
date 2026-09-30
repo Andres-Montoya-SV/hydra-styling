@@ -1,14 +1,28 @@
 # Hydra UI
 
-Hydra UI is the React and Tailwind CSS design system for **Hydra Security**. It turns the product direction—external attack-surface intelligence with a visual language rooted in El Salvador—into reusable, accessible primitives.
+Hydra UI is the React and Tailwind CSS design system for **Hydra Security**. Its Vitral art direction translates cold stained glass, distant light and clear security intelligence into reusable, accessible primitives.
 
 This repository contains:
 
 - `packages/ui`: the publishable `@hydra-security/ui` component package.
 - `apps/showcase`: a responsive product dashboard and component laboratory.
-- semantic themes for dark product surfaces and light report/document surfaces.
+- Nocturne and Daylight themes for every product surface, with smooth transmitted-light transitions.
 - components for actions, forms, findings, progress, statistics, and evidence files.
 - a custom vector Hydra mark. No external logo asset is required.
+
+## Component catalog
+
+Open **Components** (`/#components`) for equivalents of all **68 component families**
+in the daisyUI catalog checked on 2026-09-30. Search by name or React export, filter
+seven categories, interact with live previews, and expand usage examples. Each
+component has a direct link, for example `/#components/calendar`.
+
+All components use Vitral's Nocturne/Daylight tokens and the shared motion setting.
+Hydra-specific icons, evidence cards and specialized inputs remain available below
+the catalog. This is a React implementation, not daisyUI class-name compatibility
+or an implementation of every daisyUI example variant.
+
+See the [complete coverage map and integration guide](docs/component-catalog.md).
 
 ## Why it is not a daisyUI theme
 
@@ -77,6 +91,17 @@ export function ScanForm() {
 
 The package supports React 18.3 and 19. It ships ESM, CommonJS, TypeScript declarations, and compiled CSS.
 
+The current Firebase SDK pins an older Node gRPC transport. Keep the following
+override in the **consuming application's** `package.json` until Firebase updates
+that dependency. npm does not inherit a library's overrides. The repository and
+the supplied starter already include it:
+
+```json
+{ "overrides": { "@grpc/grpc-js": "1.13.6" } }
+```
+
+This clears GHSA-m9gg-hp2v-232j and GHSA-f596-whhp-79r4 without downgrading Firebase.
+
 ## Hydra backend data
 
 Open **Hydra runs** in the showcase to import a real `output/<run_id>/assets.json`
@@ -109,8 +134,8 @@ the example does not launch scans or persist an audit trail.
 
 ## Themes
 
-The ocean/glass treatment, Framer Motion integration, accessible loader and account
-screens are documented in [Ocean and accounts](docs/ocean-and-accounts.md).
+Hydra uses **Vitral**: a cool stained-glass system with Nocturne and Daylight themes.
+See [art direction, migration, theming and the point graph](docs/vitral.md).
 
 Set the theme at any DOM boundary:
 
@@ -123,16 +148,17 @@ Available themes:
 | Theme | Use |
 |---|---|
 | `nocturne` | Product dashboards, scanners, SOC and EASM interfaces |
-| `parchment` | Reports, printable views, evidence summaries and marketing surfaces |
+| `daylight` | Illuminated ice glass for dashboards, reports and daytime work |
+| `parchment` | Compatibility alias of `daylight` |
 
 Themes use semantic variables. Product applications should consume `hydra-*` Tailwind utilities or components rather than hard-coded colors.
 
 ```css
 [data-hydra-theme="customer"] {
-  --hs-canvas: #071923;
-  --hs-surface: #0c2936;
-  --hs-accent: #ffb52a;
-  --hs-text: #fff8e9;
+  --hs-canvas: #080f1e;
+  --hs-surface: #101d31;
+  --hs-accent: #99d7f7;
+  --hs-text: #edf4ff;
 }
 ```
 
@@ -145,14 +171,16 @@ Themes use semantic variables. Product applications should consume `hydra-*` Tai
 | Layout | `Card`, `CardHeader`, `CardTitle`, `CardContent`, `CardFooter` |
 | Security data | `Badge`, `Stat`, `Progress`, `Alert` |
 | Documents | `DocumentCard` for report, PDF, CSV, JSON, image, archive, code, and generic files |
-| Brand | `HydraMark`, `FolkSun` |
+| Brand | `HydraMark`, `RoseWindow`, `VitralBackdrop`, `VitralBackground` |
+| Themes | `ThemeProvider`, `ThemeToggle`, `useHydraTheme` |
+| Graph | `AssetMap`, `layoutAssetGraph` |
 
 All interactive components include visible keyboard focus, disabled states, and reduced-motion handling. `Field` automatically connects labels, hints, and error messages to its control.
 
 ## Design rules
 
 1. **Clarity under pressure.** Severity is always expressed with text, never color alone.
-2. **Cultural influence, not decoration everywhere.** Folk geometry appears in brand moments and accents; dense security data stays restrained.
+2. **Glass with purpose.** Lead seams and transmitted light establish identity; dense security data stays restrained.
 3. **One semantic token layer.** Product themes may change values without changing component markup.
 4. **Documents are first-class.** Reports and evidence use the same interaction language as live assets.
 5. **No hidden framework dependency.** Components do not require daisyUI, Radix, or a runtime CSS-in-JS provider.

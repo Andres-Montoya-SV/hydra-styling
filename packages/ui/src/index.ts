@@ -18,5 +18,15 @@ export { Stat, type StatProps } from "./components/stat";
 export { DocumentCard, type DocumentCardProps, type DocumentKind } from "./components/document-card";
 export { HydraMark, FolkSun, type HydraMarkProps } from "./components/hydra-mark";
 export {OceanBackground, SiteLoader} from './components/ocean';
+export {RoseWindow, VitralBackdrop, VitralBackground} from './components/vitral';
+export {ThemeProvider, ThemeToggle, useHydraTheme, resolveHydraTheme, type HydraTheme, type HydraThemeInput} from './components/theme';
 
 export {ErrorBoundary} from './components/error-boundary';
+
+export {layoutAssetGraph} from './lib/graph-layout';
+
+export {Modal, Drawer, Dropdown, Fab, Tooltip, Toast, type ModalProps, type DropdownItem, type ToastProps} from './components/catalog-overlays';
+export {Link, Breadcrumbs, Menu, Dock, Navbar, MegaMenu, Pagination, Steps, Tabs, type NavigationItem, type TabItem} from './components/catalog-navigation';
+export {Collapse, Accordion, Avatar, Aura, Kbd, List, Table, Status, ChatBubble, Countdown, Timeline, Loading, RadialProgress, Skeleton, Carousel, HoverGallery, HoverCard, Diff, TextRotate, type GalleryItem} from './components/catalog-display';
+export {Fieldset, Label, Radio, Filter, Rating, OtpInput, Validator, Swap, ThemeController, Calendar, type CalendarProps} from './components/catalog-input';
+export {Divider, Hero, Indicator, Join, Mask, Stack, BrowserMockup, CodeMockup, PhoneMockup, WindowMockup} from './components/catalog-layout';

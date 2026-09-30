@@ -24,4 +24,4 @@ Keep public components in `packages/ui/src/components` and export them from `pac
 - `npm test`
 - `npm run build`
 - Check the showcase at narrow and wide viewport widths.
-- Check both `nocturne` and `parchment` themes.
+- Check both `nocturne` and `daylight` (including the legacy `parchment` alias) themes.

@@ -30,6 +30,6 @@ export function MotionProvider({enabled=true,children}:{enabled?:boolean;childre
 
 export function Motion({children,enabled=true,...props}:HTMLAttributes<HTMLDivElement>&{enabled?:boolean}){
  const active=useHydraMotion();const root=useRef<HTMLDivElement>(null);
- useEffect(()=>{if(!active||!enabled||!root.current)return;const animation=animate(root.current,{opacity:[.6,1],translateY:[8,0],duration:300,ease:'outQuad'});return()=>{animation.revert();};},[active,enabled]);
+ useEffect(()=>{if(!active||!enabled||!root.current)return;const animation=animate(root.current,{translateY:[6,0],duration:260,ease:'outQuad'});return()=>{animation.revert();};},[active,enabled]);
  return <div ref={root} {...props}>{children}</div>;
 }

@@ -1,8 +1,7 @@
 :root {
-  color-scheme: dark;
   font-family: system-ui, sans-serif;
-  background: #071923;
-  color: #fff8e9;
+  background: var(--hs-canvas);
+  color: var(--hs-text);
 }
 body {
   margin: 0;
@@ -32,14 +31,14 @@ body {
 .starter-tabs button {
   color: inherit;
   background: transparent;
-  border: 1px solid #35515e;
+  border: 1px solid var(--hs-line);
   padding: 10px 16px;
   border-radius: 12px;
   cursor: pointer;
 }
 .starter-tabs button[aria-pressed="true"] {
-  border-color: #ffb52a;
-  color: #ffb52a;
+  border-color: var(--hs-accent-ink);
+  color: var(--hs-accent-ink);
 }
 summary {
   cursor: pointer;
@@ -48,5 +47,5 @@ summary {
 hr {
   margin: 24px 0;
   border: 0;
-  border-top: 1px solid #35515e;
+  border-top: 1px solid var(--hs-line);
 }
