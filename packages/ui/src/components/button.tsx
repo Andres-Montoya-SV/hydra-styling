@@ -1,6 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/cn";
+import { useHydraLocale } from "./locale";
 
 export const buttonVariants = cva(
   "hydra-button inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hydra-focus focus-visible:ring-offset-2 focus-visible:ring-offset-hydra-canvas disabled:cursor-not-allowed disabled:opacity-45 active:translate-y-px",
@@ -33,7 +34,9 @@ export interface ButtonProps
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, type = "button", disabled, loading = false,
-    loadingLabel = "Loading", children, "aria-busy": ariaBusy, ...props }, ref) => (
+    loadingLabel, children, "aria-busy": ariaBusy, ...props }, ref) => {
+    const { messages } = useHydraLocale();
+    return (
     <>
       <button
         {...props}
@@ -47,8 +50,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <span className="hydra-button-label">{children}</span>
         {loading && <span className="hydra-button-progress" aria-hidden="true"><span /></span>}
       </button>
-      {loading && <span className="sr-only" role="status" aria-live="polite">{loadingLabel}</span>}
+      {loading && <span className="sr-only" role="status" aria-live="polite">{loadingLabel === undefined ? messages.loading : loadingLabel}</span>}
     </>
-  ),
+  ); },
 );
 Button.displayName = "Button";

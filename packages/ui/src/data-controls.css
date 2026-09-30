@@ -1,16 +1,16 @@
 .hydra-picker, .hydra-tags-input { display: grid; gap: var(--hs-field-gap); min-width: 0; }
 .hydra-picker-actions { display: inline-flex; gap: .25rem; align-items: center; }
-.hydra-picker-actions button { width: 1.5rem; height: 1.5rem; color: var(--hs-muted); border-radius: .25rem; }
+.hydra-picker-actions button { display: inline-grid; place-items: center; width: 1.5rem; height: 1.5rem; color: var(--hs-muted); border-radius: .25rem; }
 .hydra-picker-actions button:hover { color: var(--hs-text); background: var(--hs-surface-strong); }
 .hydra-option-list { min-width: min(18rem, var(--hs-floating-max-width)); max-width: 28rem; padding: .375rem; color: var(--hs-text); background: var(--hs-surface); border: 1px solid var(--hs-control-line); border-radius: var(--hs-radius-floating); box-shadow: 0 12px 32px color-mix(in srgb,var(--hs-shadow) 35%,transparent); }
-.hydra-option-list [role="option"] { position: relative; padding: .625rem 2rem .625rem .75rem; border-radius: .25rem; cursor: pointer; }
+.hydra-option-list [role="option"] { position: relative; padding-block: .625rem; padding-inline: .75rem 2rem; border-radius: .25rem; cursor: pointer; }
 .hydra-option-list [role="option"][data-active] { outline: 2px solid var(--hs-focus); outline-offset: -2px; background: var(--hs-surface-strong); }
 .hydra-option-list [role="option"][aria-disabled="true"] { opacity: .5; cursor: not-allowed; }
 .hydra-option-list small { display: block; color: var(--hs-muted); }
-.hydra-option-check { position: absolute; right: .75rem; top: .625rem; color: var(--hs-accent); }
+.hydra-option-check { position: absolute; inset-inline-end: .75rem; top: .625rem; color: var(--hs-accent); }
 .hydra-option-message { padding: .75rem; color: var(--hs-muted); }
 .hydra-token-list { display: flex; flex-wrap: wrap; gap: .375rem; list-style: none; padding: 0; margin: 0; }
-.hydra-token-list li { display: inline-flex; align-items: center; gap: .375rem; max-width: 100%; border: 1px solid var(--hs-control-line); border-radius: var(--hs-radius-control); background: var(--hs-surface-strong); padding: .2rem .35rem .2rem .6rem; font-size: .8125rem; }
+.hydra-token-list li { display: inline-flex; align-items: center; gap: .375rem; max-width: 100%; border: 1px solid var(--hs-control-line); border-radius: var(--hs-radius-control); background: var(--hs-surface-strong); padding-block: .2rem; padding-inline: .6rem .35rem; font-size: .8125rem; }
 .hydra-token-list li > span { overflow-wrap: anywhere; min-width: 0; }
 .hydra-token-list button { width: 1.5rem; min-height: 1.5rem; flex-shrink: 0; }
 .hydra-data-error { color: var(--hs-danger); font-size: .875rem; }

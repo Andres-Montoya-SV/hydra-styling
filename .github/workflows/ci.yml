@@ -38,6 +38,8 @@ jobs:
           export JAVA_HOME="$JAVA_HOME_21_X64"
           export PATH="$JAVA_HOME/bin:$PATH"
           npm run check
+      - name: Compare reviewed Vitral visual baselines
+        run: npm run test:visual
       - run: npm pack --dry-run -w @hydra-security/ui
       - run: npm run audit:signatures
       - run: npm run audit
@@ -49,5 +51,7 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            playwright-visual-report/
+            test-results-visual/
           retention-days: 7
           if-no-files-found: ignore

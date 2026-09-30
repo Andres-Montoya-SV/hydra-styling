@@ -34,6 +34,12 @@ Open `/#components/data-controls` for searchable selections, tags, date ranges a
 sortable/selectable tables with local or server-owned pages. See the
 [data control contracts and integration examples](docs/data-controls.md).
 
+Open `/#components/consistency` to inspect application states in English/Spanish,
+both text directions and both densities. Individual component pages include props
+generated from TypeScript. See [composition contracts](docs/component-contracts.md),
+[localization](docs/localization.md), [public API](docs/api.md) and
+[visual regression](docs/visual-testing.md).
+
 ## Why it is not a daisyUI theme
 
 daisyUI is a useful reference for API ergonomics, but using it as the foundation would couple Hydra's identity to generic component markup and global class names. Hydra UI instead uses typed React components, semantic design tokens, and Tailwind-generated CSS. Consumers get predictable variants without inheriting a second design system.
@@ -101,7 +107,12 @@ export function ScanForm() {
 
 The package supports React 18.3 and 19. It ships ESM, CommonJS, TypeScript declarations, and compiled CSS.
 
-The current Firebase SDK pins an older Node gRPC transport. Keep the following
+Firebase is an **optional peer dependency**. Installing the base UI does not install
+the SDK or an animation engine. To use `@hydra-security/ui/firebase`, explicitly
+install `firebase@12.19.0` (the starter already does). Motion uses browser-native
+Web Animations and CSS under one shared provider.
+
+For **Firebase consumers**, the current SDK pins an older Node gRPC transport. Keep the following
 override in the **consuming application's** `package.json` until Firebase updates
 that dependency. npm does not inherit a library's overrides. The repository and
 the supplied starter already include it:

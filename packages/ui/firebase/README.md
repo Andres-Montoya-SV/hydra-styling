@@ -27,7 +27,9 @@ npm run dev
 After publishing, install `@hydra-security/ui` normally and copy its `starter`
 directory to an empty application directory. Commit the application's own lockfile.
 The starter uses session-scoped Auth persistence and deliberately avoids persistent
-Firestore caching of customer data. The Firebase SDK is a regular dependency;
+Firestore caching of customer data. The Firebase SDK is an optional peer of Hydra UI
+and an explicit dependency of the starter. Other consumers of the Firebase entry
+must install `firebase@12.19.0` (supported range: `>=12.19.0 <13`);
 the CLI and rule-test libraries are development tools, not shipped runtime code.
 
 ## Configure your Firebase project
